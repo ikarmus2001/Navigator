@@ -1,0 +1,33 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage[T1]{fontenc} % https://tex.stackexchange.com/a/392210 polskie znaki
+\usepackage{indentfirst}
+\usepackage[backend=biber,style=chem-angew]{biblatex}
+\addbibresource{bibliografia.bib}
+
+
+
+\begin{document}
+    \include{stronaTytulowa}
+    
+    \tableofcontents
+
+    \include{Rozdzialy/wstep}
+    
+    \include{Rozdzialy/motywacja}
+    % Zaprezentowanie kompletnego rozwiązania multiplatformowego
+    % Rozwój w sferze działań DevOps
+
+    \include{Rozdzialy/objasnienieNarzedzi}
+
+    % \include{Rozdzialy/dzialanieAplikacji}
+    % Prezentacja schematu działania wraz ze snippetami
+    
+    % \include{Rozdzialy/azure}
+    % Wymagania wstępne (założenie organizacji, fork rozwiązania)
+
+    % \include{Rozdzialy/dodatkowe}
+    % przydatne linki, których nie cytuję
+
+    % \printbibliography
+\end{document}
