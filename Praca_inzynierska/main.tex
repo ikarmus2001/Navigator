@@ -2,7 +2,12 @@
 \usepackage{graphicx} % Required for inserting images
 \usepackage[T1]{fontenc} % https://tex.stackexchange.com/a/392210 polskie znaki
 \usepackage{indentfirst}
-\usepackage[backend=biber,style=chem-angew]{biblatex}
+\usepackage{hyperref} % Citation to bibliography linking
+\usepackage[
+    backend=biber,
+    style=numeric-comp,
+    sorting=none
+]{biblatex}
 \addbibresource{bibliografia.bib}
 
 
@@ -29,5 +34,5 @@
     % \include{Rozdzialy/dodatkowe}
     % przydatne linki, których nie cytuję
 
-    % \printbibliography
+    \printbibliography
 \end{document}
