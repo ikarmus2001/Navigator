@@ -1,15 +1,18 @@
-\documentclass{article}
-\usepackage{graphicx} % Required for inserting images
+\documentclass[     a4paper, 12pt, twoside]{article}
+\usepackage{microtype}
+\usepackage{tikz}
+    \usetikzlibrary{svg.path}
+    \usetikzlibrary{positioning, shapes.geometric, arrows}
 \usepackage[T1]{fontenc} % https://tex.stackexchange.com/a/392210 polskie znaki
 \usepackage{indentfirst}
-\usepackage{hyperref} % Citation to bibliography linking
+\usepackage[breaklinks]{hyperref} % Citation to bibliography linking
 \usepackage[
     backend=biber,
     style=numeric-comp,
     sorting=none
 ]{biblatex}
 \addbibresource{bibliografia.bib}
-
+% \usepackage{graphicx} % Required for inserting images
 
 
 \begin{document}
@@ -25,13 +28,13 @@
 
     \include{Rozdzialy/objasnienieNarzedzi}
 
-    % \include{Rozdzialy/dzialanieAplikacji}
+    \include{Rozdzialy/dzialanieAplikacji}
     % Prezentacja schematu działania wraz ze snippetami
     
-    % \include{Rozdzialy/azure}
+    \include{Rozdzialy/azure}
     % Wymagania wstępne (założenie organizacji, fork rozwiązania)
 
-    % \include{Rozdzialy/dodatkowe}
+    \include{Rozdzialy/dodatkowe}
     % przydatne linki, których nie cytuję
 
     \printbibliography
