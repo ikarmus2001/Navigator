@@ -9,11 +9,13 @@
     }
 
 
-    public class LeafletAPI
+    public class MapBuilder
     {
         private SupportedVersions _version;
+        private string _htmlHeader = "<!DOCTYPE html>\r\n<html>\r\n<head>";
 
-        public LeafletAPI(string version)
+
+        public MapBuilder(string version)
         {
             if (!Enum.TryParse(version, out _version))
                 throw new NotSupportedException();
@@ -22,7 +24,19 @@
 
         private void PrepareStructure()
         {
+            ComposeHtmlHeader();
             throw new NotImplementedException();
+        }
+
+        private void ComposeHtmlHeader()
+        {
+            _htmlHeader += _version switch
+            {
+                SupportedVersions.v1_7_1 => "",
+                SupportedVersions.v1_9_4 => "",
+                _ => throw new NotSupportedException()
+            };
+
         }
 
         public string Build()

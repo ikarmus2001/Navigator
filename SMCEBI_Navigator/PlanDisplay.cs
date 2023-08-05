@@ -41,12 +41,12 @@ public class PlanDisplay : ContentPage
 
 public class LeafletMap_WebView : WebView
 {
-    LeafletAPI leaf;
+    MapBuilder leaf;
 
 
     public LeafletMap_WebView(string headerVersion= "v1_7_1") 
     {
-        leaf = new LeafletAPI(headerVersion);
+        leaf = new MapBuilder(headerVersion);
     }
 
     public LeafletMap_WebView ImportHTML(string html)
