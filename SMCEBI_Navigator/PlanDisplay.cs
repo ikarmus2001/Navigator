@@ -1,3 +1,5 @@
+using LeafletAPI;
+
 namespace SMCEBI_Navigator;
 
 public class PlanDisplay : ContentPage
@@ -9,21 +11,19 @@ public class PlanDisplay : ContentPage
 
     View PrepareContent()
     {
-        Grid views = new Grid();
-
-        var floorplanView = LeafletMap_WebView.Create()
-        {
-            Source = "floorplans.html",
-            MinimumHeightRequest = 200,
-        };
+        var floorplanView = new LeafletMap_WebView();
+        floorplanView.ImportHTML("floorplans.html");
+        //floorplanView.Build();
 
         VerticalStackLayout vsl = new VerticalStackLayout();
         var btn = new Button();
-        btn.Text = "cokolwieeeeeeek";
-        
-        //btn.Clicked += 
+        btn.Text = "Reload";
+
+        btn.Clicked += Btn_Clicked;
         vsl.Children.Add(btn);
 
+
+        Grid views = new Grid();
         views.RowDefinitions.Add(new RowDefinition(GridLength.Star));
         views.RowDefinitions.Add(new RowDefinition(new GridLength(30)));
 
@@ -32,12 +32,33 @@ public class PlanDisplay : ContentPage
 
         return views;
     }
+
+    private void Btn_Clicked(object sender, EventArgs e)
+    {
+        Content = PrepareContent();
+    }
 }
 
 public class LeafletMap_WebView : WebView
 {
-    public LeafletMap_WebView() { }
+    LeafletAPI leaf;
 
 
+    public LeafletMap_WebView(string headerVersion= "v1_7_1") 
+    {
+        leaf = new LeafletAPI(headerVersion);
+    }
+
+    public LeafletMap_WebView ImportHTML(string html)
+    {
+        this.Source = html;
+        return this;
+    }
+
+    public LeafletMap_WebView Build()
+    {
+        this.Source = leaf.Build();
+        throw new NotImplementedException();
+    }
 
 }
