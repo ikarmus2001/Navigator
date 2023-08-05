@@ -2,18 +2,24 @@ using LeafletAPI;
 
 namespace SMCEBI_Navigator;
 
-public class PlanDisplay : ContentPage
+public class PlanDisplay : ContentPage, IQueryAttributable
 {
-	public PlanDisplay()
+    public PlanDisplay()
 	{
         Content = PrepareContent();
+    }
+
+    public void ApplyQueryAttributes(IDictionary<string, object> mapParameters)
+    {
+        
     }
 
     View PrepareContent()
     {
         var floorplanView = new LeafletMap_WebView();
-        floorplanView.ImportHTML("floorplans.html");
-        //floorplanView.Build();
+        
+        floorplanView = floorplanView.Build();
+        //floorplanView.ImportHTML("floorplans.html");
 
         VerticalStackLayout vsl = new VerticalStackLayout();
         var btn = new Button();
@@ -44,9 +50,9 @@ public class LeafletMap_WebView : WebView
     MapBuilder leaf;
 
 
-    public LeafletMap_WebView(string headerVersion= "v1_7_1") 
+    public LeafletMap_WebView(/*string headerVersion= "v1_7_1"*/) 
     {
-        leaf = new MapBuilder(headerVersion);
+        leaf = new MapBuilder(/*headerVersion*/);
     }
 
     public LeafletMap_WebView ImportHTML(string html)
@@ -58,7 +64,7 @@ public class LeafletMap_WebView : WebView
     public LeafletMap_WebView Build()
     {
         this.Source = leaf.Build();
-        throw new NotImplementedException();
+        return this;
     }
 
 }

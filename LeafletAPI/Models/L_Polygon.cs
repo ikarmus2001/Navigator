@@ -1,9 +1,7 @@
 ﻿namespace LeafletAPI.Models
 {
-    public struct L_Polygon
+    public class L_Polygon : L_Object
     {
-        public string name;
-        public string popupMsg;
         public Point[] points;
         public MapObjectStyle style;
     }

@@ -1,47 +1,79 @@
 ﻿namespace LeafletAPI
 {
     // All the code in this file is included in all platforms.
-
-    public enum SupportedVersions : short
+    public partial class MapBuilder
     {
-        v1_7_1 = 171,
-        v1_9_4 = 194
-    }
+        private string _htmlHeader = "<!DOCTYPE html>\r\n<html>\r\n<head>\r\n    <meta charset=\"utf-8\" />\r\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">";
+        private string _htmlBody;
 
-
-    public class MapBuilder
-    {
-        private SupportedVersions _version;
-        private string _htmlHeader = "<!DOCTYPE html>\r\n<html>\r\n<head>";
-
-
-        public MapBuilder(string version)
+        public MapBuilder()
         {
-            if (!Enum.TryParse(version, out _version))
-                throw new NotSupportedException();
             PrepareStructure();
+            _htmlBody = tmp_bodybuilder();
         }
 
         private void PrepareStructure()
         {
             ComposeHtmlHeader();
-            throw new NotImplementedException();
         }
 
         private void ComposeHtmlHeader()
         {
-            _htmlHeader += _version switch
-            {
-                SupportedVersions.v1_7_1 => "",
-                SupportedVersions.v1_9_4 => "",
-                _ => throw new NotSupportedException()
-            };
-
+            _htmlHeader += AddStylesheetPath();
+            _htmlHeader += AddScriptPath();
+            _htmlHeader += AddStyles();
         }
 
-        public string Build()
+        private string AddStyles()
         {
-            throw new NotImplementedException();
+            return """
+                <style>
+                html, body {
+                    height: 100%;
+                    margin: 0;
+                }
+
+                #map {
+                    width: 100%;
+                    height: 100%;
+                }
+
+                .tooltipclass {
+                    background: transparent;
+                    border: transparent;
+                    box-shadow: 0 0px 0px rgba(0,0,0,0);
+                }
+
+                .imgclass {
+                    display: block;
+                    max-width: 400px;
+                    max-height: 400px;
+                    width: auto;
+                    height: auto;
+                }
+                </style>
+            """;
+        }
+
+        private string AddScriptPath()
+        {
+            return """
+            <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+            """;
+        }
+
+        private string AddStylesheetPath()
+        {
+            return """
+            <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+            """;
+        }
+
+        public HtmlWebViewSource Build()
+        {
+            var x = new HtmlWebViewSource();
+            x.Html = _htmlHeader + _htmlBody + "</html>";
+            return x;
         }
     }
 }
