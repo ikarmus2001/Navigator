@@ -11,7 +11,7 @@ public class PlanDisplay : ContentPage, IQueryAttributable
 
     public void ApplyQueryAttributes(IDictionary<string, object> mapParameters)
     {
-        
+        var attributes = (MapConfig)mapParameters[nameof(MapConfig)];
     }
 
     View PrepareContent()

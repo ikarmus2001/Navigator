@@ -16,13 +16,9 @@
 
 	<ItemGroup>
 		<None Include="LeafletLibs\v1_7_1\leaflet.css" />
-		<None Include="LeafletLibs\v1_7_1\leaflet.js" />
-		<None Include="LeafletLibs\v1_7_1\leaflet.js.map" />
 	</ItemGroup>
 	<ItemGroup>
 		<None Include="LeafletLibs\v1_9_4\leaflet.css" />
-		<None Include="LeafletLibs\v1_9_4\leaflet.js" />
-		<None Include="LeafletLibs\v1_9_4\leaflet.js.map" />
 	</ItemGroup>
 
 </Project>

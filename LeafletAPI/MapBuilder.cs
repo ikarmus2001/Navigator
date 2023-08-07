@@ -1,4 +1,6 @@
-﻿namespace LeafletAPI
+﻿using System;
+
+namespace LeafletAPI
 {
     // All the code in this file is included in all platforms.
     public partial class MapBuilder
@@ -9,6 +11,10 @@
         public MapBuilder()
         {
             PrepareStructure();
+        }
+
+        public void mockBody()
+        {
             _htmlBody = tmp_bodybuilder();
         }
 
@@ -71,8 +77,12 @@
 
         public HtmlWebViewSource Build()
         {
-            var x = new HtmlWebViewSource();
-            x.Html = _htmlHeader + _htmlBody + "</html>";
+            if (_htmlBody == null || _htmlBody.Length < 1)
+                throw new InvalidOperationException("Body is not initialized");
+            var x = new HtmlWebViewSource
+            {
+                Html = _htmlHeader + "</head>" + _htmlBody + "</html>"
+            };
             return x;
         }
     }
