@@ -6,8 +6,9 @@ namespace SMCEBI_Navigator
     {
         public static LeafletAPI.Models.Map ToLeafletMap(this MapConfig input)
         {
+            // TODO
             LeafletAPI.Models.Map leafletMap = new();
-            //input
+            
             return leafletMap;
         }
     }

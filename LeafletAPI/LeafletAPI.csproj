@@ -14,11 +14,11 @@
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 	</PropertyGroup>
 
-	<ItemGroup>
+	<!-- <ItemGroup>
 		<None Include="LeafletLibs\v1_7_1\leaflet.css" />
 	</ItemGroup>
 	<ItemGroup>
 		<None Include="LeafletLibs\v1_9_4\leaflet.css" />
-	</ItemGroup>
+	</ItemGroup> -->
 
 </Project>

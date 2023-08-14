@@ -1,25 +1,35 @@
-using LeafletAPI;
-
 namespace SMCEBI_Navigator;
 
 public class PlanDisplay : ContentPage, IQueryAttributable
 {
+    MapConfig mapAttributes;
     public PlanDisplay()
 	{
-        Content = PrepareContent();
+        Content = LoadingScreen();
+    }
+
+    private View LoadingScreen()
+    {
+        return new VerticalStackLayout()
+        {
+            new Label()
+            {
+                Text = "Loading",
+            }
+        };
     }
 
     public void ApplyQueryAttributes(IDictionary<string, object> mapParameters)
     {
-        var attributes = (MapConfig)mapParameters[nameof(MapConfig)];
+        mapAttributes = (MapConfig)mapParameters[nameof(MapConfig)];
+        PrepareContent();
     }
 
-    View PrepareContent()
+    private void PrepareContent()
     {
         var floorplanView = new LeafletMap_WebView();
-        
+        floorplanView.UnparseMap(mapAttributes.ToLeafletMap());
         floorplanView = floorplanView.Build();
-        //floorplanView.ImportHTML("floorplans.html");
 
         VerticalStackLayout vsl = new VerticalStackLayout();
         var btn = new Button();
@@ -36,35 +46,11 @@ public class PlanDisplay : ContentPage, IQueryAttributable
         views.Add(floorplanView, 0, 0);
         views.Add(vsl, 0, 1);
 
-        return views;
+        Content = views;
     }
 
     private void Btn_Clicked(object sender, EventArgs e)
     {
-        Content = PrepareContent();
+        PrepareContent();
     }
-}
-
-public class LeafletMap_WebView : WebView
-{
-    MapBuilder leaf;
-
-
-    public LeafletMap_WebView(/*string headerVersion= "v1_7_1"*/) 
-    {
-        leaf = new MapBuilder(/*headerVersion*/);
-    }
-
-    public LeafletMap_WebView ImportHTML(string html)
-    {
-        this.Source = html;
-        return this;
-    }
-
-    public LeafletMap_WebView Build()
-    {
-        this.Source = leaf.Build();
-        return this;
-    }
-
 }

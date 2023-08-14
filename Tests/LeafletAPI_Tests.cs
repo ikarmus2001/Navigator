@@ -1,3 +1,4 @@
+using FluentAssertions;
 using LeafletAPI.Models;
 
 namespace Tests
@@ -728,14 +729,14 @@ namespace Tests
 
         </body>
         </html>
-        """;
+        """.IgnoreIrrelevantChars();
         MapBuilder mapBuilder;
         
         private void TestInitializer()
         {
             mapBuilder = new MapBuilder();
         }
-        
+
         [Fact]
         public void ShouldProduceCompleteHTML()
         {
@@ -743,9 +744,10 @@ namespace Tests
 
             BorderSetup(mapBuilder);
 
-            var result = mapBuilder.Build();
-
+            var resultView = mapBuilder.Build();
             
+            var viewHtml = resultView.Html.IgnoreIrrelevantChars();
+            viewHtml.Should().BeEquivalentTo(leafletHtmlResult);
         }
 
         
@@ -753,7 +755,7 @@ namespace Tests
         private static void BorderSetup(MapBuilder mapBuilder)
         {
             var borders = new Dictionary<string, float[,]>();
-            var borderStyle = new MapObjectStyle("black")
+            var borderStyle = new MapObjectStyle("borderStyle", "black")
             {
                 fillColor = "none",
                 weight = 3,

@@ -1,4 +1,4 @@
-﻿using System;
+﻿using LeafletAPI.Models;
 
 namespace LeafletAPI
 {
@@ -6,10 +6,13 @@ namespace LeafletAPI
     public partial class MapBuilder
     {
         private string _htmlHeader = "<!DOCTYPE html>\r\n<html>\r\n<head>\r\n    <meta charset=\"utf-8\" />\r\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">";
+        private Models.Map map;
+
         private string _htmlBody;
 
         public MapBuilder()
         {
+            map = new Models.Map();
             PrepareStructure();
         }
 
@@ -27,10 +30,10 @@ namespace LeafletAPI
         {
             _htmlHeader += AddStylesheetPath();
             _htmlHeader += AddScriptPath();
-            _htmlHeader += AddStyles();
+            _htmlHeader += AddHeaderStyles();
         }
 
-        private string AddStyles()
+        private string AddHeaderStyles()
         {
             return """
                 <style>
@@ -75,15 +78,53 @@ namespace LeafletAPI
             """;
         }
 
+        public MapBuilder AddBorders(Dictionary<string, float[,]> borders, Models.MapObjectStyle borderStyle)
+        {
+            // map.objects.Add(new L_Polyline($"border", borderStyle, borders));
+
+            return this;
+        }
+
         public HtmlWebViewSource Build()
         {
+            ParseStyles();
+            ParsePolylines();
+            ParsePolygons();
+            ParseLayers();
+
             if (_htmlBody == null || _htmlBody.Length < 1)
                 throw new InvalidOperationException("Body is not initialized");
+
             var x = new HtmlWebViewSource
             {
                 Html = _htmlHeader + "</head>" + _htmlBody + "</html>"
             };
             return x;
+        }
+
+        private void ParseLayers()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void ParsePolygons()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void ParsePolylines()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void ParseStyles()
+        {
+            // var createdStyles = new string[map.objects.Count];
+            // foreach (L_StyledObject item in map.objects)
+            // {
+            //     if()
+            //         createdStyles.Count
+            // }
         }
     }
 }

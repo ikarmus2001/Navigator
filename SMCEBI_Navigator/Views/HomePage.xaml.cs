@@ -10,9 +10,9 @@ public partial class HomePage : ContentPage
     private void MapBtn_Clicked(object sender, EventArgs e)
     {
 		var mapConfig = new MapConfig();
-		var planConfig = new Dictionary<string, object> { { nameof(MapConfig), mapConfig } };
+		var attributes = new Dictionary<string, object> { { nameof(MapConfig), mapConfig } };
 
-		Shell.Current.GoToAsync(nameof(PlanDisplay), planConfig);
+		Shell.Current.GoToAsync(nameof(PlanDisplay), attributes);
     }
 
 	private void ConfigBtn_Clicked(object sender, EventArgs e)

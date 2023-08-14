@@ -1,8 +1,7 @@
 ﻿namespace LeafletAPI.Models
 {
-    public class L_Polygon : L_Object
+    public class L_Polygon : L_StyledObject
     {
         public Point[] points;
-        public MapObjectStyle style;
     }
 }
