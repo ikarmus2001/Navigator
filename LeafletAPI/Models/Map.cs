@@ -1,12 +1,11 @@
-﻿namespace LeafletAPI.Models
-{
-    internal class Map
-    {
-        internal List<L_Layer> layers;
+﻿namespace LeafletAPI.Models;
 
-        public Map()
-        {
-            layers = new();
-        }
+public class Map
+{
+    public List<L_Layer> layers;
+
+    public Map()
+    {
+        layers = new();
     }
 }

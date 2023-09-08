@@ -1,10 +1,11 @@
-namespace SMCEBI_Navigator;
+namespace SMCEBI_Navigator.Views;
 
-public class PlanDisplay : ContentPage, IQueryAttributable
+public class PlanDisplay : ContentPage //, IQueryAttributable
 {
     MapConfig mapAttributes;
     public PlanDisplay()
 	{
+        Loaded += (s, e) => { PrepareContent(); };
         Content = LoadingScreen();
     }
 
@@ -19,16 +20,17 @@ public class PlanDisplay : ContentPage, IQueryAttributable
         };
     }
 
-    public void ApplyQueryAttributes(IDictionary<string, object> mapParameters)
-    {
-        mapAttributes = (MapConfig)mapParameters[nameof(MapConfig)];
-        PrepareContent();
-    }
+    //public void ApplyQueryAttributes(IDictionary<string, object> mapParameters)
+    //{
+    //    mapAttributes = (MapConfig)mapParameters[nameof(MapConfig)];
+    //    PrepareContent();
+    //}
 
     private void PrepareContent()
     {
+        Thread.Sleep(1000);
         var floorplanView = new LeafletMap_WebView();
-        floorplanView.UnparseMap(mapAttributes.ToLeafletMap());
+        floorplanView.UnparseMap();
         floorplanView = floorplanView.Build();
 
         VerticalStackLayout vsl = new VerticalStackLayout();
@@ -47,6 +49,7 @@ public class PlanDisplay : ContentPage, IQueryAttributable
         views.Add(vsl, 0, 1);
 
         Content = views;
+
     }
 
     private void Btn_Clicked(object sender, EventArgs e)

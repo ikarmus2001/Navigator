@@ -18,14 +18,14 @@ public class LeafletMap_WebView : WebView
         return this;
     }
 
+    internal void UnparseMap()
+    {
+        //MapConfig.Buil
+    }
+
     public LeafletMap_WebView Build()
     {
         this.Source = leaf.Build();
         return this;
-    }
-
-    internal void UnparseMap(LeafletAPI.Models.Map map)
-    {
-        throw new NotImplementedException();
     }
 }

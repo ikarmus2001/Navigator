@@ -2,6 +2,11 @@
 {
     public class L_Layer : L_Object
     {
-        public L_StyledObject[] polygons;
+        public List<L_StyledObject> polygons = new();
+
+        public L_Layer(string name)
+        {
+            this.Name = name;
+        }
     }
 }

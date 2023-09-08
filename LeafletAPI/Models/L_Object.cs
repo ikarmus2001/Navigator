@@ -1,7 +1,6 @@
-﻿namespace LeafletAPI.Models
+﻿namespace LeafletAPI.Models;
+
+public abstract class L_Object
 {
-    public abstract class L_Object
-    {
-        public string Name;
-    }
+    public string Name;
 }

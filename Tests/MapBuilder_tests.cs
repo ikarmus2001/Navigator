@@ -1,10 +1,11 @@
+using FluentAssertions;
 using LeafletAPI.Models;
 
-namespace Tests
+namespace LeafletAPI_Tests;
+
+public class MapBuilder_tests
 {
-    public class LeafletAPI_Tests
-    {
-        private readonly string leafletHtmlResult = """
+    private readonly string leafletHtmlResult = """
         <!DOCTYPE html>
         <html>
         <head>
@@ -728,38 +729,65 @@ namespace Tests
 
         </body>
         </html>
-        """;
-        MapBuilder mapBuilder;
+        """.IgnoreIrrelevantChars();
+    internal MapBuilder mapBuilder;
+
+    internal MapBuilder_tests()
+    {
+        this.mapBuilder = new MapBuilder();
+    }
+
+
+    [Theory]
+    [InlineData(null)]
+    [InlineData("")]
+    public void ShouldThrowErrorWhenLevelNameIsNullOrEmpty(string invalidLevelName)
+    {
+        mapBuilder.Invoking(x => x.AddLevel(invalidLevelName)).Should().ThrowExactly<ArgumentException>().WithMessage("*null or empty*");
+    }
+
+
+
+    [Fact]
+    public void ShouldProduceCompleteHTML()
+    {
+        BorderSetup();
+        AddLevel("level1");
+        AddSingleRoom();
+
+        var resultView = mapBuilder.Build();
         
-        private void TestInitializer()
+        var viewHtml = resultView.Html.IgnoreIrrelevantChars();
+        viewHtml.Should().
+            Contain("<head>").And.
+            Contain("</head>").And.
+            Contain("<body>").And.
+            Contain("</body>");
+    }
+
+    private void BorderSetup()
+    {
+        var borders = new Dictionary<string, float[,]>
         {
-            mapBuilder = new MapBuilder();
-        }
-        
-        [Fact]
-        public void ShouldProduceCompleteHTML()
+            { "BuildingC", new float[,] { { 5, 5 }, { 100, 5 }, { 100, 100 }, { 50, 100 }, { 5, 50 } } }
+        };
+        var borderStyle = new MapObjectStyle("borderStyle", "black")
         {
-            TestInitializer();
+            fillColor = "none",
+            weight = 3,
+            fillOpacity = 1
+        };
+        mapBuilder.SetBuildingShape(borders, borderStyle);
+    }
 
-            BorderSetup(mapBuilder);
+    private void AddLevel(string levelName)
+    {
+        mapBuilder.AddLevel(levelName);
+    }
 
-            var result = mapBuilder.Build();
-
-            
-        }
-
-        
-
-        private static void BorderSetup(MapBuilder mapBuilder)
-        {
-            var borders = new Dictionary<string, float[,]>();
-            var borderStyle = new MapObjectStyle("black")
-            {
-                fillColor = "none",
-                weight = 3,
-                fillOpacity = 1
-            };
-            mapBuilder.AddBorders(borders, borderStyle);
-        }
+    private void AddSingleRoom()
+    {
+        var roomStyle = new MapObjectStyle("singleRoomStyle", "red");
+        mapBuilder.AddRoom("SingleRoom", new float[,] {{5, 5}, {10, 5}, {10, 10}, {5, 10}}, roomStyle);
     }
 }

@@ -9,9 +9,25 @@ public class ConfigurationManager : ContentPage
 
     private View PrepareContent()
     {
+        
+
+        var saveBtn = new Button()
+        {
+            Text = "Save"
+        };
+
+        saveBtn.Clicked += (s, e) => SaveClicked();
+
+
         return new VerticalStackLayout()
         {
-
+            
+            saveBtn,
         };
+    }
+
+    private void SaveClicked()
+    {
+        throw new NotImplementedException();
     }
 }

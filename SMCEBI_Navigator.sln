@@ -5,9 +5,11 @@ VisualStudioVersion = 17.0.31611.283
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SMCEBI_Navigator", "SMCEBI_Navigator\SMCEBI_Navigator.csproj", "{BA6FFD15-76E5-409E-B150-F967E2A9EEE9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Tests\Tests.csproj", "{E053DF5A-EC40-4B5A-8FA5-D3C807A0EB99}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests_LeafletAPI", "Tests\Tests_LeafletAPI.csproj", "{E053DF5A-EC40-4B5A-8FA5-D3C807A0EB99}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeafletAPI", "LeafletAPI\LeafletAPI.csproj", "{17C8AEF4-15C6-485B-9E3B-57C69D95AFA8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LeafletAPI", "LeafletAPI\LeafletAPI.csproj", "{17C8AEF4-15C6-485B-9E3B-57C69D95AFA8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests_SMCEBI_Navigator", "Tests_SMCEBI_Navigator\Tests_SMCEBI_Navigator.csproj", "{F3CC5D4C-800B-414C-9E48-FFB3E818F155}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +31,10 @@ Global
 		{17C8AEF4-15C6-485B-9E3B-57C69D95AFA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{17C8AEF4-15C6-485B-9E3B-57C69D95AFA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{17C8AEF4-15C6-485B-9E3B-57C69D95AFA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3CC5D4C-800B-414C-9E48-FFB3E818F155}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3CC5D4C-800B-414C-9E48-FFB3E818F155}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3CC5D4C-800B-414C-9E48-FFB3E818F155}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3CC5D4C-800B-414C-9E48-FFB3E818F155}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
