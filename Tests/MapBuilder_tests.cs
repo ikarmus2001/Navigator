@@ -757,7 +757,7 @@ public class MapBuilder_tests
 
         var resultView = mapBuilder.Build();
         
-        var viewHtml = resultView.Html.IgnoreIrrelevantChars();
+        var viewHtml = resultView.IgnoreIrrelevantChars();
         viewHtml.Should().
             Contain("<head>").And.
             Contain("</head>").And.

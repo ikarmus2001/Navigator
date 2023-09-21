@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Maui;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using SMCEBI_Navigator.Views;
 
 namespace SMCEBI_Navigator;
 
@@ -20,7 +22,10 @@ public static class MauiProgram
 #if DEBUG
 		builder.Logging.AddDebug();
 #endif
+        builder.Services.AddTransient<MapPickerPage>();
 
-		return builder.Build();
+        builder.Services.AddTransient<MapDisplayPage>();
+
+        return builder.Build();
 	}
 }

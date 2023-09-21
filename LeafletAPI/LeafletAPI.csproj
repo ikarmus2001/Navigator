@@ -14,6 +14,10 @@
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 	</PropertyGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\MapBuilder_API_Base\MapBuilder_API_Base.csproj" />
+	</ItemGroup>
+
 	<!-- <ItemGroup>
 		<None Include="LeafletLibs\v1_7_1\leaflet.css" />
 	</ItemGroup>

@@ -2,4 +2,5 @@
 
 internal class Room : BuildingElement
 {
+    public Room() { }
 }

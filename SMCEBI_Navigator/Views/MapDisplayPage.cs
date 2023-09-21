@@ -1,11 +1,13 @@
 namespace SMCEBI_Navigator.Views;
 
-public class PlanDisplay : ContentPage //, IQueryAttributable
+internal class MapDisplayPage : ContentPage
 {
-    MapConfig mapAttributes;
-    public PlanDisplay()
+    MapConfig mapConfig;
+
+    internal MapDisplayPage()
 	{
-        Loaded += (s, e) => { PrepareContent(); };
+        //WebView webView = storage.Current.GetView();
+        //Loaded += (s, e) => { PrepareContent(webView); };
         Content = LoadingScreen();
     }
 
@@ -20,20 +22,9 @@ public class PlanDisplay : ContentPage //, IQueryAttributable
         };
     }
 
-    //public void ApplyQueryAttributes(IDictionary<string, object> mapParameters)
-    //{
-    //    mapAttributes = (MapConfig)mapParameters[nameof(MapConfig)];
-    //    PrepareContent();
-    //}
-
-    private void PrepareContent()
+    private void PrepareContent(WebView injectedWebView)
     {
-        Thread.Sleep(1000);
-        var floorplanView = new LeafletMap_WebView();
-        floorplanView.UnparseMap();
-        floorplanView = floorplanView.Build();
-
-        VerticalStackLayout vsl = new VerticalStackLayout();
+        VerticalStackLayout vsl = new();
         var btn = new Button();
         btn.Text = "Reload";
 
@@ -45,7 +36,7 @@ public class PlanDisplay : ContentPage //, IQueryAttributable
         views.RowDefinitions.Add(new RowDefinition(GridLength.Star));
         views.RowDefinitions.Add(new RowDefinition(new GridLength(30)));
 
-        views.Add(floorplanView, 0, 0);
+        views.Add(injectedWebView, 0, 0);
         views.Add(vsl, 0, 1);
 
         Content = views;
@@ -54,6 +45,6 @@ public class PlanDisplay : ContentPage //, IQueryAttributable
 
     private void Btn_Clicked(object sender, EventArgs e)
     {
-        PrepareContent();
+        //PrepareContent();
     }
 }

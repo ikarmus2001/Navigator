@@ -4,10 +4,11 @@ public partial class AppShell : Shell
 {
 	public AppShell()
 	{
-		InitializeComponent();
+        MapStorage.UnparseSavedConfigs();
+        InitializeComponent();
         Routing.RegisterRoute(nameof(Views.HomePage), typeof(Views.HomePage));
-        Routing.RegisterRoute(nameof(Views.PlanDisplay), typeof(Views.PlanDisplay));
-        Routing.RegisterRoute(nameof(Views.ConfigurationManager), typeof(Views.ConfigurationManager));
+        Routing.RegisterRoute(nameof(Views.MapDisplayPage), typeof(Views.MapDisplayPage));
+        Routing.RegisterRoute(nameof(Views.MapPickerPage), typeof(Views.MapPickerPage));
 
     }
 }

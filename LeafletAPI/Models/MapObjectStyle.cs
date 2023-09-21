@@ -40,7 +40,7 @@ public class MapObjectStyle
         };
     }
 
-    internal string ToHtmlStyle()
+    internal string ToHtml()
     {
         string optionalParameters = "";
         foreach (var optionalPar in this.GetOptionalProperties())

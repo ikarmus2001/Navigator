@@ -13,5 +13,23 @@
 
             id += 1;
         }
+
+        internal string ToHtml()
+        {
+            string parsedObjectShape = "";
+            foreach (var point in points) 
+            {
+                parsedObjectShape += $" //{point.Key} \n" +
+                    $"[{point.Value}],";
+            }
+            
+
+            var parsedHTML = $@"var {Name} = L.polyline(
+[
+    {parsedObjectShape}
+], {Style.name});";
+
+            return parsedHTML;
+        }
     }
 }

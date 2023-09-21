@@ -59,6 +59,7 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\LeafletAPI\LeafletAPI.csproj" />
+	  <ProjectReference Include="..\MapBuilder_API_Base\MapBuilder_API_Base.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

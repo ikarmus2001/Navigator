@@ -1,9 +1,12 @@
-﻿using LeafletAPI.Models;
+﻿using MapBuilder_API_Base;
+using LeafletAPI.Models;
+using System.Text.Json;
+using System.Text;
 
 namespace LeafletAPI;
 
 // All the code in this file is included in all platforms.
-public partial class MapBuilder
+public partial class MapBuilder : IMapBuilder
 {
     private string _htmlHeader = "<!DOCTYPE html>\r\n<html>\r\n<head>\r\n    <meta charset=\"utf-8\" />\r\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">";
     private Models.Map map;
@@ -128,22 +131,6 @@ public partial class MapBuilder
         return this;
     }
 
-    public HtmlWebViewSource Build()
-    {
-        _htmlBody += "<script>"; // Open script tag
-        ParseStyles();
-        //ParsePolylines();
-        //ParsePolygons();
-        //ParseLayers();
-        _htmlBody += "</script>"; // Close script tag
-
-        var x = new HtmlWebViewSource
-        {
-            Html = _htmlHeader + "</head>" + _htmlBody + "</body></html>"
-        };
-        return x;
-    }
-
     private void ParseStyles()
     {
         L_Layer anyLevel;
@@ -158,28 +145,38 @@ public partial class MapBuilder
 
         foreach (MapObjectStyle uniqueStyle in createdStyles)
         {
-            htmlStyles += uniqueStyle.ToHtmlStyle() + "\n";
+            htmlStyles += uniqueStyle.ToHtml() + "\n";
         }
 
         _htmlBody += htmlStyles;
+    }
+
+    private void ParsePolylines()
+    {
+        _htmlBody += buildingShape.ToHtml() + "\n";
     }
 
     private void ParseLayers()
     {
         throw new NotImplementedException();
     }
-
-    private void ParsePolylines()
-    {
-        throw new NotImplementedException();
-    }
-
+    
     private void ParsePolygons()
     {
         throw new NotImplementedException();
     }
 
-    public void ExportToJson()
+    public async Task<MapBuilder> ImportJson(string inputJson)
+    {
+        Stream jsonStream = new MemoryStream(Encoding.UTF8.GetBytes(inputJson));
+
+        LeafletAPI.Models.Map deserialized = await JsonSerializer.DeserializeAsync<LeafletAPI.Models.Map>(jsonStream);  // TODO: error handling
+
+        this.map = deserialized;
+        return this;
+    }
+
+    public string ExportToJson()
     {
         throw new NotImplementedException();
     }
@@ -187,5 +184,32 @@ public partial class MapBuilder
     public void mockBody()
     {
         _htmlBody = tmp_bodybuilder();
+    }
+
+    public void AddFloor()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void AddRoom()
+    {
+        throw new NotImplementedException();
+    }
+
+    public string Build()
+    {
+        _htmlBody += "<script>"; // Open script tag
+        ParseStyles();
+        ParsePolylines();
+        ParsePolygons();
+        ParseLayers();
+        _htmlBody += "</script>"; // Close script tag
+
+        return _htmlHeader + "</head>" + _htmlBody + "</body></html>";
+    }
+
+    public void AddFeature()
+    {
+        throw new NotImplementedException();
     }
 }
