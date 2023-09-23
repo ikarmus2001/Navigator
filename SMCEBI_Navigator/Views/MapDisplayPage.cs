@@ -1,10 +1,10 @@
 namespace SMCEBI_Navigator.Views;
 
-internal class MapDisplayPage : ContentPage
+public partial class MapDisplayPage : ContentPage
 {
     MapConfig mapConfig;
 
-    internal MapDisplayPage()
+    public MapDisplayPage()
     {
         //WebView webView = storage.Current.GetView();
         //Loaded += (s, e) => { PrepareContent(webView); };

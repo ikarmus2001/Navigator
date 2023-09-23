@@ -5,52 +5,85 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:staticStorage="SMCEBI_Navigator.MapStorage"
              xmlns:model="clr-namespace:SMCEBI_Navigator"
-             Title="">
-    <VerticalStackLayout>
-        <Label Text="Map Picker" FontSize="Large" />
+             xmlns:innerModel="clr-namespace:SMCEBI_Navigator.Models"
+             Title="Map Picker">
+    <VerticalStackLayout Padding="10">
+        <Frame>
+            <ScrollView >
+                <CollectionView ItemsSource="{Binding}"
+                            SelectionMode="None"
+                            >
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:MapConfig">
+                            <toolkit:Expander>
+                                <toolkit:Expander.Header>
+                                    <Grid MinimumWidthRequest="120" MaximumHeightRequest="200">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="3*" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
 
-        <ScrollView >
-            <CollectionView ItemsSource="{Binding}"
-                            SelectionMode="None">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="model:MapConfig">
-                        <toolkit:Expander>
-                            <toolkit:Expander.Header>
-                                <Grid MinimumWidthRequest="120" MaximumHeightRequest="200">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="3*" />
-                                        <ColumnDefinition Width="3*" />
-                                    </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
 
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                    </Grid.RowDefinitions>
+                                        <Label Grid.Column="0"
+                                           FontSize="20"
+                                        Text="Budynek A" />
+                                        <!--{Binding Building.Name}-->
 
-                                    <Label Grid.Column="0"
-                                        Text="{Binding Building.Name}" 
-                                        FontSize="20"/>
 
-                                    <Label Grid.Column="1"
+                                        <Label Grid.Column="1"
                                         Text="{Binding Building.Floors.Count}" 
                                         HorizontalOptions="Center"
                                         FontSize="20"/>
 
-                                    <Button Grid.Column="2" Text="Edit" />
-                                    
-                                </Grid>
-                            </toolkit:Expander.Header>
-                            <HorizontalStackLayout Padding="10">
-                                
-                                <Label Text="{Binding Building.Floors}"
-                                    FontAttributes="Italic" />
-                            </HorizontalStackLayout>
-                        </toolkit:Expander>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-        </ScrollView>
+                                        <Button Grid.Column="2" Text="Edit" />
+                                        <ImageButton Source="more_vert_FILL0_wght200_GRAD0_opsz24.svg" />
+                                        <ImageButton Source="more_vert_FILL0_wght200_GRAD0_opsz24.png" />
+                                    </Grid>
+                                </toolkit:Expander.Header>
+
+                                <CollectionView ItemsSource="{Binding Building.Floors}">
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate x:DataType="innerModel:Floor" >
+                                            <toolkit:Expander>
+                                                <toolkit:Expander.Header>
+                                                    <Grid Padding="20, 0">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="3*" />
+                                                        </Grid.ColumnDefinitions>
+
+                                                        
+                                                        <Label Text="{Binding Name}" Grid.Column="1" />
+                                                    </Grid>
+                                                </toolkit:Expander.Header>
+
+                                                <CollectionView ItemsSource="{Binding rooms}">
+                                                    <CollectionView.ItemTemplate>
+                                                        <DataTemplate x:DataType="innerModel:Room">
+                                                            <Grid Padding="30, 0">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*" />
+                                                                </Grid.ColumnDefinitions>
+
+                                                                <Label Text="{Binding Name}" Grid.Column="0" />
+                                                            </Grid>
+                                                        </DataTemplate>
+                                                    </CollectionView.ItemTemplate>
+                                                </CollectionView>
+                                            </toolkit:Expander>
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+                            </toolkit:Expander>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </ScrollView>
+        </Frame>
     </VerticalStackLayout>
-
-
 </ContentPage>
