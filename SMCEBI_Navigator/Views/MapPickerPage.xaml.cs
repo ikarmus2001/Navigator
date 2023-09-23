@@ -1,10 +1,10 @@
 namespace SMCEBI_Navigator.Views;
 
-internal class MapPickerPage : ContentPage
+public partial class MapPickerPage : ContentPage
 {
-    internal MapPickerPage()
+    public MapPickerPage()
     {
-        Content = PrepareViewContent();
+        InitializeComponent();
     }
 
     private View PrepareViewContent()
@@ -17,6 +17,16 @@ internal class MapPickerPage : ContentPage
         };
         chooseMapBtn.Clicked += (s, e) => ChooseSavedMap();
 
+        var x = new CollectionView()
+        {
+            ItemsSource = MapStorage.configs
+        };
+        x.ItemTemplate = new DataTemplate(() =>
+        {
+            var label = new Label();
+            label.SetBinding(Label.TextProperty, "Building.Name");
+            return label;
+        });
 
         var saveBtn = new Button()
         {
@@ -66,10 +76,10 @@ internal class MapPickerPage : ContentPage
 
     private void SaveClicked()
     {
-        throw new NotImplementedException();
+        // ExportJson();
     }
 
-    // TODO: Dodaæ przycisk u¿ywaj¹cy exportu
+    // TODO: Add export button to actually use this method
     private async void ExportJson(string mapName)
     {
         Stream serializedMap = await MapStorage.ExportJsonMapByName(mapName);

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SMCEBI_Navigator.Views.MapPickerPage"
+             Title="">
+    <VerticalStackView>
+        <Label Text="Map Picker" FontSize="Large" />
+        <ScrollView >
+            <CollectionView ItemsSource="{Binding QueryElements}"
+                            SelectionMode="Single"
+                            SelectionChanged="StatsCollectionView_SelectionChanged">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:QueryElement">
+                        <Grid MinimumWidthRequest="120" MaximumHeightRequest="200">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="3*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="3*" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <Image Grid.Column="0" Source="{Binding thumbnail}" />
+                            <Label Grid.Column="1" Grid.Row="0" 
+                                Text="{Binding title}" 
+                                FontSize="20"/>
+                            <Label Grid.Column="1" Grid.Row="1" 
+                                TextColor="Gray"
+                                Text="{Binding description}" />
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </ScrollView>
+    </VerticalStackView>
+     
+
+</ContentPage>

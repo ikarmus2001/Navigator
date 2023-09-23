@@ -154,15 +154,18 @@ public partial class MapBuilder : IMapBuilder
     private void ParsePolylines()
     {
         _htmlBody += buildingShape.ToHtml() + "\n";
+        // TODO: add polyline parsing for level shapes, rooms, marked features
     }
 
     private void ParseLayers()
     {
+        // TODO: add layer parsing for level shapes, rooms, marked features
         throw new NotImplementedException();
     }
     
     private void ParsePolygons()
     {
+        // TODO: 
         throw new NotImplementedException();
     }
 
@@ -196,6 +199,11 @@ public partial class MapBuilder : IMapBuilder
         throw new NotImplementedException();
     }
 
+    public void AddFeature()
+    {
+        throw new NotImplementedException();
+    }
+
     public string Build()
     {
         _htmlBody += "<script>"; // Open script tag
@@ -206,10 +214,5 @@ public partial class MapBuilder : IMapBuilder
         _htmlBody += "</script>"; // Close script tag
 
         return _htmlHeader + "</head>" + _htmlBody + "</body></html>";
-    }
-
-    public void AddFeature()
-    {
-        throw new NotImplementedException();
     }
 }

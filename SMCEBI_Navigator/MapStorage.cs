@@ -9,7 +9,7 @@ internal static class MapStorage
     /// </summary>
     private static int _selectedMapId { get; set; }
 
-    private static List<MapConfig> configs { get; set; }
+    internal static List<MapConfig> configs { get; set; }
 
     internal static MapConfig Current
     {

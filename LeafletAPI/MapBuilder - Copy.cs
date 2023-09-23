@@ -1,10 +1,9 @@
-﻿namespace LeafletAPI
+﻿namespace LeafletAPI;
+public partial class MapBuilder
 {
-    public partial class MapBuilder
+    private string tmp_bodybuilder()
     {
-        private string tmp_bodybuilder()
-        {
-            var body = """
+        var body = """
                 <body>
                     <div id='map'></div>
 
@@ -335,7 +334,6 @@
                 </body>
                 
                 """;
-            return body;
-        }
+        return body;
     }
 }
