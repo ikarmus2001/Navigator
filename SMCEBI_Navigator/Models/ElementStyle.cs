@@ -1,6 +1,6 @@
 namespace SMCEBI_Navigator.Models;
 
-internal class ElementStyle
+public class ElementStyle
 {
     public string FillColor { get; set; }
     public string FillOpacity { get; set; }

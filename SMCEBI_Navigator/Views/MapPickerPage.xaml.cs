@@ -5,44 +5,9 @@ public partial class MapPickerPage : ContentPage
     public MapPickerPage()
     {
         InitializeComponent();
+        BindingContext = MapStorage.configs;
     }
 
-    private View PrepareViewContent()
-    {
-        var tmpTb = new Editor();
-
-        var chooseMapBtn = new Button()
-        {
-            Text = "Choose saved map TMP json"
-        };
-        chooseMapBtn.Clicked += (s, e) => ChooseSavedMap();
-
-        var x = new CollectionView()
-        {
-            ItemsSource = MapStorage.configs
-        };
-        x.ItemTemplate = new DataTemplate(() =>
-        {
-            var label = new Label();
-            label.SetBinding(Label.TextProperty, "Building.Name");
-            return label;
-        });
-
-        var saveBtn = new Button()
-        {
-            Text = "Save"
-        };
-
-        saveBtn.Clicked += (s, e) => SaveClicked();
-
-
-        return new VerticalStackLayout()
-        {
-            tmpTb,
-            chooseMapBtn,
-            saveBtn
-        };
-    }
 
     private void ChooseSavedMap()
     {
@@ -86,4 +51,9 @@ public partial class MapPickerPage : ContentPage
         
         AppFileSaver.SaveFile(serializedMap, $"{mapName}.json");
     }
+
+    //private void CollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    //{
+
+    //}
 }

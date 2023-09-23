@@ -19,20 +19,8 @@ internal static class MapStorage
         }
     }
 
-    internal static async void UnparseSavedConfigs(string filename = "savedMaps.json")
+    internal static async void UnparseSavedConfigs(string json)
     {
-        Stream saveFileStream;
-        try
-        {
-            saveFileStream = await FileSystem.Current.OpenAppPackageFileAsync(filename);
-        }
-        catch (FileNotFoundException)
-        {
-            // TODO: Handle the case when file is not found
-            return;
-        }
-        using StreamReader reader = new StreamReader(saveFileStream);
-        string json = await reader.ReadToEndAsync();
         var deserialized = JsonSerializer.Deserialize<List<MapConfig>>(json, new JsonSerializerOptions
         {
             IncludeFields = true,

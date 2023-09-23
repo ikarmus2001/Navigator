@@ -5,11 +5,11 @@
              Title="">
     <VerticalStackLayout>
         <Label Text="SMCEBI Navigator" />
-        <Button x:Name="MapBtn"
+        <!--<Button x:Name="MapBtn"
                 Text="Mapa" 
                 Clicked="MapBtn_Clicked"/>
         <Button x:Name="ConfigBtn"
                 Text="Konfiguracja" 
-                Clicked="ConfigBtn_Clicked" />
+                Clicked="ConfigBtn_Clicked" />-->
     </VerticalStackLayout>
 </ContentPage>

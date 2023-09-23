@@ -2,39 +2,55 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SMCEBI_Navigator.Views.MapPickerPage"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:staticStorage="SMCEBI_Navigator.MapStorage"
+             xmlns:model="clr-namespace:SMCEBI_Navigator"
              Title="">
-    <VerticalStackView>
+    <VerticalStackLayout>
         <Label Text="Map Picker" FontSize="Large" />
+
         <ScrollView >
-            <CollectionView ItemsSource="{Binding QueryElements}"
-                            SelectionMode="Single"
-                            SelectionChanged="StatsCollectionView_SelectionChanged">
+            <CollectionView ItemsSource="{Binding}"
+                            SelectionMode="None">
                 <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="model:QueryElement">
-                        <Grid MinimumWidthRequest="120" MaximumHeightRequest="200">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="3*" />
-                            </Grid.ColumnDefinitions>
+                    <DataTemplate x:DataType="model:MapConfig">
+                        <toolkit:Expander>
+                            <toolkit:Expander.Header>
+                                <Grid MinimumWidthRequest="120" MaximumHeightRequest="200">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="3*" />
+                                        <ColumnDefinition Width="3*" />
+                                    </Grid.ColumnDefinitions>
 
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="3*" />
-                                <RowDefinition Height="*" />
-                            </Grid.RowDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
 
-                            <Image Grid.Column="0" Source="{Binding thumbnail}" />
-                            <Label Grid.Column="1" Grid.Row="0" 
-                                Text="{Binding title}" 
-                                FontSize="20"/>
-                            <Label Grid.Column="1" Grid.Row="1" 
-                                TextColor="Gray"
-                                Text="{Binding description}" />
-                        </Grid>
+                                    <Label Grid.Column="0"
+                                        Text="{Binding Building.Name}" 
+                                        FontSize="20"/>
+
+                                    <Label Grid.Column="1"
+                                        Text="{Binding Building.Floors.Count}" 
+                                        HorizontalOptions="Center"
+                                        FontSize="20"/>
+
+                                    <Button Grid.Column="2" Text="Edit" />
+                                    
+                                </Grid>
+                            </toolkit:Expander.Header>
+                            <HorizontalStackLayout Padding="10">
+                                
+                                <Label Text="{Binding Building.Floors}"
+                                    FontAttributes="Italic" />
+                            </HorizontalStackLayout>
+                        </toolkit:Expander>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </ScrollView>
-    </VerticalStackView>
-     
+    </VerticalStackLayout>
+
 
 </ContentPage>

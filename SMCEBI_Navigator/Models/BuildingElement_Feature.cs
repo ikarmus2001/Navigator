@@ -1,6 +1,6 @@
 namespace SMCEBI_Navigator.Models;
 
-internal abstract class BuildingElement_Feature
+public abstract class BuildingElement_Feature
 {
-    internal List<MarkedFeature> markedFeatures;
+    public List<MarkedFeature> markedFeatures;
 }

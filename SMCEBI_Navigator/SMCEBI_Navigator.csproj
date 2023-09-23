@@ -49,6 +49,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Raw\defaultMap.json" />
 	  <None Remove="Resources\Raw\floorplans.html" />
 	</ItemGroup>
 
@@ -73,5 +74,7 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
+
+	<ProjectExtensions><VisualStudio><UserProperties resources_4raw_4jsconfig1_1json__JsonSchema="https://json.schemastore.org/base.json" /></VisualStudio></ProjectExtensions>
 
 </Project>

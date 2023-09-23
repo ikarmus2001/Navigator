@@ -5,7 +5,7 @@ internal class MapDisplayPage : ContentPage
     MapConfig mapConfig;
 
     internal MapDisplayPage()
-	{
+    {
         //WebView webView = storage.Current.GetView();
         //Loaded += (s, e) => { PrepareContent(webView); };
         Content = LoadingScreen();

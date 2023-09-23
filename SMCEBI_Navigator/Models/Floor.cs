@@ -1,8 +1,8 @@
 namespace SMCEBI_Navigator.Models;
 
-internal class Floor : BuildingElement
+public class Floor : BuildingElement
 {
-    internal List<Room> rooms { get; set; }
+    public List<Room> rooms { get; set; }
 
     public Floor() { }
 

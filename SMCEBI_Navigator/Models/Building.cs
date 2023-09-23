@@ -1,6 +1,6 @@
 namespace SMCEBI_Navigator.Models;
 
-internal class Building : BuildingElement
+public class Building : BuildingElement
 {
     public uint Version { get; set; }
     public List<Floor> Floors { get; set; }

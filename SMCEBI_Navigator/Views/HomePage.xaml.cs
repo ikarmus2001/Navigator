@@ -7,13 +7,13 @@ public partial class HomePage : ContentPage
         InitializeComponent();
     }
 
-    private void MapBtn_Clicked(object sender, EventArgs e)
-    {
-        Shell.Current.GoToAsync(nameof(MapDisplayPage));
-    }
+    //private void MapBtn_Clicked(object sender, EventArgs e)
+    //{
+    //    Shell.Current.GoToAsync(nameof(MapDisplayPage));
+    //}
 
-    private void ConfigBtn_Clicked(object sender, EventArgs e)
-    {
-        Shell.Current.GoToAsync(nameof(MapPickerPage));
-    }
+    //private void ConfigBtn_Clicked(object sender, EventArgs e)
+    //{
+    //    Shell.Current.GoToAsync(nameof(MapPickerPage));
+    //}
 }
