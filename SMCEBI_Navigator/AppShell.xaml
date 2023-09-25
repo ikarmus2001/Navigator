@@ -4,10 +4,10 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:SMCEBI_Navigator.Views">
-    
-    <TabBar>
-        <ShellContent Title="Home"  ContentTemplate="{DataTemplate views:HomePage}" />
-        <ShellContent Title="Picker" ContentTemplate="{DataTemplate views:MapPickerPage}" />
-        <ShellContent Title="Map" ContentTemplate="{DataTemplate views:MapDisplayPage}" />
-    </TabBar>
+    <FlyoutItem Title="Picker Flyout shell">
+        <ShellContent Title="PickerShellContent" ContentTemplate="{DataTemplate views:MapPickerPage}" />
+    </FlyoutItem>
+    <FlyoutItem Title="Map Flyout shell">
+        <ShellContent ContentTemplate="{DataTemplate views:MapDisplayPage}" IsVisible="True" />
+    </FlyoutItem>
 </Shell>

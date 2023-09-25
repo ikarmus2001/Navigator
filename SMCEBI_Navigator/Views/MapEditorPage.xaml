@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SMCEBI_Navigator.Views.MapEditorPage"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:model="clr-namespace:SMCEBI_Navigator"
+             xmlns:innerModel="clr-namespace:SMCEBI_Navigator.Models"
+             Shell.NavBarIsVisible="True"
+             Title="aaa">
+
+<!--DZIAŁA ANDROID i windows bez ikonki-->
+    <!--<ContentPage.ToolbarItems>
+        <ToolbarItem Text="Import JSON" Order="Secondary">
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>-->
+
+  
+    <!--Nie pokazuje się na WINDOWS ani na android (bez tytułu, z tytułem też nie)-->
+    <!--<ContentPage.MenuBarItems>
+        <MenuBarItem x:Name="ImportJSONToolbarBtn" Text="JSON Win" >  --><!--IsEnabled="{OnPlatform Android=False, WinUI=True}"--><!--
+            <MenuItem Text="Select from file..." />
+            <MenuItem Text="Paste code" />
+        </MenuBarItem>
+    </ContentPage.MenuBarItems>-->
+
+
+    <!--To mnie nie interesuje bo gorzej działa-->
+    <!--<Shell.TitleView>
+        <ListView IsVisible="{OnPlatform Android=True, WinUI=False}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <ViewCell.ContextActions>
+                            <MenuItem Text="mi">
+
+                            </MenuItem>
+                        </ViewCell.ContextActions>
+                        <Label Text="es" />
+                    </ViewCell>
+
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Shell.TitleView>-->
+        
+        
+
+    <VerticalStackLayout Padding="10" x:DataType="model:MapConfig">
+        <!--windows działa po kliknięciu prawym na dowolny element, android nie działa 
+        zgodnie z dokumentacją https://learn.microsoft.com/en-us/dotnet/maui/user-interface/context-menu
+        -->
+        <!--<FlyoutBase.ContextFlyout>  
+            <MenuFlyout>
+                <MenuFlyoutItem Text="Select file" />
+                <MenuFlyoutItem Text="Paste code" />
+            </MenuFlyout>
+        </FlyoutBase.ContextFlyout>-->
+        <Label Text="Name" />
+        <Entry Text="{Binding Building.Name}" />
+        
+        <!--styleEditorControl-->
+
+        <Label Text="Change version" />
+        <Label Text="{Binding Building.Version}" />
+
+        <ImageButton x:Name="SaveMapBtn" 
+                     Source="Images/save_fill0_wght400_grad0_opsz24.svg" 
+                     Clicked="SaveMapBtn_Clicked" />
+    </VerticalStackLayout>
+</ContentPage>

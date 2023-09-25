@@ -8,7 +8,8 @@ public class Building : BuildingElement
 
     public Building()
     {
-        //Floors = new List<Floor>();
-        //Version = 1;
+        Name = "";
+        Floors = new();
+        Version = 0;
     }
 }

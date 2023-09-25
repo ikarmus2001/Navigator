@@ -6,17 +6,29 @@
              xmlns:staticStorage="SMCEBI_Navigator.MapStorage"
              xmlns:model="clr-namespace:SMCEBI_Navigator"
              xmlns:innerModel="clr-namespace:SMCEBI_Navigator.Models"
-             Title="Map Picker">
-    <VerticalStackLayout Padding="10">
-        <Frame>
-            <ScrollView >
-                <CollectionView ItemsSource="{Binding}"
-                            SelectionMode="None"
-                            >
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="model:MapConfig">
+             Title="">
+    <Grid Padding="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+
+        <ScrollView Grid.ColumnSpan="2" Grid.Row="0">
+            <CollectionView ItemsSource="{Binding}"
+                            SelectionMode="Single">
+                <CollectionView.ItemTemplate>
+
+                    <DataTemplate x:DataType="model:MapConfig">
+                        <Frame>
                             <toolkit:Expander>
                                 <toolkit:Expander.Header>
+
                                     <Grid MinimumWidthRequest="120" MaximumHeightRequest="200">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto" />
@@ -30,20 +42,20 @@
                                         </Grid.RowDefinitions>
 
                                         <Label Grid.Column="0"
-                                           FontSize="20"
-                                        Text="Budynek A" />
-                                        <!--{Binding Building.Name}-->
+                                            FontSize="20"
+                                            Text="{Binding Building.Name}" />
 
 
                                         <Label Grid.Column="1"
-                                        Text="{Binding Building.Floors.Count}" 
-                                        HorizontalOptions="Center"
-                                        FontSize="20"/>
+                                            Text="{Binding Building.Floors.Count}" 
+                                            HorizontalOptions="Center"
+                                            FontSize="20"/>
 
                                         <Button Grid.Column="2" Text="Edit" />
-                                        <ImageButton Source="more_vert_FILL0_wght200_GRAD0_opsz24.svg" />
-                                        <ImageButton Source="more_vert_FILL0_wght200_GRAD0_opsz24.png" />
+                                        <ImageButton Grid.Column="3"
+                                                     Source="Icons/more_vert_fill0_wght200_grad0_opsz24_end.svg" />
                                     </Grid>
+
                                 </toolkit:Expander.Header>
 
                                 <CollectionView ItemsSource="{Binding Building.Floors}">
@@ -57,12 +69,12 @@
                                                             <ColumnDefinition Width="3*" />
                                                         </Grid.ColumnDefinitions>
 
-                                                        
+
                                                         <Label Text="{Binding Name}" Grid.Column="1" />
                                                     </Grid>
                                                 </toolkit:Expander.Header>
 
-                                                <CollectionView ItemsSource="{Binding rooms}">
+                                                <CollectionView ItemsSource="{Binding Rooms}">
                                                     <CollectionView.ItemTemplate>
                                                         <DataTemplate x:DataType="innerModel:Room">
                                                             <Grid Padding="30, 0">
@@ -80,10 +92,29 @@
                                     </CollectionView.ItemTemplate>
                                 </CollectionView>
                             </toolkit:Expander>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-            </ScrollView>
-        </Frame>
-    </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </ScrollView>
+        <!--<Frame  Grid.Column="2" Grid.Row="2"
+                CornerRadius="50"
+                HeightRequest="60"
+                WidthRequest="60"
+                BackgroundColor="Coral" 
+                IsClippedToBounds="True"
+                HorizontalOptions="Center"
+                VerticalOptions="Center">-->
+            <ImageButton x:Name="CreateNewMap"
+                         Grid.Column="2" Grid.Row="2"
+                         Source="Icons/add_fill0_wght400_grad0_opsz24.svg" 
+                         Aspect="Fill"
+                         BackgroundColor="Aqua"
+                         HorizontalOptions="End"
+                         VerticalOptions="End"
+                         Clicked="CreateNewMapButton_Clicked" />
+        <!--</Frame>-->
+    </Grid>
 </ContentPage>
