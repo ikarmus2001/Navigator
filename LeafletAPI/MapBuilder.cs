@@ -101,7 +101,7 @@ public partial class MapBuilder : IMapBuilder
     /// <param name="roomName"></param>
     /// <param name="roomShape"></param>
     /// <param name="level">Optional, last level created before the method call or the one with provided name</param>
-    public MapBuilder AddRoom(string roomName, float[,] roomShape, MapObjectStyle roomStyle, string level = "")
+    public MapBuilder AddRoom(string roomName, List<Point> roomShape, MapObjectStyle roomStyle, string level = "")
     {
         if (map.layers.Count < 1)
             throw new InvalidOperationException($"Room cannot be instantiated withouot creating level, call {nameof(AddLevel)}");
@@ -125,7 +125,7 @@ public partial class MapBuilder : IMapBuilder
     /// </summary>
     /// <param name="borders"></param>
     /// <param name="borderStyle">Style of building walls</param>
-    public MapBuilder SetBuildingShape(Dictionary<string, float[,]> borders, MapObjectStyle borderStyle)
+    public MapBuilder SetBuildingShape(List<Point> borders, MapObjectStyle borderStyle)
     {
         buildingShape = new L_Polyline("border", borderStyle, borders);
         return this;
@@ -145,7 +145,7 @@ public partial class MapBuilder : IMapBuilder
 
         foreach (MapObjectStyle uniqueStyle in createdStyles)
         {
-            htmlStyles += uniqueStyle.ToHtml() + "\n";
+            htmlStyles += uniqueStyle.ToHtmlDefinition() + "\n";
         }
 
         _htmlBody += htmlStyles;
@@ -159,25 +159,36 @@ public partial class MapBuilder : IMapBuilder
 
     private void ParseLayers()
     {
-        // TODO: add layer parsing for level shapes, rooms, marked features
-        throw new NotImplementedException();
+        foreach (L_Layer l in map.layers)
+        {
+            _htmlBody += l.ToHtml() + "\n";
+        }
     }
     
     private void ParsePolygons()
     {
-        // TODO: 
-        throw new NotImplementedException();
+        string parsedPolygons = "";
+
+        foreach (L_Layer l in map.layers)
+        {
+            foreach (L_Polygon p in l.polygons)
+            {
+                parsedPolygons += p.ToHtml() + "\n";
+            }
+        }
+
+        _htmlBody += parsedPolygons;
     }
 
-    public async Task<MapBuilder> ImportJson(string inputJson)
-    {
-        Stream jsonStream = new MemoryStream(Encoding.UTF8.GetBytes(inputJson));
+    //public async Task<MapBuilder> ImportJson(string inputJson)
+    //{
+    //    Stream jsonStream = new MemoryStream(Encoding.UTF8.GetBytes(inputJson));
 
-        LeafletAPI.Models.Map deserialized = await JsonSerializer.DeserializeAsync<LeafletAPI.Models.Map>(jsonStream);  // TODO: error handling
+    //    LeafletAPI.Models.Map deserialized = await JsonSerializer.DeserializeAsync<LeafletAPI.Models.Map>(jsonStream);  // TODO: error handling
 
-        this.map = deserialized;
-        return this;
-    }
+    //    this.map = deserialized;
+    //    return this;
+    //}
 
     public string ExportToJson()
     {
@@ -211,8 +222,17 @@ public partial class MapBuilder : IMapBuilder
         ParsePolylines();
         ParsePolygons();
         ParseLayers();
+        ParseMap();
         _htmlBody += "</script>"; // Close script tag
 
         return _htmlHeader + "</head>" + _htmlBody + "</body></html>";
+    }
+
+    private void ParseMap()
+    {
+        _htmlBody += $@"var map = L.map('map', {{crs: L.CRS.Simple,
+            minZoom: 0,
+            //		cursor: true,
+            layers: [{string.Join(", ", map.layers.Select(l => l.Name))}]}});";
     }
 }

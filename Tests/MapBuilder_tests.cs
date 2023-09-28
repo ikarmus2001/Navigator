@@ -773,11 +773,11 @@ public class MapBuilder_tests
         };
         var borderStyle = new MapObjectStyle("borderStyle", "black")
         {
-            fillColor = "none",
-            weight = 3,
-            fillOpacity = 1
+            FillColor = "none",
+            Weight = 3,
+            FillOpacity = 1
         };
-        mapBuilder.SetBuildingShape(borders, borderStyle);
+        //mapBuilder.SetBuildingShape(borders, borderStyle);
     }
 
     private void AddLevel(string levelName)
@@ -788,6 +788,7 @@ public class MapBuilder_tests
     private void AddSingleRoom()
     {
         var roomStyle = new MapObjectStyle("singleRoomStyle", "red");
-        mapBuilder.AddRoom("SingleRoom", new float[,] {{5, 5}, {10, 5}, {10, 10}, {5, 10}}, roomStyle);
+        var pts = new List<Point>() { new Point(5, 5), new Point(10, 5), new Point(10, 10), new Point(5, 10) };
+        mapBuilder.AddRoom("SingleRoom", pts, roomStyle);
     }
 }

@@ -1,0 +1,118 @@
+﻿{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "MapSize": {
+        "type": "array",
+        "items": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "integer"
+          }
+        ]
+      },
+      "Building": {
+        "type": "object",
+        "properties": {
+          "Name": {
+            "type": "string"
+          },
+          "version": {
+            "type": "integer"
+          },
+          "corners": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                }
+              ]
+            }
+          },
+          "features": {
+            "type": "object"
+          },
+          "style": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "linecolor": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "name",
+              "linecolor"
+            ]
+          },
+          "rooms": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "Name": {
+                  "type": "string"
+                },
+                "corners": {
+                  "type": "array",
+                  "items": {
+                    "type": "array",
+                    "items": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "type": "number"
+                      }
+                    ]
+                  }
+                },
+                "features": {
+                  "type": "object"
+                },
+                "style": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "linecolor": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "linecolor"
+                  ]
+                }
+              },
+              "required": [
+                "Name",
+                "corners"
+              ]
+            }
+          }
+        },
+        "required": [
+          "Name",
+          "corners"
+        ]
+      }
+    },
+    "required": [
+      "Building"
+    ]
+  }
+}

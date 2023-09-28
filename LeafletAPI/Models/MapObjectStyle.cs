@@ -5,17 +5,22 @@ public class MapObjectStyle
     private static int id;
     private static List<MapObjectStyle> instances;
 
-    public string name;
-    public string color;
-    public string fillColor;
-    public float fillOpacity;
-    public float weight;
-    public float opacity;
+    public string Name;
+    /// <summary>
+    /// Color of lines / borders
+    /// </summary>
+    public string Color;
+#nullable enable
+    public float? Opacity;
+    public float? Weight;
+    public string? FillColor;
+    public float? FillOpacity;
+#nullable disable
 
     public MapObjectStyle(string name, string color)
     {
-        this.name = $"{name}_{id}";
-        this.color = color;
+        this.Name = $"{name}_{id}";
+        this.Color = color;
 
 
         id += 1;
@@ -28,30 +33,31 @@ public class MapObjectStyle
     {
         return instances;
     }
-
-    internal Dictionary<string, string> GetOptionalProperties()
+#nullable enable
+    internal Dictionary<string, string?> GetOptionalProperties()
     {
-        return new Dictionary<string, string>() 
+        return new Dictionary<string, string?>() 
         {
-            {nameof(fillColor), this.fillColor },
-            {nameof(fillOpacity), this.fillOpacity.ToString() },
-            {nameof(weight), this.weight.ToString() },
-            {nameof(opacity), this.opacity.ToString() }
+            {nameof(FillColor), this.FillColor },
+            {nameof(FillOpacity), this.FillOpacity.ToString() },
+            {nameof(Weight), this.Weight.ToString() },
+            {nameof(Opacity), this.Opacity.ToString() }
         };
     }
 
-    internal string ToHtml()
+    internal string ToHtmlDefinition()
     {
         string optionalParameters = "";
         foreach (var optionalPar in this.GetOptionalProperties())
         {
-            if(optionalPar.Value != null)
+            if(!string.IsNullOrEmpty(optionalPar.Value))
                 optionalParameters += $",{optionalPar.Key}: {optionalPar.Value}";
         }
 
-        return $@"var {this.name} = {{
-            color: '{this.color}'
+        return $@"var {this.Name} = {{
+            color: '{this.Color}'
             {optionalParameters}
         }};\n";
     }
+#nullable disable
 }

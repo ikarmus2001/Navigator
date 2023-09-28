@@ -7,7 +7,7 @@ internal static class MapStorage
     /// <summary>
     /// Stores the index of currently selected (for viewing purpose) MapBuilder object in mapBuilders
     /// </summary>
-    private static int _selectedMapId { get; set; }
+    private static int _selectedMapId { get; set; } = 0;
 
     internal static List<MapConfig> configs { get; set; }
 

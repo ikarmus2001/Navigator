@@ -80,6 +80,6 @@
 	  </MauiXaml>
 	</ItemGroup>
 
-	<ProjectExtensions><VisualStudio><UserProperties resources_4raw_4jsconfig1_1json__JsonSchema="https://json.schemastore.org/base.json" /></VisualStudio></ProjectExtensions>
+	<ProjectExtensions><VisualStudio><UserProperties resources_4raw_4defaultmap_1json__JsonSchema="importJsonSchema.json" /></VisualStudio></ProjectExtensions>
 
 </Project>

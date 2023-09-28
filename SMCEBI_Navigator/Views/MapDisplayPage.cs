@@ -7,7 +7,7 @@ public partial class MapDisplayPage : ContentPage
     public MapDisplayPage()
     {
         //WebView webView = storage.Current.GetView();
-        //Loaded += (s, e) => { PrepareContent(webView); };
+        Loaded += (s, e) => { PrepareContent(); };
         Content = LoadingScreen();
     }
 
@@ -22,7 +22,7 @@ public partial class MapDisplayPage : ContentPage
         };
     }
 
-    private void PrepareContent(WebView injectedWebView)
+    private async void PrepareContent()
     {
         VerticalStackLayout vsl = new();
         var btn = new Button();
@@ -36,8 +36,9 @@ public partial class MapDisplayPage : ContentPage
         views.RowDefinitions.Add(new RowDefinition(GridLength.Star));
         views.RowDefinitions.Add(new RowDefinition(new GridLength(30)));
 
-        views.Add(injectedWebView, 0, 0);
+        IView x = await MapStorage.Current.GetView();
         views.Add(vsl, 0, 1);
+        views.Add(x, 0, 0);
 
         Content = views;
 
