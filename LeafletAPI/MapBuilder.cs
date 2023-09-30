@@ -8,7 +8,11 @@ namespace LeafletAPI;
 // All the code in this file is included in all platforms.
 public partial class MapBuilder : IMapBuilder
 {
-    private string _htmlHeader = "<!DOCTYPE html>\r\n<html>\r\n<head>\r\n    <meta charset=\"utf-8\" />\r\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">";
+    private string _htmlHeader = @"<!DOCTYPE html>
+<html>
+<head>
+<meta charset=""utf-8"" />
+        <meta name=""viewport"" content=""width=device-width, initial-scale=1.0"">";
     private Models.Map map;
 
     private string _htmlBody = "<body>";
@@ -145,7 +149,7 @@ public partial class MapBuilder : IMapBuilder
 
         foreach (MapObjectStyle uniqueStyle in createdStyles)
         {
-            htmlStyles += uniqueStyle.ToHtmlDefinition() + "\n";
+            htmlStyles += uniqueStyle.ToHtmlDefinition() + Environment.NewLine;
         }
 
         _htmlBody += htmlStyles;
@@ -153,7 +157,7 @@ public partial class MapBuilder : IMapBuilder
 
     private void ParsePolylines()
     {
-        _htmlBody += buildingShape.ToHtml() + "\n";
+        _htmlBody += buildingShape.ToHtml() + Environment.NewLine;
         // TODO: add polyline parsing for level shapes, rooms, marked features
     }
 
@@ -161,8 +165,15 @@ public partial class MapBuilder : IMapBuilder
     {
         foreach (L_Layer l in map.layers)
         {
-            _htmlBody += l.ToHtml() + "\n";
+            _htmlBody += l.ToHtml() + Environment.NewLine;
         }
+
+        string mapLvls = "var mapLevels = {";
+        foreach (L_Layer l in map.layers)
+        {
+             mapLvls += $"'{l.Name}': {l.NameVariable},";
+        }
+        _htmlBody += mapLvls.TrimEnd(',') + "};" + Environment.NewLine;
     }
     
     private void ParsePolygons()
@@ -173,7 +184,7 @@ public partial class MapBuilder : IMapBuilder
         {
             foreach (L_Polygon p in l.polygons)
             {
-                parsedPolygons += p.ToHtml() + "\n";
+                parsedPolygons += p.ToHtml() + Environment.NewLine;
             }
         }
 
@@ -215,8 +226,21 @@ public partial class MapBuilder : IMapBuilder
         throw new NotImplementedException();
     }
 
+    private void ParseMap()
+    {
+        _htmlBody += $@"var map = L.map('map', {{crs: L.CRS.Simple,
+            minZoom: 0,
+            //		cursor: true,
+            layers: [{string.Join(", ", map.layers.Select(l => l.NameVariable))}]}});" + Environment.NewLine;
+
+        _htmlBody += $"map.setView([25.25, 9], 4);" + Environment.NewLine;
+        //_htmlBody += $"map.addControl(new L.Control.Fullscreen());" + Environment.NewLine;
+        _htmlBody += "L.control.layers(mapLevels, null, {collapsed:false}).addTo(map);" + Environment.NewLine;
+    }
+
     public string Build()
     {
+        PrepareMapVariable();
         _htmlBody += "<script>"; // Open script tag
         ParseStyles();
         ParsePolylines();
@@ -228,11 +252,8 @@ public partial class MapBuilder : IMapBuilder
         return _htmlHeader + "</head>" + _htmlBody + "</body></html>";
     }
 
-    private void ParseMap()
+    private void PrepareMapVariable()
     {
-        _htmlBody += $@"var map = L.map('map', {{crs: L.CRS.Simple,
-            minZoom: 0,
-            //		cursor: true,
-            layers: [{string.Join(", ", map.layers.Select(l => l.Name))}]}});";
+        _htmlBody += "<div id=\"map\"></div>";
     }
 }

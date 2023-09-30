@@ -19,7 +19,7 @@ internal class L_Polyline : L_StyledObject
         string parsedObjectShape = "";
         foreach (var p in points)
         {
-            parsedObjectShape += $"[{p}],\n";
+            parsedObjectShape += $"[{p.X}, {p.Y}]," + Environment.NewLine;
         }
 
         var parsedHTML = $@"var {Name} = L.polyline(

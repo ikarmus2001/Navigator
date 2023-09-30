@@ -3,7 +3,6 @@ using SMCEBI_Navigator.Models;
 
 namespace SMCEBI_Navigator;
 
-
 internal sealed class MapConfig
 {
     public int HtmlChangeId { get; set; }
@@ -24,9 +23,11 @@ internal sealed class MapConfig
     internal async Task<WebView> GetView()
     {
         IMapBuilder builder = await ConfigParser.ParseToApi(this);
-        return new WebView()
+        var x = new WebView()
         {
-            Source = builder.Build()
+            Source = new HtmlWebViewSource() { Html = builder.Build() }
         };
+
+        return x;
     }
 }

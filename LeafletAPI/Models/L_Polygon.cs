@@ -18,8 +18,9 @@ public class L_Polygon : L_StyledObject
         {
             parsedPoints += $"[{point.X}, {point.Y}],";
         }
+        parsedPoints.TrimEnd(',');
         
-        var html = @$"var {Name} = L.polygon([{parsedPoints}], {Style.Name});;";
+        var html = @$"var {Name} = L.polygon([{parsedPoints}], {Style.Name}).bindTooltip(""{Name.Replace("_", " ")}"", {{ permanent: true, direction: ""center"", className: 'tooltipclass'}}).openTooltip();;";
         return html;
     }
 }

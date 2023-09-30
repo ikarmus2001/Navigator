@@ -2,8 +2,6 @@ namespace SMCEBI_Navigator.Views;
 
 public partial class MapDisplayPage : ContentPage
 {
-    MapConfig mapConfig;
-
     public MapDisplayPage()
     {
         //WebView webView = storage.Current.GetView();

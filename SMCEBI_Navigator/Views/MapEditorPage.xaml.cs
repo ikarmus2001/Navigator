@@ -5,6 +5,7 @@ namespace SMCEBI_Navigator.Views;
 
 public partial class MapEditorPage : ContentPage, IQueryAttributable
 {
+    MapConfig orgMapConfig;
     public MapEditorPage()
     {
         InitializeComponent();
@@ -12,7 +13,9 @@ public partial class MapEditorPage : ContentPage, IQueryAttributable
 
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
-        BindingContext = query["mapConfig"] as MapConfig;
+        orgMapConfig = query["mapConfig"] as MapConfig;
+        var copiedConfig = orgMapConfig.Copy();
+        BindingContext = copiedConfig;
     }
 
     private async void LoadMapBtn_Clicked(object sender, EventArgs e)
@@ -36,7 +39,11 @@ public partial class MapEditorPage : ContentPage, IQueryAttributable
 
     private void SaveMapBtn_Clicked(object sender, EventArgs e)
     {
-
+        var changedConfig = BindingContext as MapConfig;
+        orgMapConfig.Engine = changedConfig.Engine;
+        orgMapConfig.Building = changedConfig.Building;
+        orgMapConfig.MapSize = changedConfig.MapSize;
+        // TODO: Save commited versions in app cache, make use of version etc.
     }
 
     private void ImportJSONToolbarBtn_Clicked(object sender, EventArgs e)

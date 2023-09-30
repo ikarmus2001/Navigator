@@ -57,7 +57,7 @@ public class MapObjectStyle
         return $@"var {this.Name} = {{
             color: '{this.Color}'
             {optionalParameters}
-        }};\n";
+        }};";
     }
 #nullable disable
 }

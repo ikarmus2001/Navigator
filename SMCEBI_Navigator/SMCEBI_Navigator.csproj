@@ -33,6 +33,9 @@
 	<ItemGroup>
 		<!-- App Icon -->
 		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+		<MauiIcon Include="Resources\Images\Icons\add_fill0_wght400_grad0_opsz24.svg" />
+		<MauiIcon Include="Resources\Images\Icons\more_vert_fill0_wght200_grad0_opsz24_end.svg" />
+		<MauiIcon Include="Resources\Images\Icons\save_fill0_wght400_grad0_opsz24.svg" />
 
 		<!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
@@ -51,18 +54,31 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiImage Remove="Resources\Images\Icons\add_fill0_wght400_grad0_opsz24.svg" />
+	  <MauiImage Remove="Resources\Images\Icons\more_vert_fill0_wght200_grad0_opsz24_end.svg" />
+	  <MauiImage Remove="Resources\Images\Icons\save_fill0_wght400_grad0_opsz24.svg" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <None Remove="Resources\Raw\defaultMap.json" />
 	  <None Remove="Resources\Raw\floorplans.html" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="CommunityToolkit.Maui" Version="5.3.0" />
+		<PackageReference Include="CommunityToolkit.Maui" Version="6.0.0" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <ProjectReference Include="..\LeafletAPI\LeafletAPI.csproj" />
 	  <ProjectReference Include="..\MapBuilder_API_Base\MapBuilder_API_Base.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Views\MapPickerPage.xaml.cs">
+	    <DependentUpon>MapPickerPage.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -76,6 +92,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\MapEditorPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\MapPickerPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
