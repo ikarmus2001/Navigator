@@ -9,6 +9,7 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(nameof(Views.MapDisplayPage), typeof(Views.MapDisplayPage));
         Routing.RegisterRoute(nameof(Views.MapPickerPage), typeof(Views.MapPickerPage));
         Routing.RegisterRoute(nameof(Views.MapEditorPage), typeof(Views.MapEditorPage));
+        Routing.RegisterRoute(nameof(Views.AddFeaturePage), typeof(Views.AddFeaturePage));
 
     }
 

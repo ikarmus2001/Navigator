@@ -11,12 +11,13 @@
     <!--<FlexLayout Direction="Column">-->
     <!--<ScrollView>-->
         <CollectionView x:Name="maps_collectionView"
-                        SelectionMode="None"
+                        SelectionMode="Single"
                         ItemsSource="{Binding Maps}"
+                        SelectionChanged="maps_collectionView_SelectionChanged"
                         ItemSizingStrategy="MeasureAllItems">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="local:MapConfig">
-                    <Frame BorderColor="Blue" Margin="10, 5">
+                    <Border Margin="10, 5" >
                         <Grid MinimumHeightRequest="20">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*" />
@@ -48,12 +49,12 @@
                                 </CollectionView.ItemTemplate>
                             </CollectionView>
 
-                            <ImageButton Source="more_vert_fill0_wght200_grad0_opsz24_end.ico" WidthRequest="32" HeightRequest="32"
+                            <ImageButton Source="more_vert_fill0_wght200_grad0_opsz24_end.png" WidthRequest="32" HeightRequest="32"
                                          Clicked="ImageButton_Clicked"
                                          VerticalOptions="Center" HorizontalOptions="Center"
                                          BackgroundColor="Red" Grid.Column="2" Grid.Row="0" Grid.RowSpan="2" />
                         </Grid>
-                    </Frame>
+                    </Border>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>

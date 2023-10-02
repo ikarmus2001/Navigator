@@ -3,25 +3,64 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SMCEBI_Navigator.Views.MapEditorPage"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             xmlns:model="clr-namespace:SMCEBI_Navigator"
              xmlns:innerModel="clr-namespace:SMCEBI_Navigator.Models"
+             xmlns:vm="clr-namespace:SMCEBI_Navigator.ViewModels"
              Shell.NavBarIsVisible="True">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Order="Primary" Text="Import JSON" />
+        <ToolbarItem Order="Primary" Text="Import JSON" Clicked="ImportJSONToolbarBtn_Clicked" />
     </ContentPage.ToolbarItems>
 
-    <VerticalStackLayout Padding="10" x:DataType="model:MapConfig">
-        <Label Text="Name" />
-        <Entry Text="{Binding Building.Name}" />
-        
-        <!--styleEditorControl-->
+    <ScrollView Padding="10" x:DataType="vm:MapEditorViewModel">
+        <VerticalStackLayout>
 
-        <Label Text="Change version" />
-        <Label Text="{Binding Building.Version}" />
+            <Label Text="Name" />
+            <Entry Text="{Binding EditedMap.Building.Name}" />
 
-        <ImageButton x:Name="SaveMapBtn" 
-                     Source="Images/save_fill0_wght400_grad0_opsz24.svg" 
+            <!--styleEditorControl-->
+
+            <Label Text="{Binding EditedMap.Building.Version, StringFormat='Changeset version: {0}'}" />
+            
+
+            <CollectionView ItemsSource="{Binding EditedMap.Building.Floors}" 
+                            SelectionMode="None" 
+                            Margin="0, 5, 0, 5">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="innerModel:Floor">
+                        <Border Stroke="red" StrokeThickness="4" Padding="10" StrokeShape="RoundRectangle 5, 5, 5, 5">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <Label Text="{Binding Name}" 
+                                       Grid.Column="0" MinimumHeightRequest="20" />
+                                <Label Text="{Binding Path=Rooms.Count, StringFormat='Zdefiniowane pokoje: {0}'}" 
+                                       MinimumHeightRequest="20" Grid.Column="1"
+                                       VerticalOptions="Center"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                <CollectionView.Footer>
+                    <VerticalStackLayout>
+                        <ImageButton x:Name="addFloor_imgBtn"
+                                     Source="add_fill0_wght400_grad0_opsz24.png" BackgroundColor="Red" 
+                                     HorizontalOptions="End"
+                                     Clicked="addFloor_imgBtn_Clicked"/>
+                    </VerticalStackLayout>
+                    
+                </CollectionView.Footer>
+            </CollectionView>
+
+            <ImageButton x:Name="SaveMapBtn" 
+                     Source="Resources/Images/Icons/save_fill0_wght400_grad0_opsz24.png" 
                      Clicked="SaveMapBtn_Clicked" />
-    </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

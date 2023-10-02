@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SMCEBI_Navigator.Views.AddFeaturePage"
+             xmlns:vm="clr-namespace:SMCEBI_Navigator.ViewModels"
+             xmlns:cc="clr-namespace:SMCEBI_Navigator.CustomControls"
+             x:DataType="vm:AddFeatureViewModel"
+             Title="AddFeaturePage">
+    <VerticalStackLayout>
+        <Label 
+            Text="{Binding AddedFeatureName, StringFormat='{0} name'}"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+        <Entry Placeholder="{Binding AddedFeatureName, StringFormat='{0} name'}" />
+        <cc:StylePicker />
+
+
+    </VerticalStackLayout>
+</ContentPage>

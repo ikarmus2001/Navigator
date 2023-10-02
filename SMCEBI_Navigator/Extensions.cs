@@ -131,4 +131,31 @@ namespace System
         }
     }
 
+    namespace StringExtensions
+    {
+        internal static class StringExtensions
+        {
+            /// <summary>
+            /// Provides very basic color name to hex conversion
+            /// </summary>
+            /// <param name="colorName"></param>
+            /// <returns></returns>
+            internal static string ToHex(this string colorName)
+            {
+                if (string.IsNullOrEmpty(colorName))
+                    return "#000000";
+
+                return colorName.ToLower() switch
+                {
+                    "red" => "#FF0000",
+                    "green" => "#00FF00",
+                    "blue" => "#0000FF",
+                    "black" => "#000000",
+                    "white" => "#FFFFFF",
+                    _ => "#000000"
+                };
+            }
+        }
+    }
+
 }

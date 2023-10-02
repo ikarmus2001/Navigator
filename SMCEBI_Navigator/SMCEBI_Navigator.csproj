@@ -33,15 +33,11 @@
 	<ItemGroup>
 		<!-- App Icon -->
 		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
-		<MauiIcon Include="Resources\Images\Icons\add_fill0_wght400_grad0_opsz24.svg" />
-		<MauiIcon Include="Resources\Images\Icons\more_vert_fill0_wght200_grad0_opsz24_end.svg" />
-		<MauiIcon Include="Resources\Images\Icons\save_fill0_wght400_grad0_opsz24.svg" />
 
 		<!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
 
 		<!-- Images -->
-		<MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208" />
 		<MauiImage Include="Resources\Images\*" />
 		<MauiImage Include="Resources\Images\Icons\*" />
 		
@@ -51,12 +47,6 @@
 
 		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <MauiImage Remove="Resources\Images\Icons\add_fill0_wght400_grad0_opsz24.svg" />
-	  <MauiImage Remove="Resources\Images\Icons\more_vert_fill0_wght200_grad0_opsz24_end.svg" />
-	  <MauiImage Remove="Resources\Images\Icons\save_fill0_wght400_grad0_opsz24.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -76,12 +66,18 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="CustomControls\StylePicker.xaml.cs">
+	    <DependentUpon>StylePicker.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\MapPickerPage.xaml.cs">
 	    <DependentUpon>MapPickerPage.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="CustomControls\StylePicker.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="HomePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -89,6 +85,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="MapPickerPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\AddFeaturePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\MapEditorPage.xaml">

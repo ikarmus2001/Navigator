@@ -1,5 +1,6 @@
 ﻿using SMCEBI_Navigator.Models;
 using System.Text.Json;
+using VM = SMCEBI_Navigator.ViewModels.MapEditorViewModel;
 
 namespace SMCEBI_Navigator.Views;
 
@@ -13,9 +14,8 @@ public partial class MapEditorPage : ContentPage, IQueryAttributable
 
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
-        orgMapConfig = query["mapConfig"] as MapConfig;
-        var copiedConfig = orgMapConfig.Copy();
-        BindingContext = copiedConfig;
+        orgMapConfig = query[nameof(MapConfig)] as MapConfig;
+        BindingContext = new VM(orgMapConfig);
     }
 
     private async void LoadMapBtn_Clicked(object sender, EventArgs e)
@@ -49,5 +49,10 @@ public partial class MapEditorPage : ContentPage, IQueryAttributable
     private void ImportJSONToolbarBtn_Clicked(object sender, EventArgs e)
     {
 
+    }
+
+    private async void addFloor_imgBtn_Clicked(object sender, EventArgs e)
+    {
+        await ((VM)BindingContext).AddFloor();
     }
 }
