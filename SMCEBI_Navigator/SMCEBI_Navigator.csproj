@@ -78,6 +78,9 @@
 	  <Compile Update="CustomControls\StylePicker.xaml.cs">
 	    <DependentUpon>StylePicker.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Views\FeatureEditorPage.xaml.cs">
+	    <DependentUpon>FeatureEditorPage.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\MapPickerPage.xaml.cs">
 	    <DependentUpon>MapPickerPage.xaml</DependentUpon>
 	  </Compile>
@@ -96,7 +99,7 @@
 	  <MauiXaml Update="MapPickerPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\AddFeaturePage.xaml">
+	  <MauiXaml Update="Views\FeatureEditorPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\MapEditorPage.xaml">

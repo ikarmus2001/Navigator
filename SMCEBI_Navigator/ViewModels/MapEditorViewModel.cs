@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using SMCEBI_Navigator.Models;
 using SMCEBI_Navigator.Views;
-using System.Collections.ObjectModel;
 
 namespace SMCEBI_Navigator.ViewModels;
 
@@ -11,12 +10,20 @@ internal partial class MapEditorViewModel : ObservableObject
 
     public MapEditorViewModel(MapConfig mapToEdit)
     {
-        EditedMap = mapToEdit.Copy();
+        // TODO: Work on new, copied object
+        EditedMap = mapToEdit;
     }
 
     internal async Task AddFloor()
     {
-        var param = new Dictionary<string, object>() { { nameof(MapEditorViewModel), EditedMap }, { nameof(Object), typeof(Floor) } };
-        await Shell.Current.GoToAsync(nameof(AddFeaturePage), param);
+        var addedFloor = new Floor();
+        var param = new Dictionary<string, object>()
+        {
+            { nameof(Building), EditedMap.Building },
+            { nameof(BuildingElement), addedFloor },
+            //{ nameof(FeatureAction), FeatureAction.Add },
+            { nameof(Type), typeof(Floor) }
+        };
+        await Shell.Current.GoToAsync(nameof(FeatureEditorPage), param);
     }
 }

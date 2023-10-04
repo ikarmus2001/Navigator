@@ -12,4 +12,9 @@ public class Building : BuildingElement
         Floors = new();
         Version = 0;
     }
+
+    internal void AddFloor(Floor newFloor)
+    {
+        Floors.Add(newFloor);
+    }
 }

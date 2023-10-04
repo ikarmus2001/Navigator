@@ -11,56 +11,54 @@
         <ToolbarItem Order="Primary" Text="Import JSON" Clicked="ImportJSONToolbarBtn_Clicked" />
     </ContentPage.ToolbarItems>
 
-    <ScrollView Padding="10" x:DataType="vm:MapEditorViewModel">
-        <VerticalStackLayout>
+    <VerticalStackLayout Padding="10" x:DataType="vm:MapEditorViewModel">
 
-            <Label Text="Name" />
-            <Entry Text="{Binding EditedMap.Building.Name}" />
+        <Label Text="Name" />
+        <Entry Text="{Binding EditedMap.Building.Name}" />
 
-            <!--styleEditorControl-->
+        <!--styleEditorControl-->
 
-            <Label Text="{Binding EditedMap.Building.Version, StringFormat='Changeset version: {0}'}" />
-            
+        <Label Text="{Binding EditedMap.Building.Version, StringFormat='Changeset version: {0}'}" />
 
-            <CollectionView ItemsSource="{Binding EditedMap.Building.Floors}" 
+
+        <CollectionView ItemsSource="{Binding EditedMap.Building.Floors}" 
                             SelectionMode="None" 
                             Margin="0, 5, 0, 5">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="innerModel:Floor">
-                        <Border Stroke="red" StrokeThickness="4" Padding="10" StrokeShape="RoundRectangle 5, 5, 5, 5">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="innerModel:Floor">
+                    <Border Stroke="red" StrokeThickness="4" Padding="10" StrokeShape="RoundRectangle 5, 5, 5, 5">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
 
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
 
-                                <Label Text="{Binding Name}" 
+                            <Label Text="{Binding Name}" 
                                        Grid.Column="0" MinimumHeightRequest="20" />
-                                <Label Text="{Binding Path=Rooms.Count, StringFormat='Zdefiniowane pokoje: {0}'}" 
+                            <Label Text="{Binding Path=Rooms.Count, StringFormat='Zdefiniowane pokoje: {0}'}" 
                                        MinimumHeightRequest="20" Grid.Column="1"
                                        VerticalOptions="Center"/>
-                            </Grid>
-                        </Border>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-                <CollectionView.Footer>
-                    <VerticalStackLayout>
-                        <ImageButton x:Name="addFloor_imgBtn"
-                                     Source="add_fill0_wght400_grad0_opsz24.png" BackgroundColor="Red" 
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+            <CollectionView.Footer>
+                <VerticalStackLayout>
+                    <ImageButton x:Name="addFloor_imgBtn"
+                                     Source="add_fill0_wght400_grad0_opsz24.png"
                                      HorizontalOptions="End"
                                      Clicked="addFloor_imgBtn_Clicked"/>
-                    </VerticalStackLayout>
-                    
-                </CollectionView.Footer>
-            </CollectionView>
+                </VerticalStackLayout>
 
-            <ImageButton x:Name="SaveMapBtn" 
+            </CollectionView.Footer>
+        </CollectionView>
+
+        <ImageButton x:Name="SaveMapBtn" 
                      Source="Resources/Images/Icons/save_fill0_wght400_grad0_opsz24.png" 
                      Clicked="SaveMapBtn_Clicked" />
-        </VerticalStackLayout>
-    </ScrollView>
+    </VerticalStackLayout>
 </ContentPage>
