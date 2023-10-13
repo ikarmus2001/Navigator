@@ -13,9 +13,5 @@
             HorizontalOptions="Center" />
         <Entry Placeholder="{Binding FeatureName, StringFormat='{0} name'}" />
         <cc:StylePicker />
-        
-        <
-
-
     </VerticalStackLayout>
 </ContentPage>

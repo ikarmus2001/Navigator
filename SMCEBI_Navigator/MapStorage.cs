@@ -43,4 +43,8 @@ internal static class MapStorage
         await JsonSerializer.SerializeAsync(exportStream, configs.Find(x => x.Building.Name == mapName));
         return exportStream;
     }
+
+    internal static bool IsSelected(MapConfig mapConfig) => configs[_selectedMapId] == mapConfig;
+
+    internal static void SelectMap(MapConfig mapConfig) => _selectedMapId = configs.FindIndex(x => x == mapConfig);
 }

@@ -1,4 +1,6 @@
-﻿namespace SMCEBI_Navigator;
+﻿using SMCEBI_Navigator.Views;
+
+namespace SMCEBI_Navigator;
 
 public partial class AppShell : Shell
 {
@@ -10,7 +12,6 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(nameof(Views.MapPickerPage), typeof(Views.MapPickerPage));
         Routing.RegisterRoute(nameof(Views.MapEditorPage), typeof(Views.MapEditorPage));
         Routing.RegisterRoute(nameof(Views.FeatureEditorPage), typeof(Views.FeatureEditorPage));
-
     }
 
     private void AppInitialization()
@@ -58,4 +59,5 @@ public partial class AppShell : Shell
         Preferences.Set("ClassGroup", "W4-ISS102_gr1");
         Preferences.Set("Configured", true);
     }
+
 }

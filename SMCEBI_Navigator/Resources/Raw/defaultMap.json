@@ -78,12 +78,25 @@
           },
           "rooms": [
             {
-              "name": "Pokój 1",
+              "name": "Room1",
               "corners": [
                 [ 0, 0 ],
                 [ 10, 0 ],
                 [ 10, 10 ],
                 [ 0, 10 ]
+              ],
+              "style": {
+                "name": "roomStyle",
+                "linecolor": "green"
+              }
+            },
+            {
+              "name": "Room2",
+              "corners": [
+                [ 10, 10 ],
+                [ 20, 10 ],
+                [ 20, 20 ],
+                [ 10, 20 ]
               ],
               "style": {
                 "name": "roomStyle",

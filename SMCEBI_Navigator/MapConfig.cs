@@ -12,6 +12,9 @@ internal sealed class MapConfig
     public Tuple<uint, uint> MapSize { get; set; }
     public Building Building { get; set; }
 
+    // Should be refactored, to avoid reversed dependency
+    public bool IsSelected { get { return MapStorage.IsSelected(this); } set { if (value == true) MapStorage.SelectMap(this); }  }
+
     public MapConfig()
     {
         Building = new Building();

@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
+using SMCEBI_Navigator.Views;
 
 namespace SMCEBI_Navigator;
 

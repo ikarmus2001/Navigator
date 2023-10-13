@@ -5,6 +5,7 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:innerModel="clr-namespace:SMCEBI_Navigator.Models"
              xmlns:vm="clr-namespace:SMCEBI_Navigator.ViewModels"
+             xmlns:cc="clr-namespace:SMCEBI_Navigator.CustomControls"
              Shell.NavBarIsVisible="True">
 
     <ContentPage.ToolbarItems>
@@ -16,7 +17,7 @@
         <Label Text="Name" />
         <Entry Text="{Binding EditedMap.Building.Name}" />
 
-        <!--styleEditorControl-->
+        <cc:StylePicker />
 
         <Label Text="{Binding EditedMap.Building.Version, StringFormat='Changeset version: {0}'}" />
 

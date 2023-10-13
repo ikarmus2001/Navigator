@@ -42,26 +42,31 @@ internal partial class FeatureEditorViewModel : ObservableObject
 
     private async Task PrepareFeature()
     {
-        featureName = "Feature";
+        FeatureName = "Feature";
         
     }
 
     private async Task PrepareRoom()
     {
-        featureName = "Room";
+        FeatureName = "Room";
     }
 
     private async Task PrepareFloor()
     {
-        featureName = "Floor";
+        FeatureName = "Floor";
         //SaveEvent += new Action<Floor>(buildingRef.AddFloor);
+    }
+
+    internal void Save()
+    {
+        
     }
 
     //internal async Task<bool> Save()
     //{
     //    if (action == FeatureAction.Add)
     //    {
-            
+
     //    }
     //    return true;
     //}
