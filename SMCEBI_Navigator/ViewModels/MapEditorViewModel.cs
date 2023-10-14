@@ -14,16 +14,24 @@ internal partial class MapEditorViewModel : ObservableObject
         EditedMap = mapToEdit;
     }
 
-    internal async Task AddFloor()
+    internal async Task<Dictionary<string, object>> AddFloor()
     {
         var addedFloor = new Floor();
-        var param = new Dictionary<string, object>()
+        return new Dictionary<string, object>()
         {
             { nameof(Building), EditedMap.Building },
             { nameof(BuildingElement), addedFloor },
             //{ nameof(FeatureAction), FeatureAction.Add },
             { nameof(Type), typeof(Floor) }
         };
-        await Shell.Current.GoToAsync(nameof(FeatureEditorPage), param);
+    }
+
+    // TODO: Save commited versions in app cache, make use of version etc.
+    internal void SaveMap()
+    {
+        //orgMapConfig.Engine = changedConfig.Engine;
+        //orgMapConfig.Building = changedConfig.Building;
+        //orgMapConfig.MapSize = changedConfig.MapSize;
+        
     }
 }

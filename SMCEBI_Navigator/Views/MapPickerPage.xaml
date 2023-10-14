@@ -7,10 +7,13 @@
              xmlns:model="clr-namespace:SMCEBI_Navigator.Models"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:DataType="vm:MapPickerViewModel"
+             
              Title="Wybór mapy">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Dodaj mapę" />
+        <ToolbarItem Text="Dodaj mapę" IconImageSource="add_fill0_wght400_grad0_opsz24.png" />
+        <ToolbarItem Text="See Map" IconImageSource="add_fill0_wght400_grad0_opsz24.png" Clicked="ToolbarItem_Clicked">
+        </ToolbarItem>
     </ContentPage.ToolbarItems>
 
     <CollectionView x:Name="maps_collectionView"

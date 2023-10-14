@@ -1,4 +1,5 @@
 ﻿using SMCEBI_Navigator.Models;
+using SMCEBI_Navigator.ViewModels;
 using System.Text.Json;
 using VM = SMCEBI_Navigator.ViewModels.MapEditorViewModel;
 
@@ -10,6 +11,13 @@ public partial class MapEditorPage : ContentPage, IQueryAttributable
     public MapEditorPage()
     {
         InitializeComponent();
+    }
+
+    public MapEditorPage(IDictionary<string, object> query)
+    {
+        InitializeComponent();
+        orgMapConfig = query[nameof(MapConfig)] as MapConfig;
+        BindingContext = new VM(orgMapConfig);
     }
 
     public void ApplyQueryAttributes(IDictionary<string, object> query)
@@ -39,11 +47,8 @@ public partial class MapEditorPage : ContentPage, IQueryAttributable
 
     private void SaveMapBtn_Clicked(object sender, EventArgs e)
     {
-        var changedConfig = BindingContext as MapConfig;
-        orgMapConfig.Engine = changedConfig.Engine;
-        orgMapConfig.Building = changedConfig.Building;
-        orgMapConfig.MapSize = changedConfig.MapSize;
-        // TODO: Save commited versions in app cache, make use of version etc.
+        ((MapEditorViewModel)BindingContext).SaveMap();
+        Navigation.PopModalAsync();
     }
 
     private void ImportJSONToolbarBtn_Clicked(object sender, EventArgs e)
@@ -53,6 +58,8 @@ public partial class MapEditorPage : ContentPage, IQueryAttributable
 
     private async void addFloor_imgBtn_Clicked(object sender, EventArgs e)
     {
-        await ((VM)BindingContext).AddFloor();
+        var floorParams = await ((VM)BindingContext).AddFloor();
+        FeatureEditorPage featureEditorPage = new(floorParams);
+        await Navigation.PushModalAsync(featureEditorPage);
     }
 }

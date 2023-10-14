@@ -5,7 +5,7 @@ public partial class MapDisplayPage : ContentPage
     public MapDisplayPage()
     {
         //WebView webView = storage.Current.GetView();
-        Loaded += async (s, e) => { await PrepareContent(); };
+        //Loaded += async (s, e) => { await PrepareContent(); };
         Content = LoadingScreen();
     }
 
@@ -39,12 +39,11 @@ public partial class MapDisplayPage : ContentPage
         views.Add(x, 0, 0);
 
         Content = views;
-
     }
 
-    internal static async Task UpdateDisplay(MapDisplayPage instance)
+    internal async Task UpdateDisplay()
     {
-        await instance.PrepareContent();
+        await PrepareContent();
     }
 
     private void Btn_Clicked(object sender, EventArgs e)

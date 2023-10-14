@@ -5,8 +5,7 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:innerModel="clr-namespace:SMCEBI_Navigator.Models"
              xmlns:vm="clr-namespace:SMCEBI_Navigator.ViewModels"
-             xmlns:cc="clr-namespace:SMCEBI_Navigator.CustomControls"
-             Shell.NavBarIsVisible="True">
+             xmlns:cc="clr-namespace:SMCEBI_Navigator.CustomControls">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Order="Primary" Text="Import JSON" Clicked="ImportJSONToolbarBtn_Clicked" />
@@ -59,7 +58,10 @@
         </CollectionView>
 
         <ImageButton x:Name="SaveMapBtn" 
-                     Source="Resources/Images/Icons/save_fill0_wght400_grad0_opsz24.png" 
+                     Source="save_fill0_wght400_grad0_opsz24.png" 
+					 MaximumHeightRequest="40"
+					 MaximumWidthRequest="40"
+					 HorizontalOptions="End"
                      Clicked="SaveMapBtn_Clicked" />
     </VerticalStackLayout>
 </ContentPage>

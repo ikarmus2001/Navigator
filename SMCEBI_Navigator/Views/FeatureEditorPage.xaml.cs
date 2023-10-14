@@ -9,6 +9,12 @@ public partial class FeatureEditorPage : ContentPage, IQueryAttributable
 		InitializeComponent();
 	}
 
+    public FeatureEditorPage(Dictionary<string, object> query)
+    {
+        InitializeComponent();
+        BindingContext = new VM(query);
+    }
+
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
         BindingContext = new VM(query);
