@@ -60,7 +60,8 @@
 
                         <RadioButton GroupName="collection_radio" 
                                      Grid.Column="3" Grid.Row="0" Grid.RowSpan="2" 
-                                     IsChecked="{Binding IsSelected, Mode=TwoWay}" />
+                                     IsChecked="{Binding IsSelected, Mode=TwoWay}" 
+                                     CheckedChanged="RadioButton_CheckedChanged" />
 
 
                     </Grid>

@@ -25,4 +25,13 @@ public partial class MapPickerPage : ContentPage
         var param = new Dictionary<string, object>() { {nameof(MapConfig), selectedMap } };
         Shell.Current.GoToAsync(nameof(MapEditorPage), param);
     }
+
+    private async void RadioButton_CheckedChanged(object sender, CheckedChangedEventArgs e)
+    {
+        // TODO Update displays asynchronously when switching radios
+
+        //var x = Navigation.NavigationStack.Where(x => x != null).Where(x => x.GetType() == typeof(MapDisplayPage));
+        //if (x.Any())
+        //    await MapDisplayPage.UpdateDisplay(x.FirstOrDefault() as MapDisplayPage);
+    }
 }
