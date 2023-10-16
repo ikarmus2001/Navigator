@@ -1,13 +1,29 @@
-﻿namespace SMCEBI_Navigator;
+﻿using Microsoft.Maui.Controls.Handlers.Items;
+
+namespace SMCEBI_Navigator;
 
 public partial class App : Application
 {
 	public App()
 	{
+        CollectionView_HeaderFooterFix();
         AppInitialization();
         InitializeComponent();
 
         MainPage = new MainNavigationPage();
+    }
+
+    /// <summary>
+    /// https://github.com/dotnet/maui/issues/14557
+    /// https://github.com/dotnet/maui/issues/14557#issuecomment-1686149840
+    /// </summary>
+    private void CollectionView_HeaderFooterFix()
+    {
+        CollectionViewHandler.Mapper.AppendToMapping("HeaderAndFooterFix", (_, collectionView) =>
+        {
+            collectionView.AddLogicalChild(collectionView.Header as Element);
+            collectionView.AddLogicalChild(collectionView.Footer as Element);
+        });
     }
 
     private void AppInitialization()

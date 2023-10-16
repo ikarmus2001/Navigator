@@ -12,8 +12,7 @@
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Dodaj mapę" IconImageSource="add_fill0_wght400_grad0_opsz24.png" />
-        <ToolbarItem Text="See Map" IconImageSource="add_fill0_wght400_grad0_opsz24.png" Clicked="ToolbarItem_Clicked">
-        </ToolbarItem>
+        <ToolbarItem Text="See Map" IconImageSource="add_fill0_wght400_grad0_opsz24.png" Clicked="ToolbarItem_ShowMap_Clicked" />
     </ContentPage.ToolbarItems>
 
     <CollectionView x:Name="maps_collectionView"

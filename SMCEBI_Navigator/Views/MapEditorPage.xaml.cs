@@ -26,20 +26,6 @@ public partial class MapEditorPage : ContentPage, IQueryAttributable
         BindingContext = new VM(orgMapConfig);
     }
 
-    private async void LoadMapBtn_Clicked(object sender, EventArgs e)
-    {
-        var file = await FilePicker.PickAsync();
-        if (file == null)
-        {
-            return;
-        }
-
-        var building = await UnparseJsonBuildingAsync(await file.OpenReadAsync());
-        var mapConfig = BindingContext as MapConfig;
-        mapConfig.Building = building;
-        mapConfig.HtmlChangeId++;
-    }
-
     private static async Task<Building> UnparseJsonBuildingAsync(Stream inputJson)
     {
         return await JsonSerializer.DeserializeAsync<Building>(inputJson);
@@ -48,7 +34,7 @@ public partial class MapEditorPage : ContentPage, IQueryAttributable
     private void SaveMapBtn_Clicked(object sender, EventArgs e)
     {
         ((MapEditorViewModel)BindingContext).SaveMap();
-        Navigation.PopModalAsync();
+        Navigation.PopAsync();
     }
 
     private void ImportJSONToolbarBtn_Clicked(object sender, EventArgs e)
@@ -58,8 +44,16 @@ public partial class MapEditorPage : ContentPage, IQueryAttributable
 
     private async void addFloor_imgBtn_Clicked(object sender, EventArgs e)
     {
-        var floorParams = await ((VM)BindingContext).AddFloor();
-        FeatureEditorPage featureEditorPage = new(floorParams);
-        await Navigation.PushModalAsync(featureEditorPage);
+        var floorParams = ((VM)BindingContext).GetFloorParams();
+        await Navigation.PushAsync(new MainNavigationPage(new FeatureEditorPage(floorParams)));
+    }
+
+    private async void CollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (e.CurrentSelection.Count == 0) return;
+
+        var floorParams = ((MapEditorViewModel)BindingContext).GetFloorParams(e.CurrentSelection.FirstOrDefault() as Floor);
+        await Navigation.PushAsync(new MainNavigationPage(new FeatureEditorPage(floorParams)));
+        (sender as CollectionView).SelectedItem = null;
     }
 }

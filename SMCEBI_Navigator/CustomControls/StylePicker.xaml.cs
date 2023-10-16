@@ -1,6 +1,4 @@
 using SMCEBI_Navigator.Models;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.StringExtensions;
 
 namespace SMCEBI_Navigator.CustomControls;
@@ -8,7 +6,7 @@ namespace SMCEBI_Navigator.CustomControls;
 public partial class StylePicker : ContentView
 {
     public static readonly BindableProperty ObjElementStyleProperty 
-        = BindableProperty.Create(nameof(ObjElementStyle), typeof(string), typeof(ElementStyle), 
+        = BindableProperty.Create(nameof(ObjElementStyle), typeof(ElementStyle), typeof(ElementStyle), 
             defaultBindingMode: BindingMode.TwoWay); //, defaultValueCreator: NewStyle);
 
     public ElementStyle ObjElementStyle

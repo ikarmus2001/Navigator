@@ -4,6 +4,6 @@ public abstract class BuildingElement
 {
     public string Name { get; set; }
     public List<BuildingElement_Feature> Features;
-    public List<Point> Corners;
-    public ElementStyle Style;
+    public List<Point> Corners { get; set; }
+    public ElementStyle Style { get; set; }
 }

@@ -9,7 +9,7 @@ internal partial class FeatureEditorViewModel : ObservableObject
     [ObservableProperty] private string featureName;
 
     FeatureAction action;
-    private BuildingElement editorElement;
+    [ObservableProperty] public BuildingElement editorElement;
 
     //internal delegate Action<BuildingElement> SaveDelegate();
 
@@ -18,7 +18,7 @@ internal partial class FeatureEditorViewModel : ObservableObject
     public FeatureEditorViewModel(IDictionary<string, object> query)
     {
         buildingRef = query[nameof(Building)] as Building;
-        editorElement = query[nameof(BuildingElement)] as BuildingElement;
+        EditorElement = query[nameof(BuildingElement)] as BuildingElement;
         //action = (FeatureAction)Enum.Parse(typeof(FeatureAction), query[nameof(FeatureAction)].ToString());
         PrepareContent(query[nameof(Type)] as Type);
     }
@@ -54,7 +54,7 @@ internal partial class FeatureEditorViewModel : ObservableObject
     private async Task PrepareFloor()
     {
         FeatureName = "Floor";
-        //SaveEvent += new Action<Floor>(buildingRef.AddFloor);
+        //SaveEvent += new Action<Floor>(buildingRef.GetFloorParams);
     }
 
     internal void Save()

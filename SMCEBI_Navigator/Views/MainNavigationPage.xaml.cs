@@ -15,6 +15,20 @@ public partial class MainNavigationPage : NavigationPage
         Loaded += MainNavigationPage_Loaded;
 	}
 
+    public MainNavigationPage(Page page)
+    {
+        mapDisplay = new();
+        InitializeComponent();
+        Navigation.PushAsync(page);
+
+        Loaded += MainNavigationPage_Loaded;
+    }
+
+    internal async void ShowEditor(Dictionary<string, object> query)
+    {
+        await Navigation.PushAsync(new MainNavigationPage(new MapEditorPage(query)));
+    }
+
     internal async void ShowMap()
     {
         await Navigation.PushAsync(mapDisplay);

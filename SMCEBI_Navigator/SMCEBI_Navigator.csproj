@@ -75,6 +75,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="CustomControls\SizePicker.xaml.cs">
+	    <DependentUpon>SizePicker.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="CustomControls\StylePicker.xaml.cs">
 	    <DependentUpon>StylePicker.xaml</DependentUpon>
 	  </Compile>
@@ -87,13 +90,16 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="CustomControls\SizePicker.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="CustomControls\StylePicker.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="HomePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="MainNavigationPage.xaml">
+	  <MauiXaml Update="Views\MainNavigationPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="MapPage.xaml">

@@ -5,25 +5,32 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:innerModel="clr-namespace:SMCEBI_Navigator.Models"
              xmlns:vm="clr-namespace:SMCEBI_Navigator.ViewModels"
-             xmlns:cc="clr-namespace:SMCEBI_Navigator.CustomControls">
+             xmlns:cc="clr-namespace:SMCEBI_Navigator.CustomControls"
+             x:DataType="vm:MapEditorViewModel"
+             
+             Title="cokolwiek">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Order="Primary" Text="Import JSON" Clicked="ImportJSONToolbarBtn_Clicked" />
     </ContentPage.ToolbarItems>
 
-    <VerticalStackLayout Padding="10" x:DataType="vm:MapEditorViewModel">
+    <VerticalStackLayout Padding="15">
 
-        <Label Text="Name" />
-        <Entry Text="{Binding EditedMap.Building.Name}" />
+        <Label Text="Name" Padding="0,0,0,5" />
+        <Entry Text="{Binding EditedMap.Building.Name, Mode=TwoWay}" />
 
-        <cc:StylePicker />
-
-        <Label Text="{Binding EditedMap.Building.Version, StringFormat='Changeset version: {0}'}" />
+        <cc:StylePicker Padding="0, 10" />
 
 
         <CollectionView ItemsSource="{Binding EditedMap.Building.Floors}" 
-                            SelectionMode="None" 
-                            Margin="0, 5, 0, 5">
+                        SelectionMode="Single" 
+                        SelectionChanged="CollectionView_SelectionChanged"
+                        Margin="0, 5, 0, 5">
+            <CollectionView.Header>
+                <VerticalStackLayout>
+                    <Label Text="{Binding EditedMap.Building.Version, StringFormat='Changeset version: {0}'}" />
+                </VerticalStackLayout>
+            </CollectionView.Header>
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="innerModel:Floor">
                     <Border Stroke="red" StrokeThickness="4" Padding="10" StrokeShape="RoundRectangle 5, 5, 5, 5">
@@ -38,30 +45,31 @@
                             </Grid.ColumnDefinitions>
 
                             <Label Text="{Binding Name}" 
-                                       Grid.Column="0" MinimumHeightRequest="20" />
+                                   Grid.Column="0" MinimumHeightRequest="20" />
                             <Label Text="{Binding Path=Rooms.Count, StringFormat='Zdefiniowane pokoje: {0}'}" 
-                                       MinimumHeightRequest="20" Grid.Column="1"
-                                       VerticalOptions="Center"/>
+                                   MinimumHeightRequest="20" Grid.Column="1"
+                                   VerticalOptions="Center"/>
                         </Grid>
                     </Border>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
             <CollectionView.Footer>
-                <VerticalStackLayout>
-                    <ImageButton x:Name="addFloor_imgBtn"
-                                     Source="add_fill0_wght400_grad0_opsz24.png"
-                                     HorizontalOptions="End"
-                                     Clicked="addFloor_imgBtn_Clicked"/>
-                </VerticalStackLayout>
-
+                    <HorizontalStackLayout HorizontalOptions="End" Margin="5">
+                        <Border StrokeShape="RoundRectangle 5" Margin="0,0,5,0">
+                            <ImageButton x:Name="AddFloorBtn" 
+                                     Source="add_fill0_wght400_grad0_opsz24.png" 
+                                     HeightRequest="50" WidthRequest="50"
+                                     Clicked="addFloor_imgBtn_Clicked" />
+                        </Border>
+                        <Border StrokeShape="RoundRectangle 5" Margin="0,0,5,0">
+                            <ImageButton x:Name="SaveMapBtn" 
+                                     Source="save_fill0_wght400_grad0_opsz24.png" 
+                                     HeightRequest="50" WidthRequest="50"
+                                     Clicked="SaveMapBtn_Clicked" />
+                        </Border>
+                </HorizontalStackLayout>
             </CollectionView.Footer>
         </CollectionView>
 
-        <ImageButton x:Name="SaveMapBtn" 
-                     Source="save_fill0_wght400_grad0_opsz24.png" 
-					 MaximumHeightRequest="40"
-					 MaximumWidthRequest="40"
-					 HorizontalOptions="End"
-                     Clicked="SaveMapBtn_Clicked" />
     </VerticalStackLayout>
 </ContentPage>

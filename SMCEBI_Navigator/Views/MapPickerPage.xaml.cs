@@ -18,7 +18,6 @@ public partial class MapPickerPage : ContentPage
 
     private void ImageButton_Clicked(object sender, EventArgs e)
     {
-        
         //((viewModel)BindingContext).Maps[]
     }
 
@@ -27,9 +26,9 @@ public partial class MapPickerPage : ContentPage
         var selectedMap = (MapConfig)e.CurrentSelection.FirstOrDefault();
         if (selectedMap == null) return;
         (sender as CollectionView).SelectedItem = null;
-        var param = new Dictionary<string, object>() { {nameof(MapConfig), selectedMap } };
-        await Navigation.PushModalAsync(new MapEditorPage(param));
-        //Shell.Current.GoToAsync(nameof(MapEditorPage), param);
+        var param = new Dictionary<string, object>() { { nameof(MapConfig), selectedMap } };
+
+        ((VM)BindingContext).SelectMap(Parent as MainNavigationPage, param);
     }
 
     private async void RadioButton_CheckedChanged(object sender, CheckedChangedEventArgs e)
@@ -38,7 +37,7 @@ public partial class MapPickerPage : ContentPage
         await (Parent as MainNavigationPage).mapDisplay.UpdateDisplay();
     }
 
-    private void ToolbarItem_Clicked(object sender, EventArgs e)
+    private void ToolbarItem_ShowMap_Clicked(object sender, EventArgs e)
     {
         ((VM)BindingContext).ShowMap(Parent as MainNavigationPage);
     }

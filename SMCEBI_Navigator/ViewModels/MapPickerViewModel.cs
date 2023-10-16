@@ -17,9 +17,9 @@ internal partial class MapPickerViewModel : ObservableObject
         Maps = new ObservableCollection<MapConfig>(MapStorage.configs);
     }
 
-    internal void SelectMap()
+    internal void SelectMap(MainNavigationPage navPage, Dictionary<string, object> query)
     {
-        //throw new NotImplementedException();
+        navPage.ShowEditor(query);
     }
 
     internal void ShowMap(MainNavigationPage navPage)

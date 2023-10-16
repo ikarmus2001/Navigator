@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using SMCEBI_Navigator.Models;
-using SMCEBI_Navigator.Views;
 
 namespace SMCEBI_Navigator.ViewModels;
 
@@ -14,13 +13,34 @@ internal partial class MapEditorViewModel : ObservableObject
         EditedMap = mapToEdit;
     }
 
-    internal async Task<Dictionary<string, object>> AddFloor()
+
+    /// <summary>
+    /// Instantiates new floor in query form for FeatureEditorPage
+    /// </summary>
+    /// <returns>Query with newly instantiated floor</returns>
+    internal Dictionary<string, object> GetFloorParams()
     {
         var addedFloor = new Floor();
         return new Dictionary<string, object>()
         {
             { nameof(Building), EditedMap.Building },
             { nameof(BuildingElement), addedFloor },
+            //{ nameof(FeatureAction), FeatureAction.Add },
+            { nameof(Type), typeof(Floor) }
+        };
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="f"></param>
+    /// <returns>Query with choosen Floor</returns>
+    internal Dictionary<string, object> GetFloorParams(Floor f)
+    {
+        return new Dictionary<string, object>()
+        {
+            { nameof(Building), EditedMap.Building },
+            { nameof(BuildingElement), f},
             //{ nameof(FeatureAction), FeatureAction.Add },
             { nameof(Type), typeof(Floor) }
         };
