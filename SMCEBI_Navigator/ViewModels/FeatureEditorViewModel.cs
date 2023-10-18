@@ -5,11 +5,17 @@ namespace SMCEBI_Navigator.ViewModels;
 
 internal partial class FeatureEditorViewModel : ObservableObject
 {
-    private Building buildingRef;
+    internal Building buildingRef;
     [ObservableProperty] private string featureName;
+
+    [ObservableProperty] private string pageTitle;
 
     FeatureAction action;
     [ObservableProperty] public BuildingElement editorElement;
+
+    [ObservableProperty] public List<BuildingElement> childElements;
+
+    [ObservableProperty] public List<BuildingElement_Feature> markedFeatures;
 
     //internal delegate Action<BuildingElement> SaveDelegate();
 
@@ -23,38 +29,42 @@ internal partial class FeatureEditorViewModel : ObservableObject
         PrepareContent(query[nameof(Type)] as Type);
     }
 
-    private async void PrepareContent(Type elementType)
+    private void PrepareContent(Type elementType)
     {
         // TODO IK it look awful, cant find suitable syntax for type pattern matching switch
         if (elementType == typeof(Floor))
         {
-            await PrepareFloor();
+            PrepareFloor();
         }
         else if (elementType == typeof(Room))
         {
-            await PrepareRoom();
+            PrepareRoom();
         }
         else if (elementType == typeof(MarkedFeature))
         {
-            await PrepareFeature();
-        } 
+            PrepareFeature();
+        }
+        PageTitle = $"{Enum.GetName(typeof(FeatureAction), action)} {FeatureName}";
     }
 
-    private async Task PrepareFeature()
+    private void PrepareFeature()
     {
         FeatureName = "Feature";
-        
+        MarkedFeatures = (EditorElement as MarkedFeature).Features;
     }
 
-    private async Task PrepareRoom()
+    private void PrepareRoom()
     {
         FeatureName = "Room";
+        ChildElements = null;
+        MarkedFeatures = (EditorElement as Room).Features;
     }
 
-    private async Task PrepareFloor()
+    private void PrepareFloor()
     {
         FeatureName = "Floor";
-        //SaveEvent += new Action<Floor>(buildingRef.GetFloorParams);
+        ChildElements = (EditorElement as Floor).Rooms.Cast<BuildingElement>().ToList();
+        MarkedFeatures = (EditorElement as Floor).Features;
     }
 
     internal void Save()

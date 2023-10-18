@@ -2,12 +2,14 @@ namespace SMCEBI_Navigator.Views;
 
 public partial class MapDisplayPage : ContentPage
 {
+    private IView mapView;
     public MapDisplayPage()
     {
-        //WebView webView = storage.Current.GetView();
-        //Loaded += async (s, e) => { await PrepareContent(); };
         Content = LoadingScreen();
+        
     }
+
+
 
     private View LoadingScreen()
     {
@@ -16,29 +18,51 @@ public partial class MapDisplayPage : ContentPage
             new Label()
             {
                 Text = "Loading",
+                VerticalOptions = LayoutOptions.Center,
+                HorizontalOptions = LayoutOptions.Center
             }
         };
     }
 
-    private async Task PrepareContent()
+    private async Task PrepareContent(string injectedHtml=null)
     {
-        VerticalStackLayout vsl = new();
-        var btn = new Button();
-        btn.Text = "Reload";
-
+        var btn = new Button
+        {
+            Text = "Reload"
+        };
         btn.Clicked += Btn_Clicked;
-        vsl.Children.Add(btn);
 
+        Editor injectHtmlEditor = new();
+        injectHtmlEditor.Completed += InjectHtmlEditor_Accepted;
 
-        Grid views = new Grid();
-        views.RowDefinitions.Add(new RowDefinition(GridLength.Star));
-        views.RowDefinitions.Add(new RowDefinition(new GridLength(30)));
+        VerticalStackLayout vsl = new()
+        {
+            Children =
+            {
+                btn,
+                injectHtmlEditor
+            }
+        };
 
-        IView x = await MapStorage.Current.GetView();
-        views.Add(vsl, 0, 1);
-        views.Add(x, 0, 0);
+        Grid gridView = new()
+        {
+            RowDefinitions = new()
+            {
+                new RowDefinition(GridLength.Star),
+                new RowDefinition(new GridLength(100))
+            }
+        };
 
-        Content = views;
+        if (string.IsNullOrEmpty(injectedHtml))
+            mapView = await MapStorage.Current.GetView();
+        else
+            mapView = new WebView() { Source = new HtmlWebViewSource() { Html = injectedHtml } };
+        
+
+        gridView.Add(vsl, 0, 1);
+        gridView.Add(mapView, 0, 0);
+
+        Content = gridView;
     }
 
     internal async Task UpdateDisplay()
@@ -46,8 +70,15 @@ public partial class MapDisplayPage : ContentPage
         await PrepareContent();
     }
 
+    private async void InjectHtmlEditor_Accepted(object sender, EventArgs e)
+    {
+        var x = sender as Editor;
+        await PrepareContent(x.Text);
+    }
+
     private void Btn_Clicked(object sender, EventArgs e)
     {
-        //PrepareContent();
+        var Html = ((mapView as WebView).Source as HtmlWebViewSource).Html;
+        Clipboard.SetTextAsync(Html);
     }
 }

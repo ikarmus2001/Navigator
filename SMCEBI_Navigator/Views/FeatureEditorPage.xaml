@@ -5,8 +5,7 @@
              xmlns:vm="clr-namespace:SMCEBI_Navigator.ViewModels"
              xmlns:cc="clr-namespace:SMCEBI_Navigator.CustomControls"
              x:DataType="vm:FeatureEditorViewModel"
-             Disappearing="ContentPage_Disappearing"
-             Title="AddFeaturePage">
+             Title="{Binding PageTitle}">
     <VerticalStackLayout Padding="10">
         <Label 
             Text="{Binding FeatureName, StringFormat='{0} name'}"
@@ -15,11 +14,12 @@
         
         <cc:StylePicker Padding="0,15,0,5" />
 
-        <Label Text="{Binding EditorElement}" />
-        <Label Text="{Binding FeatureName}" />
-
         <cc:SizePicker x:Name="fe_SizePicker" 
                        BindingContext="{Binding EditorElement.Corners}" />
+
+        <cc:ChildElementsCollection BindingContext="{Binding ChildElements}" />
+
+        <cc:FeatureCollection BindingContext="{Binding MarkedFeatures}" />
 
     </VerticalStackLayout>
 </ContentPage>
