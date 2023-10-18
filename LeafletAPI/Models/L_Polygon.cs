@@ -1,10 +1,12 @@
-﻿namespace LeafletAPI.Models;
+﻿using MapBuilder_API_Base;
+
+namespace LeafletAPI.Models;
 
 public class L_Polygon : L_StyledObject
 {
-    public List<Point> points;
+    public IEnumerable<PointClass> points;
 
-    public L_Polygon(string name, List<Point> points, MapObjectStyle style)
+    public L_Polygon(string name, IEnumerable<PointClass> points, MapObjectStyle style)
     {
         this.Name = name.Replace(" ", "_");
         this.points = points;

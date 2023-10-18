@@ -1,11 +1,13 @@
-﻿namespace LeafletAPI.Models;
+﻿using MapBuilder_API_Base;
+
+namespace LeafletAPI.Models;
 
 internal class L_Polyline : L_StyledObject
 {
     private static int id = 0;
-    internal List<Point> points;
+    internal IEnumerable<PointClass> points;
 
-    internal L_Polyline(string name, MapObjectStyle style, List<Point> points)
+    internal L_Polyline(string name, MapObjectStyle style, IEnumerable<PointClass> points)
     {
         this.Name = $"{name}_{id}";
         Style = style;

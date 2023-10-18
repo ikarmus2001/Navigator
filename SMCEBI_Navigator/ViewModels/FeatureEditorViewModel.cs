@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using MapBuilder_API_Base;
 using SMCEBI_Navigator.Models;
 
 namespace SMCEBI_Navigator.ViewModels;
@@ -11,6 +12,8 @@ internal partial class FeatureEditorViewModel : ObservableObject
     FeatureAction action;
     [ObservableProperty] public BuildingElement editorElement;
 
+    [ObservableProperty] public IEnumerable<PointClass> pts;
+
     //internal delegate Action<BuildingElement> SaveDelegate();
 
     //internal event Action<BuildingElement> SaveEvent;
@@ -19,6 +22,7 @@ internal partial class FeatureEditorViewModel : ObservableObject
     {
         buildingRef = query[nameof(Building)] as Building;
         EditorElement = query[nameof(BuildingElement)] as BuildingElement;
+        Pts = EditorElement.Corners;
         //action = (FeatureAction)Enum.Parse(typeof(FeatureAction), query[nameof(FeatureAction)].ToString());
         PrepareContent(query[nameof(Type)] as Type);
     }

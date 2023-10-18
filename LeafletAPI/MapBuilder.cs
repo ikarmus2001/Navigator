@@ -105,7 +105,7 @@ public partial class MapBuilder : IMapBuilder
     /// <param name="roomName"></param>
     /// <param name="roomShape"></param>
     /// <param name="level">Optional, last level created before the method call or the one with provided name</param>
-    public MapBuilder AddRoom(string roomName, List<Point> roomShape, MapObjectStyle roomStyle, string level = "")
+    public MapBuilder AddRoom(string roomName, IEnumerable<PointClass> roomShape, MapObjectStyle roomStyle, string level = "")
     {
         if (map.layers.Count < 1)
             throw new InvalidOperationException($"Room cannot be instantiated withouot creating level, call {nameof(AddLevel)}");
@@ -129,7 +129,7 @@ public partial class MapBuilder : IMapBuilder
     /// </summary>
     /// <param name="borders"></param>
     /// <param name="borderStyle">Style of building walls</param>
-    public MapBuilder SetBuildingShape(List<Point> borders, MapObjectStyle borderStyle)
+    public MapBuilder SetBuildingShape(IEnumerable<PointClass> borders, MapObjectStyle borderStyle)
     {
         buildingShape = new L_Polyline("border", borderStyle, borders);
         return this;

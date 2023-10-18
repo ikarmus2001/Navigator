@@ -13,7 +13,6 @@ public partial class FeatureEditorPage : ContentPage, IQueryAttributable
     {
         InitializeComponent();
         BindingContext = new VM(query);
-        //fe_SizePicker.ObjBuildingElement = ((VM)BindingContext).EditorElement;
     }
 
     public void ApplyQueryAttributes(IDictionary<string, object> query)
@@ -29,5 +28,10 @@ public partial class FeatureEditorPage : ContentPage, IQueryAttributable
     private void ContentPage_Disappearing(object sender, EventArgs e)
     {
         // TODO: Save changes in Points at Corners property in BuildingElement
+    }
+
+    private void Entry_Unfocused(object sender, FocusEventArgs e)
+    {
+
     }
 }
