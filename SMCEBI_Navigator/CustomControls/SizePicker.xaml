@@ -2,26 +2,31 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:model="clr-namespace:SMCEBI_Navigator.Models"
-             x:Class="SMCEBI_Navigator.CustomControls.SizePicker"
-             x:DataType="model:BuildingElement">
+             xmlns:pc="clr-namespace:MapBuilder_API_Base;assembly=MapBuilder_API_Base"
+             x:Class="SMCEBI_Navigator.CustomControls.SizePicker">
+    <ContentView.BindingContext>
+        <x:Array Type="{x:Type pc:PointClass}" />
+    </ContentView.BindingContext>
     <VerticalStackLayout>
         <Border StrokeThickness="2" Stroke="Coral">
-            <CollectionView ItemsSource="{Binding Corners, Mode=TwoWay}">
+            <CollectionView ItemsSource="{Binding .}">
                 <CollectionView.Header>
                     <Label Text="Size picker" />
                 </CollectionView.Header>
                 <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="Point">
+                    <DataTemplate x:DataType="pc:PointClass">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Entry Text="{Binding X, Mode=TwoWay}"  Keyboard="Numeric"
-                                   Grid.Column="1" Completed="Entry_Completed" />
+                            <Label Text="xd" />
+                            <Entry Text="{Binding X, Mode=TwoWay}" Keyboard="Numeric"
+                               Grid.Column="1" />
+
                             <Entry Text="{Binding Y, Mode=TwoWay}" Keyboard="Numeric"
-                                   Grid.Column="2" />
+                               Grid.Column="2" />
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>

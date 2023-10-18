@@ -4,10 +4,9 @@
              x:Class="SMCEBI_Navigator.Views.FeatureEditorPage"
              xmlns:vm="clr-namespace:SMCEBI_Navigator.ViewModels"
              xmlns:cc="clr-namespace:SMCEBI_Navigator.CustomControls"
-             
+             x:DataType="vm:FeatureEditorViewModel"
              Disappearing="ContentPage_Disappearing"
              Title="AddFeaturePage">
-    <!--x:DataType="vm:FeatureEditorViewModel"-->
     <VerticalStackLayout Padding="10">
         <Label 
             Text="{Binding FeatureName, StringFormat='{0} name'}"
@@ -19,44 +18,8 @@
         <Label Text="{Binding EditorElement}" />
         <Label Text="{Binding FeatureName}" />
 
-        <!--<cc:SizePicker x:Name="fe_SizePicker" 
-                       BindingContext="{Binding EditorElement, Mode=TwoWay}" />-->
-
-        <VerticalStackLayout>
-            <Border StrokeThickness="2" Stroke="Coral">
-                <CollectionView ItemsSource="{Binding Pts}">
-                    <CollectionView.Header>
-                        <Label Text="Size picker" />
-                    </CollectionView.Header>
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate> <!--x:DataType="Point"-->
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <Label Text="xd" />
-                                <Entry Text="{Binding X, Mode=TwoWay}" Keyboard="Numeric"
-                                       Grid.Column="1"
-                                       Unfocused="Entry_Unfocused" />
-
-                                <Entry Text="{Binding Y, Mode=TwoWay}" Keyboard="Numeric"
-                                       Grid.Column="2" 
-                                       Unfocused="Entry_Unfocused" />
-                            </Grid>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                    <CollectionView.Footer>
-                        <Border StrokeShape="RoundRectangle 5" Margin="0,0,5,0" HorizontalOptions="End">
-                            <ImageButton 
-            Source="save_fill0_wght400_grad0_opsz24.png" 
-            HeightRequest="50" WidthRequest="50" />
-                        </Border>
-                    </CollectionView.Footer>
-                </CollectionView>
-            </Border>
-        </VerticalStackLayout>
+        <cc:SizePicker x:Name="fe_SizePicker" 
+                       BindingContext="{Binding EditorElement.Corners}" />
 
     </VerticalStackLayout>
 </ContentPage>
