@@ -12,6 +12,7 @@
             <CollectionView ItemsSource="{Binding .}">
                 <CollectionView.Header>
                     <Label Text="Size picker" />
+                    <!--TODO Add Warning about 2 or less points-->
                 </CollectionView.Header>
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="pc:PointClass">
@@ -21,19 +22,25 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Label Text="xd" />
                             <Entry Text="{Binding X, Mode=TwoWay}" Keyboard="Numeric"
-                               Grid.Column="1" />
+                               Grid.Column="0" />
 
                             <Entry Text="{Binding Y, Mode=TwoWay}" Keyboard="Numeric"
-                               Grid.Column="2" />
+                               Grid.Column="1" />
+
+                            <ImageButton x:Name="DeletePoint" 
+                                         Source="delete_fill0_wght400_grad0_opsz24.png"
+                                         Clicked="DeletePoint_Clicked"
+                                         Grid.Column="2"
+                                         />
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
                 <CollectionView.Footer>
                     <Border StrokeShape="RoundRectangle 5" Margin="0,0,5,0" HorizontalOptions="End">
                         <ImageButton 
-                            Source="save_fill0_wght400_grad0_opsz24.png" 
+                            Source="add_fill0_wght400_grad0_opsz24.png" 
+                            Clicked="AddPoint_Clicked"
                             HeightRequest="50" WidthRequest="50" />
                     </Border>
                 </CollectionView.Footer>

@@ -13,7 +13,7 @@ public partial class FeatureEditorPage : ContentPage, IQueryAttributable
     {
         InitializeComponent();
         BindingContext = new VM(query);
-
+        InvalidateMeasure();
     }
 
     public void ApplyQueryAttributes(IDictionary<string, object> query)

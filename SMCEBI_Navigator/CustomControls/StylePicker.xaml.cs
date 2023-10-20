@@ -44,8 +44,10 @@ public partial class StylePicker : ContentView
 
     private void LineColor_Picker_SelectedIndexChanged(object sender, EventArgs e)
     {
-        string hexColor = ((sender as Picker).SelectedItem as string).ToHex();
+        string colorName = (sender as Picker).SelectedItem.ToString();
+        string hexColor = colorName.ToHex();
         LineColor_PreviewRect.Fill = new SolidColorBrush(Color.FromArgb(hexColor));
         ObjElementStyle.LineColor = hexColor;
+        (BindingContext as ElementStyle).LineColor = colorName;
     }
 }

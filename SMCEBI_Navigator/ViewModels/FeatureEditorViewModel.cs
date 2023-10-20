@@ -17,6 +17,10 @@ internal partial class FeatureEditorViewModel : ObservableObject
 
     [ObservableProperty] public List<BuildingElement_Feature> markedFeatures;
 
+    [ObservableProperty] public bool isSizePickerVisible = true;
+    [ObservableProperty] public bool isStylePickerVisible = true;
+    
+
     //internal delegate Action<BuildingElement> SaveDelegate();
 
     //internal event Action<BuildingElement> SaveEvent;
@@ -65,6 +69,9 @@ internal partial class FeatureEditorViewModel : ObservableObject
         FeatureName = "Floor";
         ChildElements = (EditorElement as Floor).Rooms.Cast<BuildingElement>().ToList();
         MarkedFeatures = (EditorElement as Floor).Features;
+
+        IsSizePickerVisible = false;
+        IsStylePickerVisible = false;
     }
 
     internal void Save()

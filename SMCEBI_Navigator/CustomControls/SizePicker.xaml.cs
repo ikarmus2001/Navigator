@@ -24,20 +24,32 @@ public partial class SizePicker : ContentView
 
     }
 
-    private void Entry_Completed(object sender, EventArgs e)
+    private void AddPoint_Clicked(object sender, EventArgs e)
     {
-        if (sender is Entry entry)
-        {
-            if (entry.Text == string.Empty)
-            {
-                // parse string to double
-                entry.Text = null;
-            }
-            else
-            {
-                entry.Text = entry.Text.Replace(',', '.');
-            }
-        }
-        
+        (BindingContext as IEnumerable<PointClass>).Append(new PointClass());
+        InvalidateLayout();
     }
+
+    private void DeletePoint_Clicked(object sender, EventArgs e)
+    {
+        (sender as Button).BindingContext = null;
+        InvalidateLayout();
+    }
+
+    //private void Entry_Completed(object sender, EventArgs e)
+    //{
+    //    if (sender is Entry entry)
+    //    {
+    //        if (entry.Text == string.Empty)
+    //        {
+    //            // parse string to double
+    //            entry.Text = null;
+    //        }
+    //        else
+    //        {
+    //            entry.Text = entry.Text.Replace(',', '.');
+    //        }
+    //    }
+
+    //}
 }

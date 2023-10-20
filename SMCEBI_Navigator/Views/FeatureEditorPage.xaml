@@ -11,10 +11,11 @@
             Text="{Binding FeatureName, StringFormat='{0} name'}"
             HorizontalOptions="Start" Padding="0,0,0,5" />
         <Entry Placeholder="{Binding FeatureName, StringFormat='{0} name'}" Text="{Binding EditorElement.Name, Mode=TwoWay}" />
-        
-        <cc:StylePicker Padding="0,15,0,5" />
 
-        <cc:SizePicker x:Name="fe_SizePicker" 
+        <cc:StylePicker Padding="0,15,0,5" IsVisible="{Binding IsStylePickerVisible}" 
+                        BindingContext="{Binding EditorElement.Style}" />
+
+        <cc:SizePicker x:Name="fe_SizePicker" IsVisible="{Binding IsSizePickerVisible}"
                        BindingContext="{Binding EditorElement.Corners}" />
 
         <cc:ChildElementsCollection BindingContext="{Binding ChildElements}" />
