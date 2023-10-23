@@ -13,13 +13,16 @@ internal partial class FeatureEditorViewModel : ObservableObject
     FeatureAction action;
     [ObservableProperty] public BuildingElement editorElement;
 
+    private Type editorType;
+
     [ObservableProperty] public List<BuildingElement> childElements;
 
     [ObservableProperty] public List<BuildingElement_Feature> markedFeatures;
 
     [ObservableProperty] public bool isSizePickerVisible = true;
     [ObservableProperty] public bool isStylePickerVisible = true;
-    
+    [ObservableProperty] public bool isPreviewVisible = false;
+
 
     //internal delegate Action<BuildingElement> SaveDelegate();
 
@@ -30,7 +33,8 @@ internal partial class FeatureEditorViewModel : ObservableObject
         buildingRef = query[nameof(Building)] as Building;
         EditorElement = query[nameof(BuildingElement)] as BuildingElement;
         //action = (FeatureAction)Enum.Parse(typeof(FeatureAction), query[nameof(FeatureAction)].ToString());
-        PrepareContent(query[nameof(Type)] as Type);
+        editorType = query[nameof(Type)] as Type;
+        PrepareContent(editorType);
     }
 
     private void PrepareContent(Type elementType)
@@ -62,6 +66,7 @@ internal partial class FeatureEditorViewModel : ObservableObject
         FeatureName = "Room";
         ChildElements = null;
         MarkedFeatures = (EditorElement as Room).Features;
+        IsPreviewVisible = true;
     }
 
     private void PrepareFloor()
@@ -74,9 +79,16 @@ internal partial class FeatureEditorViewModel : ObservableObject
         IsStylePickerVisible = false;
     }
 
-    internal void Save()
+    internal void AddChild()
     {
-        
+        BuildingElement newChild = editorType switch
+        {
+            Type t when t == typeof(Floor) => new Room(),
+            Type t when t == typeof(Room) => new MarkedFeature(),
+            _ => throw new NotImplementedException()
+        };
+
+        ChildElements.Add(newChild);
     }
 
     //internal async Task<bool> Save()

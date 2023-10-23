@@ -7,29 +7,103 @@
     <Border StrokeThickness="2" Stroke="Blue" Padding="10, 5, 10, 5">
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="5*"/>
-                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="8*"/>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="8*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="8*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-
             <Label Text="Style picker"
-               Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0"
-               VerticalOptions="Center" HorizontalOptions="Center" />
+                   Grid.Column="0" Grid.ColumnSpan="8" Grid.Row="0"
+                   VerticalOptions="Center" HorizontalOptions="Center" />
 
+            
+            
+            
+            <Label Text="Fill color" 
+                   Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2"
+                   HorizontalOptions="Center" />
+
+            <Picker x:Name="FillColor_Picker" 
+                    Grid.Column="0" Grid.Row="2" 
+                    VerticalOptions="Center" HorizontalOptions="Center" />
+
+            <Rectangle x:Name="FillColor_PreviewRect" 
+                       Grid.Column="1" Grid.Row="2"
+                       Opacity="{x:Binding Value, Source={x:Reference FillOpacity_Slider}}"
+                       Stroke="Black" StrokeThickness="2" 
+                       HorizontalOptions="Center" />
+
+            <Border 
+                Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
+                <Slider x:Name="FillOpacity_Slider"
+                        ToolTipProperties.Text="Opacity"
+                        Minimum="0" Maximum="1"
+                        ValueChanged="FillOpacity_Slider_ValueChanged" />
+            </Border>
+            
+
+
+
+
+            <Label Text="Line color" 
+                   Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2"
+                   HorizontalOptions="Center" />
+            
             <Picker x:Name="LineColor_Picker" 
-                    Grid.Column="1" Grid.Row="1" 
+                    Grid.Row="2" Grid.Column="3"
                     SelectedIndexChanged="LineColor_Picker_SelectedIndexChanged"
-                    VerticalOptions="Center" HorizontalOptions="End"/>
+                    VerticalOptions="Center" HorizontalOptions="Center" />
 
-            <Rectangle x:Name="LineColor_PreviewRect" 
-                       Grid.Column="2" Grid.Row="1"
+            <Line x:Name="LineColor_PreviewLine" 
+                  Grid.Row="2" Grid.Column="4"
+                  X1="10" X2="210"
+                  Y1="25" Y2="25" 
+                  StrokeThickness="2" 
+                  Opacity="{x:Binding Value, Source={x:Reference LineOpacity_Slider}}"
+                  HorizontalOptions="Fill" />
+
+            <Border 
+                Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="2">
+                <Slider x:Name="LineOpacity_Slider"
+                        ToolTipProperties.Text="Opacity"
+                        Minimum="0" Maximum="1"
+                        ValueChanged="LineOpacity_Slider_ValueChanged" />
+            </Border>
+
+
+
+            <Label Text="Background" 
+                   Grid.Column="6" Grid.Row="1" Grid.ColumnSpan="2"
+                   HorizontalOptions="Center" />
+
+            <Picker x:Name="BackgroundColor_Picker" 
+                    Grid.Row="2" Grid.Column="6"
+                    VerticalOptions="Center" HorizontalOptions="Center" />
+
+            <Rectangle x:Name="BackgroundColor_PreviewRect" 
+                       Grid.Row="2" Grid.Column="7" 
+                       Opacity="{x:Binding Value, Source={x:Reference BackgroundOpacity_Slider}}"
                        Stroke="Black" StrokeThickness="2" />
+            <!--Fill="{Binding , Source={x:Reference BackgroundColor_Picker}}"-->
 
+            <Border 
+                Grid.Row="3" Grid.Column="6" Grid.ColumnSpan="2">
+                <Slider x:Name="BackgroundOpacity_Slider"
+                        ToolTipProperties.Text="Opacity"
+                        Minimum="0" Maximum="1"
+                        ValueChanged="BackgroundOpacity_Slider_ValueChanged" />
+            </Border>
         </Grid>
     </Border>
 </ContentView>

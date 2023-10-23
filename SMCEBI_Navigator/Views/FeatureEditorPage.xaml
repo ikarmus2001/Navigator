@@ -14,13 +14,20 @@
         <Entry Placeholder="{Binding FeatureName, StringFormat='{0} name'}" Text="{Binding EditorElement.Name, Mode=TwoWay}" />
 
         <cc:StylePicker Padding="0,15,0,5" IsVisible="{Binding IsStylePickerVisible}"
-                        BindingContext="{Binding EditorElement.Style}" Loaded="StylePicker_Loaded"
-                        />
+                        StyleItem="{Binding EditorElement.Style}"
+                        Loaded="StylePicker_Loaded" />
 
-        <cc:SizePicker x:Name="fe_SizePicker" IsVisible="{Binding IsSizePickerVisible}"
-                       BindingContext="{Binding EditorElement.Corners}" />
+        <!--<cc:SizePicker x:Name="fe_SizePicker" IsVisible="{Binding IsSizePickerVisible}"
+                       ItemsSource="{Binding EditorElement.Corners}" />-->
 
-        <cc:ChildElementsCollection BindingContext="{Binding ChildElements}" />
+        <cc:ElementPreview x:Name="PreviewControl"
+                           PreviewElement="{Binding EditorElement, Mode=OneWay}" 
+                           ControlVisibility="{Binding IsPreviewVisible}"
+                           HeightRequest="100" WidthRequest="100" 
+                           Margin="10" />
+        
+        <cc:ChildElementsCollection x:Name="ChildElements_CC"
+            BindingContext="{Binding ChildElements}" AddClicked="ChildElements_CC_AddClicked" />
 
         <cc:FeatureCollection BindingContext="{Binding MarkedFeatures}" />
 

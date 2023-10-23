@@ -6,12 +6,14 @@ namespace SMCEBI_Navigator.CustomControls;
 
 public partial class ChildElementsCollection : ContentView
 {
-	public ChildElementsCollection()
+    public event EventHandler AddClicked;
+
+    public ChildElementsCollection()
 	{
 		InitializeComponent();
 	}
 
-    private void CollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    private async void CollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         if (e.CurrentSelection.Count == 0) return;
 
@@ -21,7 +23,12 @@ public partial class ChildElementsCollection : ContentView
 			//{ nameof(FeatureAction), FeatureAction.Edit },
 			{ nameof(Type), e.CurrentSelection.Single().GetType() }
 		};
-		Navigation.PushAsync(new FeatureEditorPage(param));
+        await Navigation.PushAsync(new FeatureEditorPage(param));
         (sender as CollectionView).SelectedItem = null;
+    }
+
+    private void AddFloorBtn_Clicked(object sender, EventArgs e)
+    {
+        AddClicked?.Invoke(this, EventArgs.Empty);
     }
 }

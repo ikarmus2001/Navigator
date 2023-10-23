@@ -3,13 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:model="clr-namespace:SMCEBI_Navigator.Models"
              xmlns:pc="clr-namespace:MapBuilder_API_Base;assembly=MapBuilder_API_Base"
-             x:Class="SMCEBI_Navigator.CustomControls.SizePicker">
-    <ContentView.BindingContext>
-        <x:Array Type="{x:Type pc:PointClass}" />
-    </ContentView.BindingContext>
+             x:Class="SMCEBI_Navigator.CustomControls.SizePicker"
+             x:Name="SizePickerComponent">
     <VerticalStackLayout>
         <Border StrokeThickness="2" Stroke="Coral">
-            <CollectionView ItemsSource="{Binding .}">
+            <CollectionView ItemsSource="{Binding ItemsSource, Source={x:Reference SizePickerComponent}}">
                 <CollectionView.Header>
                     <Label Text="Size picker" />
                     <!--TODO Add Warning about 2 or less points-->
@@ -22,10 +20,10 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Entry Text="{Binding X, Mode=TwoWay}" Keyboard="Numeric"
+                            <Entry Text="{Binding X}" Keyboard="Numeric"
                                Grid.Column="0" />
 
-                            <Entry Text="{Binding Y, Mode=TwoWay}" Keyboard="Numeric"
+                            <Entry Text="{Binding Y}" Keyboard="Numeric"
                                Grid.Column="1" />
 
                             <ImageButton x:Name="DeletePoint" 

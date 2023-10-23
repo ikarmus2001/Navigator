@@ -16,4 +16,9 @@ public class PointClass
         X = x;
         Y = y;
     }
+
+    public Point ToPoint()
+    {
+        return new Point(this.X, this.Y);
+    }
 }

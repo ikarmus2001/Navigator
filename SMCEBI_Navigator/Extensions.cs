@@ -69,6 +69,16 @@ namespace System
         {
             return (T)Copy((Object)original);
         }
+
+        public static SolidColorBrush ToColorBrush(this string hexColor)
+        {
+            return new SolidColorBrush(Color.FromArgb(hexColor));
+        }
+
+        public static Color ToColor(this string hexColor)
+        {
+            return Color.FromArgb(hexColor);
+        }
     }
 
     public class ReferenceEqualityComparer : EqualityComparer<Object>
@@ -144,6 +154,9 @@ namespace System
             {
                 if (string.IsNullOrEmpty(colorName))
                     return "#000000";
+
+                if (colorName.StartsWith('#') && colorName.Length == 7)
+                    return colorName;
 
                 return colorName.ToLower() switch
                 {

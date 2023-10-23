@@ -36,6 +36,7 @@ public partial class MainNavigationPage : NavigationPage
 
     private async void MainNavigationPage_Loaded(object sender, EventArgs e)
     {
+        this.Window.MinimumWidth = 1000;
         await mapDisplay.UpdateDisplay();
     }
 }

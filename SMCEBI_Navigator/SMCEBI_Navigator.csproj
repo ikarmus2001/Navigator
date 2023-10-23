@@ -84,6 +84,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="CustomControls\ElementPreview.xaml.cs">
+	    <DependentUpon>ElementPreview.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="CustomControls\SizePicker.xaml.cs">
 	    <DependentUpon>SizePicker.xaml</DependentUpon>
 	  </Compile>
@@ -99,6 +102,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="CustomControls\ElementPreview.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="CustomControls\SizePicker.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

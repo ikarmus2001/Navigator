@@ -1,4 +1,5 @@
 using MapBuilder_API_Base;
+using SMCEBI_Navigator.Models;
 
 namespace SMCEBI_Navigator.CustomControls;
 
@@ -8,16 +9,22 @@ public partial class SizePicker : ContentView
     //    = BindableProperty.Create(nameof(ObjBuildingElement), typeof(BuildingElement), typeof(BuildingElement),
     //        defaultBindingMode: BindingMode.TwoWay);
 
-    //public BuildingElement ObjBuildingElement
-    //{
-    //    get => (BuildingElement)GetValue(ObjBuildingElementProperty);
-    //    set => SetValue(ObjBuildingElementProperty, value);
-    //}
+    public BuildingElement ItemsSource
+    {
+        get => _itemsSource;
+        set
+        {
+            _itemsSource = value;
+            OnPropertyChanged();
+        }
+    }
+    private BuildingElement _itemsSource;
+
 
     public SizePicker()
-	{
-		InitializeComponent();
-	}
+    {
+        InitializeComponent();
+    }
 
     public void AddPoint()
     {
@@ -35,21 +42,4 @@ public partial class SizePicker : ContentView
         (sender as Button).BindingContext = null;
         InvalidateLayout();
     }
-
-    //private void Entry_Completed(object sender, EventArgs e)
-    //{
-    //    if (sender is Entry entry)
-    //    {
-    //        if (entry.Text == string.Empty)
-    //        {
-    //            // parse string to double
-    //            entry.Text = null;
-    //        }
-    //        else
-    //        {
-    //            entry.Text = entry.Text.Replace(',', '.');
-    //        }
-    //    }
-
-    //}
 }

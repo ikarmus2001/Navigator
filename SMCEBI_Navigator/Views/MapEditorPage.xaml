@@ -19,7 +19,7 @@
         <Label Text="Name" Padding="0,0,0,5" />
         <Entry Text="{Binding EditedMap.Building.Name, Mode=TwoWay}" />
 
-        <cc:StylePicker Padding="0, 10" />
+        <!--<cc:StylePicker Padding="0, 10" />-->
 
 
         <CollectionView ItemsSource="{Binding EditedMap.Building.Floors}" 

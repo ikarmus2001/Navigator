@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:model="clr-namespace:SMCEBI_Navigator.Models"
+             xmlns:cc="clr-namespace:SMCEBI_Navigator.CustomControls"
+             xmlns:pc="clr-namespace:MapBuilder_API_Base;assembly=MapBuilder_API_Base"
+             x:Class="SMCEBI_Navigator.CustomControls.ElementPreview"
+             x:DataType="cc:ElementPreview"
+             IsVisible="{Binding ControlVisibility}">
+    
+    <Polygon x:Name="PreviewPolygon"
+             StrokeThickness="{Binding PreviewElement.Style.LineWidth}" 
+             Stroke="{Binding BorderColor}" 
+             Points="{Binding Points}" 
+             Fill="{Binding Fill}" />
+</ContentView>

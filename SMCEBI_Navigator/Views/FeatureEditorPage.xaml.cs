@@ -22,19 +22,15 @@ public partial class FeatureEditorPage : ContentPage, IQueryAttributable
         BindingContext = new VM(query);
     }
 
-    private async void SaveChanges()
-    {
-        ((VM)BindingContext).Save();
-    }
-
-    private void ContentPage_Disappearing(object sender, EventArgs e)
-    {
-        // TODO: Save changes in Points at Corners property in BuildingElement
-    }
-
     // TODO Literally the worst workaround
     private void StylePicker_Loaded(object sender, EventArgs e)
     {
         (sender as StylePicker).IsVisible = ((VM)BindingContext).IsStylePickerVisible;
+    }
+
+    private void ChildElements_CC_AddClicked(object sender, EventArgs e)
+    {
+        ((VM)BindingContext).AddChild();
+        this.InvalidateMeasure();
     }
 }
