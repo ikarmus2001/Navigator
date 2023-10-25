@@ -2,14 +2,13 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:model="clr-namespace:SMCEBI_Navigator.Models"
+             xmlns:cc="clr-namespace:SMCEBI_Navigator.CustomControls"
+             x:DataType="cc:ChildElementsCollection"
              x:Class="SMCEBI_Navigator.CustomControls.ChildElementsCollection">
-    <ContentView.BindingContext>
-        <x:Array Type="{x:Type model:BuildingElement}" />
-    </ContentView.BindingContext>
-    <CollectionView ItemsSource="{Binding .}"
-                SelectionMode="Single" 
-                SelectionChanged="CollectionView_SelectionChanged"
-                Margin="0, 5, 0, 5">
+    <CollectionView x:Name="Children_CollectionView"
+                    SelectionMode="Single" 
+                    SelectionChanged="CollectionView_SelectionChanged"
+                    Margin="0, 5, 0, 5">
         <CollectionView.ItemTemplate>
             <DataTemplate x:DataType="model:BuildingElement">
                 <Border Stroke="red" StrokeThickness="4" Padding="10" StrokeShape="RoundRectangle 5, 5, 5, 5">

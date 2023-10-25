@@ -9,9 +9,10 @@
     <VerticalStackLayout Padding="10">
         <Label 
             Text="{Binding FeatureName, StringFormat='{0} name'}"
-            HorizontalOptions="Start" Padding="0,0,0,5"
-            />
-        <Entry Placeholder="{Binding FeatureName, StringFormat='{0} name'}" Text="{Binding EditorElement.Name, Mode=TwoWay}" />
+            HorizontalOptions="Start" Padding="0,0,0,5" />
+        <Entry 
+            Placeholder="{Binding FeatureName, StringFormat='{0} name'}"
+            Text="{Binding EditorElement.Name, Mode=TwoWay}" />
 
         <cc:StylePicker x:Name="StylePicker_CC"
                         Padding="0,15,0,5" IsVisible="{Binding IsStylePickerVisible}"
@@ -27,9 +28,10 @@
                            Margin="10" />
         
         <cc:ChildElementsCollection x:Name="ChildElements_CC"
-            BindingContext="{Binding ChildElements}" AddClicked="ChildElements_CC_AddClicked" />
+                                    Items="{Binding ChildElements}" 
+                                    AddClicked="ChildElements_CC_AddClicked" />
 
-        <cc:FeatureCollection BindingContext="{Binding MarkedFeatures}" />
+        <cc:ChildElementsCollection Items="{Binding MarkedFeatures}" />
 
     </VerticalStackLayout>
 </ContentPage>

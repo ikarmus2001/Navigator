@@ -1,5 +1,6 @@
 using SMCEBI_Navigator.Models;
 using VM = SMCEBI_Navigator.ViewModels.MapPickerViewModel;
+using FA = SMCEBI_Navigator.ViewModels.FeatureAction;
 
 namespace SMCEBI_Navigator.Views;
 
@@ -30,7 +31,7 @@ public partial class MapPickerPage : ContentPage
         var param = new Dictionary<string, object>() {
             { nameof(Building), selectedMap.Building },
             { nameof(BuildingElement), selectedMap.Building},
-			//{ nameof(FeatureAction), FeatureAction.Edit }
+            { nameof(FA), FA.Modify }
         };
 
         (sender as CollectionView).SelectedItem = null;

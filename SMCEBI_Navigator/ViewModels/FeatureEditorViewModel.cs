@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using SMCEBI_Navigator.Models;
+using FA = SMCEBI_Navigator.ViewModels.FeatureAction;
 
 namespace SMCEBI_Navigator.ViewModels;
 
@@ -10,7 +11,7 @@ internal partial class FeatureEditorViewModel : ObservableObject
 
     [ObservableProperty] private string pageTitle;
 
-    readonly FeatureAction action;  // TODO make use of FeatureAction
+    readonly FA action;
     [ObservableProperty] public BuildingElement editorElement;
     [ObservableProperty] public List<BuildingElement> childElements;
     [ObservableProperty] public List<BuildingElement_Feature> markedFeatures;
@@ -19,16 +20,11 @@ internal partial class FeatureEditorViewModel : ObservableObject
     [ObservableProperty] public bool isStylePickerVisible = true;
     [ObservableProperty] public bool isPreviewVisible = false;
 
-
-    //internal delegate Action<BuildingElement> SaveDelegate();
-
-    //internal event Action<BuildingElement> SaveEvent;
-
     public FeatureEditorViewModel(IDictionary<string, object> query)
     {
         buildingRef = query[nameof(Building)] as Building;
         EditorElement = query[nameof(BuildingElement)] as BuildingElement;
-        //action = (FeatureAction)Enum.Parse(typeof(FeatureAction), query[nameof(FeatureAction)].ToString());
+        action = (FA)Enum.Parse(typeof(FA), query[nameof(FA)].ToString());
         PrepareContent();
     }
 
@@ -44,7 +40,7 @@ internal partial class FeatureEditorViewModel : ObservableObject
         };
         p();
 
-        PageTitle = $"{Enum.GetName(typeof(FeatureAction), action)} {FeatureName}";
+        PageTitle = $"{Enum.GetName(typeof(FA), action)} {FeatureName}";
     }
 
     private void PrepareBuilding()
