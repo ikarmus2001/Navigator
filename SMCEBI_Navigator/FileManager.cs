@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Maui.Storage;
 using System.Text;
+using System.Text.Json;
 
 namespace SMCEBI_Navigator;
 
@@ -77,5 +78,12 @@ internal static class FileManager
             string content = File.ReadAllText(path);
             MapStorage.UnparseSavedConfigs(content);
         }
+    }
+
+    internal static async Task SaveChanges(MapConfig mapConfig)
+    {
+        Stream s = new MemoryStream();
+        await JsonSerializer.SerializeAsync<MapConfig>(s, mapConfig);
+        _ = await SaveFileAsync(s, mapConfig.Building.Name + ".json");
     }
 }

@@ -7,6 +7,8 @@ internal sealed class MapConfig
 {
     public int HtmlChangeId { get; set; }
     public int ObjChangeId { get; set; }
+
+    // TODO use versioned htmls to avoid unnecessary parsing
     public Tuple<uint, string> VersionedCachedHtml { get; set; }
     internal MapEngine Engine { get; set; }
     public Tuple<uint, uint> MapSize { get; set; }
@@ -32,5 +34,12 @@ internal sealed class MapConfig
         };
 
         return x;
+    }
+
+    internal async Task SaveChanges()
+    {
+        //HtmlChangeId++;
+        //ObjChangeId++;
+        await FileManager.SaveChanges(this);
     }
 }

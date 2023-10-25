@@ -1,36 +1,27 @@
-using SMCEBI_Navigator.CustomControls;
 using VM = SMCEBI_Navigator.ViewModels.FeatureEditorViewModel;
 
 namespace SMCEBI_Navigator.Views;
 
-public partial class FeatureEditorPage : ContentPage, IQueryAttributable
+public partial class FeatureEditorPage : ContentPage
 {
-	public FeatureEditorPage()
-	{
-		InitializeComponent();
-	}
-
     public FeatureEditorPage(Dictionary<string, object> query)
     {
         InitializeComponent();
         BindingContext = new VM(query);
+        Loaded += FeatureEditorPage_Loaded;
         InvalidateMeasure();
     }
 
-    public void ApplyQueryAttributes(IDictionary<string, object> query)
+    private void FeatureEditorPage_Loaded(object sender, EventArgs e)
     {
-        BindingContext = new VM(query);
-    }
-
-    // TODO Literally the worst workaround
-    private void StylePicker_Loaded(object sender, EventArgs e)
-    {
-        (sender as StylePicker).IsVisible = ((VM)BindingContext).IsStylePickerVisible;
+        StylePicker_CC.IsVisible = ((VM)BindingContext).IsStylePickerVisible;
+        SizePicker_CC.IsVisible = ((VM)BindingContext).IsSizePickerVisible;
+        ElementPreview_CC.IsVisible = ((VM)BindingContext).IsPreviewVisible;
     }
 
     private void ChildElements_CC_AddClicked(object sender, EventArgs e)
     {
         ((VM)BindingContext).AddChild();
-        this.InvalidateMeasure();
+        InvalidateMeasure();
     }
 }

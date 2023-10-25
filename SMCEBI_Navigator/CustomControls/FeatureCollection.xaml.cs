@@ -11,7 +11,7 @@ public partial class FeatureCollection : ContentView
 		InitializeComponent();
 	}
 
-    private void CollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    private async void CollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         if (e.CurrentSelection.Count == 0) return;
 
@@ -21,7 +21,7 @@ public partial class FeatureCollection : ContentView
 			//{ nameof(FeatureAction), FeatureAction.Edit },
 			{ nameof(Type), e.CurrentSelection.GetType() }
         };
-        Navigation.PushAsync(new FeatureEditorPage(param));
+        await Navigation.PushAsync(new FeatureEditorPage(param));
         (sender as CollectionView).SelectedItem = null;
     }
 }

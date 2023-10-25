@@ -1,5 +1,4 @@
 ﻿using SMCEBI_Navigator.Models;
-using SMCEBI_Navigator.ViewModels;
 using System.Text.Json;
 using VM = SMCEBI_Navigator.ViewModels.MapEditorViewModel;
 
@@ -11,6 +10,12 @@ public partial class MapEditorPage : ContentPage, IQueryAttributable
     public MapEditorPage()
     {
         InitializeComponent();
+        NavigatedFrom += MapEditorPage_NavigatedFrom;
+    }
+
+    private async void MapEditorPage_NavigatedFrom(object sender, NavigatedFromEventArgs e)
+    {
+        await orgMapConfig.SaveChanges();
     }
 
     public MapEditorPage(IDictionary<string, object> query)
@@ -33,7 +38,7 @@ public partial class MapEditorPage : ContentPage, IQueryAttributable
 
     private void SaveMapBtn_Clicked(object sender, EventArgs e)
     {
-        ((MapEditorViewModel)BindingContext).SaveMap();
+        ((VM)BindingContext).SaveMap();
         Navigation.PopAsync();
     }
 
@@ -42,18 +47,20 @@ public partial class MapEditorPage : ContentPage, IQueryAttributable
 
     }
 
-    private async void addFloor_imgBtn_Clicked(object sender, EventArgs e)
+    private async void AddFloor_imgBtn_Clicked(object sender, EventArgs e)
     {
         var floorParams = ((VM)BindingContext).GetFloorParams();
-        await Navigation.PushAsync(new MainNavigationPage(new FeatureEditorPage(floorParams)));
+        //new MainNavigationPage()
+        await Navigation.PushAsync(new FeatureEditorPage(floorParams));
     }
 
     private async void CollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         if (e.CurrentSelection.Count == 0) return;
 
-        var floorParams = ((MapEditorViewModel)BindingContext).GetFloorParams(e.CurrentSelection.FirstOrDefault() as Floor);
-        await Navigation.PushAsync(new MainNavigationPage(new FeatureEditorPage(floorParams)));
+        var floorParams = ((VM)BindingContext).GetFloorParams(e.CurrentSelection.FirstOrDefault() as Floor);
+        //new MainNavigationPage(
+        await Navigation.PushAsync(new FeatureEditorPage(floorParams));
         (sender as CollectionView).SelectedItem = null;
     }
 }

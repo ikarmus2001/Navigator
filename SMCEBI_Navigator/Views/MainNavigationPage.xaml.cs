@@ -26,7 +26,7 @@ public partial class MainNavigationPage : NavigationPage
 
     internal async void ShowEditor(Dictionary<string, object> query)
     {
-        await Navigation.PushAsync(new MainNavigationPage(new MapEditorPage(query)));
+        await Navigation.PushAsync(new FeatureEditorPage(query));
     }
 
     internal async void ShowMap()

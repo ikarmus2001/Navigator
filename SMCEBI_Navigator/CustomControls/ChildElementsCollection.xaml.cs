@@ -20,8 +20,7 @@ public partial class ChildElementsCollection : ContentView
         var param = new Dictionary<string, object>() { 
 			{ nameof(Building), (Parent.BindingContext as VM).buildingRef },
 			{ nameof(BuildingElement), e.CurrentSelection.Single() as BuildingElement },
-			//{ nameof(FeatureAction), FeatureAction.Edit },
-			{ nameof(Type), e.CurrentSelection.Single().GetType() }
+			//{ nameof(FeatureAction), FeatureAction.Edit }
 		};
         await Navigation.PushAsync(new FeatureEditorPage(param));
         (sender as CollectionView).SelectedItem = null;

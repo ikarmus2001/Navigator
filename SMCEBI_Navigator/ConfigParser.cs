@@ -23,20 +23,16 @@ internal static class ConfigParser
         MapBuilder builder = new();
         builder.SetBuildingShape(config.Building.Corners, config.Building.Style.ToLeafletApi());
 
-        var x = new Task(() =>
+        foreach (var floor in config.Building.Floors)
         {
-            foreach (var floor in config.Building.Floors)
-            {
-                builder.AddLevel(floor.Name);
+            builder.AddLevel(floor.Name);
 
-                foreach (var room in floor.Rooms)
-                {
-                    builder.AddRoom(room.Name, room.Corners, room.Style.ToLeafletApi());
-                }
+            foreach (var room in floor.Rooms)
+            {
+                builder.AddRoom(room.Name, room.Corners, room.Style.ToLeafletApi());
             }
-        });
-        x.Start();
-        x.Wait();
+        }
+
         return builder;
     }
 

@@ -12,11 +12,7 @@ internal partial class FeatureEditorViewModel : ObservableObject
 
     readonly FeatureAction action;  // TODO make use of FeatureAction
     [ObservableProperty] public BuildingElement editorElement;
-
-    private readonly Type editorType;
-
     [ObservableProperty] public List<BuildingElement> childElements;
-
     [ObservableProperty] public List<BuildingElement_Feature> markedFeatures;
 
     [ObservableProperty] public bool isSizePickerVisible = true;
@@ -33,26 +29,31 @@ internal partial class FeatureEditorViewModel : ObservableObject
         buildingRef = query[nameof(Building)] as Building;
         EditorElement = query[nameof(BuildingElement)] as BuildingElement;
         //action = (FeatureAction)Enum.Parse(typeof(FeatureAction), query[nameof(FeatureAction)].ToString());
-        editorType = query[nameof(Type)] as Type;
-        PrepareContent(editorType);
+        PrepareContent();
     }
 
-    private void PrepareContent(Type elementType)
+    private void PrepareContent()
     {
-        // TODO IK it look awful, cant find suitable syntax for type pattern matching switch
-        if (elementType == typeof(Floor))
+        Action p = EditorElement switch
         {
-            PrepareFloor();
-        }
-        else if (elementType == typeof(Room))
-        {
-            PrepareRoom();
-        }
-        else if (elementType == typeof(MarkedFeature))
-        {
-            PrepareFeature();
-        }
+            Building => PrepareBuilding,
+            Floor => PrepareFloor,
+            Room => PrepareRoom,
+            MarkedFeature => PrepareFeature,
+            _ => throw new NotImplementedException()
+        };
+        p();
+
         PageTitle = $"{Enum.GetName(typeof(FeatureAction), action)} {FeatureName}";
+    }
+
+    private void PrepareBuilding()
+    {
+        FeatureName = "Building";
+        ChildElements = (EditorElement as Building).Floors.Cast<BuildingElement>().ToList();
+
+        IsSizePickerVisible = false;
+        IsStylePickerVisible = false;
     }
 
     private void PrepareFeature()
@@ -81,22 +82,14 @@ internal partial class FeatureEditorViewModel : ObservableObject
 
     internal void AddChild()
     {
-        BuildingElement newChild = editorType switch
+        BuildingElement newChild = EditorElement switch
         {
-            Type t when t == typeof(Floor) => new Room(),
-            Type t when t == typeof(Room) => new MarkedFeature(),
+            Building => new Floor(),
+            Floor => new Room(),
+            Room => new MarkedFeature(),
             _ => throw new NotImplementedException()
         };
 
         ChildElements.Add(newChild);
     }
-
-    //internal async Task<bool> Save()
-    //{
-    //    if (action == FeatureAction.Add)
-    //    {
-
-    //    }
-    //    return true;
-    //}
 }
