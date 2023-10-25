@@ -12,7 +12,7 @@ internal partial class MapPickerViewModel : ObservableObject
         Maps = new ObservableCollection<MapConfig>(MapStorage.configs);
     }
 
-    internal async void UpdateVM()
+    internal void UpdateVM()
     {
         Maps = new ObservableCollection<MapConfig>(MapStorage.configs);
     }

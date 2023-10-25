@@ -3,6 +3,5 @@
                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                 x:Class="SMCEBI_Navigator.MainNavigationPage">
     <NavigationPage.HasBackButton>true</NavigationPage.HasBackButton>
-    <NavigationPage.BackButtonTitle>Siema</NavigationPage.BackButtonTitle>
     <NavigationPage.HasNavigationBar>true</NavigationPage.HasNavigationBar>
 </NavigationPage>

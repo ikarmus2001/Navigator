@@ -13,10 +13,10 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 
 		<!-- Display name -->
-		<ApplicationTitle>SMCEBI_Navigator</ApplicationTitle>
+		<ApplicationTitle>Navigator</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.smcebi_navigator</ApplicationId>
+		<ApplicationId>pl.ikarmus.smcebi_navigator</ApplicationId>
 		<ApplicationIdGuid>bef01f6c-b594-4a44-b6cc-70443a888fc1</ApplicationIdGuid>
 
 		<!-- Versions -->

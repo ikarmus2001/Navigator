@@ -21,7 +21,7 @@ internal sealed class MapConfig
     }
 
     ///<summary>
-    ///Gets newest html from versionedCachedHtml, if it's not up to date, updates it via Build method
+    /// Gets newest html from versionedCachedHtml, if it's not up to date, updates it via Build method
     ///</summary>
     internal async Task<WebView> GetView()
     {

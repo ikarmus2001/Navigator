@@ -10,10 +10,10 @@ internal partial class FeatureEditorViewModel : ObservableObject
 
     [ObservableProperty] private string pageTitle;
 
-    FeatureAction action;
+    readonly FeatureAction action;  // TODO make use of FeatureAction
     [ObservableProperty] public BuildingElement editorElement;
 
-    private Type editorType;
+    private readonly Type editorType;
 
     [ObservableProperty] public List<BuildingElement> childElements;
 

@@ -15,11 +15,13 @@ internal static class MapStorage
     {
         get
         {
+            if (configs.Count == 0)
+                return null;
             return configs[_selectedMapId];
         }
     }
 
-    internal static async void UnparseSavedConfigs(string json)
+    internal static void UnparseSavedConfigs(string json)
     {
         var deserialized = JsonSerializer.Deserialize<List<MapConfig>>(json, new JsonSerializerOptions
         {
