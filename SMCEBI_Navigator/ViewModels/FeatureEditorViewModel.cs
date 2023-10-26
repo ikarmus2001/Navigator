@@ -14,11 +14,13 @@ internal partial class FeatureEditorViewModel : ObservableObject
     readonly FA action;
     [ObservableProperty] public BuildingElement editorElement;
     [ObservableProperty] public List<BuildingElement> childElements;
-    [ObservableProperty] public List<BuildingElement_Feature> markedFeatures;
+    [ObservableProperty] public List<MarkedFeature> markedFeatures;
 
     [ObservableProperty] public bool isSizePickerVisible = true;
     [ObservableProperty] public bool isStylePickerVisible = true;
     [ObservableProperty] public bool isPreviewVisible = false;
+
+    [ObservableProperty] public string childName;
 
     public FeatureEditorViewModel(IDictionary<string, object> query)
     {
@@ -45,7 +47,8 @@ internal partial class FeatureEditorViewModel : ObservableObject
 
     private void PrepareBuilding()
     {
-        FeatureName = "Building";
+        FeatureName = nameof(Building);
+        ChildName = nameof(Floor);
         ChildElements = (EditorElement as Building).Floors.Cast<BuildingElement>().ToList();
 
         IsSizePickerVisible = false;
@@ -55,12 +58,14 @@ internal partial class FeatureEditorViewModel : ObservableObject
     private void PrepareFeature()
     {
         FeatureName = "Feature";
+        ChildName = "Subfeature";
         MarkedFeatures = (EditorElement as MarkedFeature).Features;
     }
 
     private void PrepareRoom()
     {
         FeatureName = "Room";
+        ChildName = null;
         ChildElements = null;
         MarkedFeatures = (EditorElement as Room).Features;
         IsPreviewVisible = true;
@@ -69,6 +74,7 @@ internal partial class FeatureEditorViewModel : ObservableObject
     private void PrepareFloor()
     {
         FeatureName = "Floor";
+        ChildName = nameof(Room);
         ChildElements = (EditorElement as Floor).Rooms.Cast<BuildingElement>().ToList();
         MarkedFeatures = (EditorElement as Floor).Features;
 
@@ -82,10 +88,14 @@ internal partial class FeatureEditorViewModel : ObservableObject
         {
             Building => new Floor(),
             Floor => new Room(),
-            Room => new MarkedFeature(),
             _ => throw new NotImplementedException()
         };
 
         ChildElements.Add(newChild);
+    }
+
+    internal void AddFeature()
+    {
+        MarkedFeatures.Add(new MarkedFeature());
     }
 }

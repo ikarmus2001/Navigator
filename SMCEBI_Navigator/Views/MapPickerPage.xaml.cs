@@ -48,4 +48,17 @@ public partial class MapPickerPage : ContentPage
     {
         ((VM)BindingContext).ShowMap(Parent as MainNavigationPage);
     }
+
+    private async void ToolbarItem_AddMap_Clicked(object sender, EventArgs e)
+    {
+        var newMap = new MapConfig();
+        MapStorage.configs.Add(newMap);
+        var param = new Dictionary<string, object>() {
+            { nameof(Building), newMap.Building },
+            { nameof(BuildingElement), newMap.Building},
+            { nameof(FA), FA.Add }
+        };
+
+        await Navigation.PushAsync(new FeatureEditorPage(param));
+    }
 }

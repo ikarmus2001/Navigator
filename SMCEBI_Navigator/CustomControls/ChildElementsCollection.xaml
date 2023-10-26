@@ -32,10 +32,11 @@
         <CollectionView.Footer>
             <HorizontalStackLayout HorizontalOptions="End" Margin="5">
                 <Border StrokeShape="RoundRectangle 5" Margin="0,0,5,0">
-                    <ImageButton x:Name="AddFloorBtn" 
+                    <ImageButton x:Name="AddFloorBtn"
                                  Source="add_fill0_wght400_grad0_opsz24.png" 
                                  HeightRequest="50" WidthRequest="50" 
-                                 Clicked="AddFloorBtn_Clicked"/>
+                                 Clicked="AddFloorBtn_Clicked" 
+                                 ToolTipProperties.Text="{Binding ChildName_Tooltip}" />
                 </Border>
             </HorizontalStackLayout>
         </CollectionView.Footer>

@@ -6,14 +6,17 @@
              xmlns:local="clr-namespace:SMCEBI_Navigator"
              xmlns:model="clr-namespace:SMCEBI_Navigator.Models"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             x:DataType="vm:MapPickerViewModel"
-             
+             x:DataType="vm:MapPickerViewModel"     
              Title="Wybór mapy">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="See Map" 
-                     IconImageSource="add_fill0_wght400_grad0_opsz24.png" 
+        <ToolbarItem Text="Show map" 
+                     IconImageSource="map_fill0_wght200_grad0_opsz24.png" 
                      Clicked="ToolbarItem_ShowMap_Clicked" />
+
+        <ToolbarItem Text="Add map" 
+                     IconImageSource="add_fill0_wght400_grad0_opsz24.png" 
+                     Clicked="ToolbarItem_AddMap_Clicked" />
     </ContentPage.ToolbarItems>
 
     <CollectionView x:Name="Maps_collectionView"
@@ -37,8 +40,8 @@
                         </Grid.ColumnDefinitions>
 
                         <Label
-                                    Grid.Column="0"
-                                    Text="{Binding Building.Name}" />
+                            Grid.Column="0"
+                            Text="{Binding Building.Name}" />
 
 
 

@@ -29,9 +29,12 @@
         
         <cc:ChildElementsCollection x:Name="ChildElements_CC"
                                     Items="{Binding ChildElements}" 
-                                    AddClicked="ChildElements_CC_AddClicked" />
+                                    AddClicked="ChildElements_CC_AddClicked" 
+                                    ChildName_Tooltip="{Binding ChildName}" />
 
-        <cc:ChildElementsCollection Items="{Binding MarkedFeatures}" />
+        <cc:ChildElementsCollection Items="{Binding MarkedFeatures}" 
+                                    AddClicked="Features_CC_AddClicked"
+                                    ChildName_Tooltip="Feature" />
 
     </VerticalStackLayout>
 </ContentPage>

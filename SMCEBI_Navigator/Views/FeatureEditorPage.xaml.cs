@@ -22,6 +22,10 @@ public partial class FeatureEditorPage : ContentPage
     private void ChildElements_CC_AddClicked(object sender, EventArgs e)
     {
         ((VM)BindingContext).AddChild();
-        InvalidateMeasure();
+    }
+
+    private void Features_CC_AddClicked(object sender, EventArgs e)
+    {
+        ((VM)BindingContext).AddFeature();
     }
 }
