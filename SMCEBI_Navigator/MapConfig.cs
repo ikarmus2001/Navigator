@@ -35,11 +35,4 @@ internal sealed class MapConfig
 
         return x;
     }
-
-    internal async Task SaveChanges()
-    {
-        //HtmlChangeId++;
-        //ObjChangeId++;
-        await FileManager.SaveChanges(this);
-    }
 }

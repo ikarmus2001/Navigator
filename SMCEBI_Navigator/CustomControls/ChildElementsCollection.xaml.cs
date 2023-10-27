@@ -32,17 +32,7 @@ public partial class ChildElementsCollection : ContentView
     public string? ChildName_Tooltip
     {
         get => (string)GetValue(ChildName_TooltipProperty);
-        set
-        {
-            if (!string.IsNullOrEmpty(value))
-                SetValue(ChildName_TooltipProperty, $"Add {value}");
-            else
-            {
-                AddFloorBtn.IsVisible = false;
-                SetValue(ChildName_TooltipProperty, null);
-            }
-        }
-
+        set => SetValue(ChildName_TooltipProperty, value);
     }
 #nullable disable
 
@@ -57,19 +47,16 @@ public partial class ChildElementsCollection : ContentView
     private void ChildElementsCollection_Loaded(object sender, EventArgs e)
     {
         Children_CollectionView.ItemsSource = Items;
+        ToolTipProperties.SetText(AddFloorBtn, "Add " + ChildName_Tooltip);
+        InvalidateLayout();
     }
 
     private async void CollectionView_SelectionChanged(object sender, Microsoft.Maui.Controls.SelectionChangedEventArgs e)
     {
         if (e.CurrentSelection.Count == 0) return;
 
-        var param = new Dictionary<string, object>() {
-            { nameof(Building), (Parent.BindingContext as VM).buildingRef },
-            { nameof(BuildingElement), e.CurrentSelection.Single()},
-            { nameof(FA), FA.Modify }
-        };
-        await Navigation.PushAsync(new FeatureEditorPage(param));
         (sender as CollectionView).SelectedItem = null;
+        await VM.GoToEditor((Parent.BindingContext as VM).buildingRef, (BuildingElement)e.CurrentSelection.Single(), FA.Modify, Navigation);
     }
 
     private void AddFloorBtn_Clicked(object sender, EventArgs e)

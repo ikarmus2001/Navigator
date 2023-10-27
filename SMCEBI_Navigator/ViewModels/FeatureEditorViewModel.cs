@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using SMCEBI_Navigator.Models;
+using SMCEBI_Navigator.Views;
 using FA = SMCEBI_Navigator.ViewModels.FeatureAction;
 
 namespace SMCEBI_Navigator.ViewModels;
@@ -13,8 +14,8 @@ internal partial class FeatureEditorViewModel : ObservableObject
 
     readonly FA action;
     [ObservableProperty] public BuildingElement editorElement;
-    [ObservableProperty] public List<BuildingElement> childElements;
-    [ObservableProperty] public List<MarkedFeature> markedFeatures;
+    [ObservableProperty] public IEnumerable<BuildingElement> childElements;
+    [ObservableProperty] public IEnumerable<MarkedFeature> markedFeatures;
 
     [ObservableProperty] public bool isSizePickerVisible = true;
     [ObservableProperty] public bool isStylePickerVisible = true;
@@ -49,7 +50,7 @@ internal partial class FeatureEditorViewModel : ObservableObject
     {
         FeatureName = nameof(Building);
         ChildName = nameof(Floor);
-        ChildElements = (EditorElement as Building).Floors.Cast<BuildingElement>().ToList();
+        ChildElements = (EditorElement as Building).Floors;
 
         IsSizePickerVisible = false;
         IsStylePickerVisible = false;
@@ -91,11 +92,14 @@ internal partial class FeatureEditorViewModel : ObservableObject
             _ => throw new NotImplementedException()
         };
 
-        ChildElements.Add(newChild);
+        _ = ChildElements.Append(newChild);
     }
 
     internal void AddFeature()
     {
-        MarkedFeatures.Add(new MarkedFeature());
+        _ = MarkedFeatures.Append(new MarkedFeature());
     }
+
+    internal static async Task GoToEditor(Building building, BuildingElement element, FA fa, INavigation navi) =>
+        await navi.PushAsync(new FeatureEditorPage(ObjectExtensions.NavigationParams(building, element, fa)));
 }

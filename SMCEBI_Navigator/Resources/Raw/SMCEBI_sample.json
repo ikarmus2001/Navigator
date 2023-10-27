@@ -1,0 +1,48 @@
+{
+  "building": {
+    "name": "SMCEBI",
+    "version": 1,
+    "corners": [
+      [ 0, 0 ],
+      [ 100, 0 ],
+      [ 100, 100 ],
+      [ 0, 100 ]
+    ],
+    "features": null,
+    "style": {
+      "name": "buildingStyle",
+      "linecolor": "black"
+    },
+    "floors": [
+      {
+        "name": "Floor 1",
+        "corners": [
+          [ 0, 0 ],
+          [ 100, 0 ],
+          [ 100, 100 ],
+          [ 0, 100 ]
+        ],
+        "features": null,
+        "style": {
+          "name": "floor1Style",
+          "linecolor": "red"
+        },
+        "rooms": [
+          {
+            "name": "Pokoj 1",
+            "corners": [
+              [ 0, 0 ],
+              [ 10, 0 ],
+              [ 10, 10 ],
+              [ 0, 10 ]
+            ],
+            "style": {
+              "name": "roomStyle",
+              "linecolor": "blue"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

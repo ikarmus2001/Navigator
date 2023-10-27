@@ -1,16 +1,28 @@
-using SMCEBI_Navigator.Models;
-using VM = SMCEBI_Navigator.ViewModels.MapPickerViewModel;
 using FA = SMCEBI_Navigator.ViewModels.FeatureAction;
+using VM = SMCEBI_Navigator.ViewModels.MapPickerViewModel;
 
 namespace SMCEBI_Navigator.Views;
 
 public partial class MapPickerPage : ContentPage
 {
+    MapConfig EditedMap = null;
+
 	public MapPickerPage()
 	{
         InitializeComponent();
         Appearing += MapPickerPage_Appearing;
         Loaded += MapPickerPage_Loaded;
+        NavigatedTo += MapPickerPage_NavigatedToAsync;
+    }
+
+    private async void MapPickerPage_NavigatedToAsync(object sender, NavigatedToEventArgs e)
+    {
+        if (EditedMap != null)
+        {
+            ((VM)BindingContext).UpdateVM();
+            await FileManager.SaveMap(EditedMap);
+        }
+        EditedMap = null;
     }
 
     private void MapPickerPage_Appearing(object sender, EventArgs e)
@@ -27,16 +39,10 @@ public partial class MapPickerPage : ContentPage
     {
         if (e.CurrentSelection.Count == 0) return;
 
-        var selectedMap = e.CurrentSelection.Single() as MapConfig;
-        var param = new Dictionary<string, object>() {
-            { nameof(Building), selectedMap.Building },
-            { nameof(BuildingElement), selectedMap.Building},
-            { nameof(FA), FA.Modify }
-        };
-
+        EditedMap = e.CurrentSelection.Single() as MapConfig;
         (sender as CollectionView).SelectedItem = null;
 
-        await Navigation.PushAsync(new FeatureEditorPage(param));
+        await VM.GoToEditor(EditedMap.Building, FA.Modify, Navigation);
     }
 
     private async void RadioButton_CheckedChanged(object sender, CheckedChangedEventArgs e)
@@ -46,19 +52,13 @@ public partial class MapPickerPage : ContentPage
 
     private void ToolbarItem_ShowMap_Clicked(object sender, EventArgs e)
     {
-        ((VM)BindingContext).ShowMap(Parent as MainNavigationPage);
+        VM.ShowMap(Parent as MainNavigationPage);
     }
 
     private async void ToolbarItem_AddMap_Clicked(object sender, EventArgs e)
     {
-        var newMap = new MapConfig();
-        MapStorage.configs.Add(newMap);
-        var param = new Dictionary<string, object>() {
-            { nameof(Building), newMap.Building },
-            { nameof(BuildingElement), newMap.Building},
-            { nameof(FA), FA.Add }
-        };
-
-        await Navigation.PushAsync(new FeatureEditorPage(param));
+        EditedMap = new MapConfig();
+        _ = MapStorage.configs.Append(EditedMap);
+        await VM.GoToEditor(EditedMap.Building, FA.Add, Navigation);
     }
 }

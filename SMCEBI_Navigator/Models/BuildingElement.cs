@@ -1,11 +1,12 @@
 using MapBuilder_API_Base;
+using System.Collections.ObjectModel;
 
 namespace SMCEBI_Navigator.Models;
 
 public abstract class BuildingElement
 {
     public string Name { get; set; } = "<Empty name>";
-    public List<MarkedFeature> Features { get; set; } = new();
-    public List<PointClass> Corners { get; set; } = new();
+    public ObservableCollection<MarkedFeature> Features { get; set; } = new();
+    public ObservableCollection<PointClass> Corners { get; set; } = new();
     public ElementStyle Style { get; set; } = new();
 }

@@ -10,7 +10,7 @@ public partial class App : Application
     {
         CollectionView_HeaderFooterFix();
         InitializeComponent();
-
+        
         MainPage = new MainNavigationPage();
     }
 
@@ -30,9 +30,9 @@ public partial class App : Application
 
     internal static async Task Initialization()
     {
-#if DEBUG
-        Preferences.Clear();
-#endif
+//#if DEBUG
+//        Preferences.Clear();
+//#endif
         await CheckFirstRun();
         FileManager.ReloadMaps();
         IsInitialized = true;
@@ -42,15 +42,9 @@ public partial class App : Application
     {
         if (!Preferences.ContainsKey("Configured"))
         {
-            await SaveDefaultMap();
+            await FileManager.UnpackSampleMaps();
             InitializePreferences();
         }
-    }
-
-    private static async Task SaveDefaultMap()
-    {
-        Stream defaultMapContent = await FileManager.OpenAppBundledFileAsync("defaultMap.json");
-        await FileManager.SaveFileAsync(defaultMapContent, "defaultMap.json");
     }
 
     private static void InitializePreferences()

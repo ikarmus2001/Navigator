@@ -9,7 +9,7 @@ internal static class MapStorage
     /// </summary>
     private static int _selectedMapId { get; set; } = 0;
 
-    internal static List<MapConfig> configs { get; set; }
+    internal static List<MapConfig> configs = new();
 
     internal static MapConfig Current
     {
@@ -21,22 +21,31 @@ internal static class MapStorage
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="json"></param>
+    /// <exception cref="ArgumentException">Throws when unable to deserialize</exception>
     internal static void UnparseSavedConfigs(string json)
     {
-        var deserialized = JsonSerializer.Deserialize<List<MapConfig>>(json, new JsonSerializerOptions
+        MapConfig deserialized;
+        try
         {
-            IncludeFields = true,
-            PropertyNameCaseInsensitive = true,
-            Converters = { new PointConverter() }
-        });
+            deserialized = JsonSerializer.Deserialize<MapConfig>(json, new JsonSerializerOptions
+            {
+                IncludeFields = true,
+                PropertyNameCaseInsensitive = true,
+                Converters = { new PointConverter() }
+            });
+        }
+        catch (JsonException e)
+        {
+            throw new ArgumentException("Can't deserialize saved maps", e);
+        }
 
-        if (deserialized == null)
-            throw new ArgumentException("Can't deserialize saved maps");
+        //if (deserialized == null) throw new ArgumentException("Can't deserialize saved maps");
 
-        if (configs != null)
-            configs.AddRange(deserialized);
-        else
-            configs = deserialized;
+        configs.Add(deserialized);
     }
 
     internal static async Task<Stream> ExportJsonMapByName(string mapName)

@@ -9,8 +9,6 @@ public partial class MapDisplayPage : ContentPage
         
     }
 
-
-
     private View LoadingScreen()
     {
         return new VerticalStackLayout()

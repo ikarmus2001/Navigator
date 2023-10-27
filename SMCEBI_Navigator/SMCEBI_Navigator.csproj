@@ -50,7 +50,7 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+		<MauiIcon Include="Resources\AppIcon\simple_icon_single_floor_build.png" />
 
 		<!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
@@ -68,8 +68,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Remove="Resources\Raw\defaultMap.json" />
+	  <None Remove="Resources\AppIcon\simple_icon_single_floor_build.png" />
+	  <None Remove="Resources\Raw\Dom_sample.json" />
 	  <None Remove="Resources\Raw\floorplans.html" />
+	  <None Remove="Resources\Raw\SMCEBI_sample.json" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -131,6 +133,10 @@
 	  </MauiXaml>
 	</ItemGroup>
 
-	<ProjectExtensions><VisualStudio><UserProperties resources_4raw_4defaultmap_1json__JsonSchema="importJsonSchema.json" /></VisualStudio></ProjectExtensions>
+	<ItemGroup>
+	  <None Update="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+	</ItemGroup>
+
+	<ProjectExtensions><VisualStudio><UserProperties resources_4raw_4smcebi_3default_1json__JsonSchema="importJsonSchema.json" /></VisualStudio></ProjectExtensions>
 
 </Project>

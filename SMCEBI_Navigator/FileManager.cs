@@ -30,8 +30,9 @@ internal static class FileManager
     internal static async Task<bool> SaveFileAsync(Stream content, string filename, bool isUserChoosingLocation = false, string initialPath = null)
     {
         initialPath ??= FileSystem.AppDataDirectory;
-        if (!filename.StartsWith('\\'))
-            filename = '\\' + filename;
+        
+        //if (!filename.StartsWith('\\'))
+        //    filename = '\\' + filename;
 
         if (!isUserChoosingLocation)
         {
@@ -40,7 +41,7 @@ internal static class FileManager
                 Mode = FileMode.Create,
                 Access = FileAccess.Write
             };
-            var x = new StreamWriter(Path.Combine(initialPath + filename), opts);
+            var x = new StreamWriter(Path.Combine(initialPath, filename), opts);
 
             await content.CopyToAsync(x.BaseStream);
             x.Close();
@@ -63,27 +64,41 @@ internal static class FileManager
         return await FileSystem.Current.OpenAppPackageFileAsync(filename);
     }
 
+    internal static async Task UnpackSampleMaps()
+    {
+        var samples = new string[] { "Dom_sample.json", "SMCEBI_sample.json" };
+
+        foreach (string name in samples)
+        {
+            Stream sampleMapContent = await OpenAppBundledFileAsync(name);
+            await SaveFileAsync(sampleMapContent, name);
+        }
+    }
+
     internal static void ReloadMaps()
     {
-        MapStorage.configs = null;
+        MapStorage.configs = new();
         var x = Directory.GetFiles(FileSystem.AppDataDirectory);
-        if (x.Length == 0)
-        {
-            MapStorage.configs = new();
-            return;
-        }
 
         foreach (string path in x)
         {
             string content = File.ReadAllText(path);
-            MapStorage.UnparseSavedConfigs(content);
+            try { MapStorage.UnparseSavedConfigs(content); } catch (ArgumentException) { /* skip loading */ }
         }
     }
 
-    internal static async Task SaveChanges(MapConfig mapConfig)
+    internal static async Task SaveMap(MapConfig editedMap)
     {
+        //HtmlChangeId++;
+        //ObjChangeId++;
         Stream s = new MemoryStream();
-        await JsonSerializer.SerializeAsync<MapConfig>(s, mapConfig);
-        _ = await SaveFileAsync(s, mapConfig.Building.Name + ".json");
+        await JsonSerializer.SerializeAsync(s, editedMap, new JsonSerializerOptions()
+        {
+            IncludeFields = true,
+            PropertyNameCaseInsensitive = true,
+            Converters = { new PointConverter() }
+        });
+        s.Seek(0, SeekOrigin.Begin);
+        _ = await SaveFileAsync(s, editedMap.Building.Name + ".json");  // TODO change filename to something more persistent
     }
 }

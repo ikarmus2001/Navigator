@@ -1,9 +1,9 @@
 ﻿/// https://github.com/Burtsev-Alexey/net-object-deep-copy
 
-
-using System.Collections.Generic;
-using System.Reflection;
+using FA = SMCEBI_Navigator.ViewModels.FeatureAction;
 using System.ArrayExtensions;
+using System.Reflection;
+using SMCEBI_Navigator.Models;
 
 namespace System
 {
@@ -79,6 +79,9 @@ namespace System
         {
             return Color.FromArgb(hexColor);
         }
+
+        internal static Dictionary<string, object> NavigationParams(Building b, BuildingElement be, FA fa) =>
+            new() { { nameof(Building), b }, { nameof(BuildingElement), be }, { nameof(FA), fa } };
     }
 
     public class ReferenceEqualityComparer : EqualityComparer<Object>
