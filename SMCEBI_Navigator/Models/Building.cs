@@ -2,7 +2,7 @@ using System.Collections.ObjectModel;
 
 namespace SMCEBI_Navigator.Models;
 
-public class Building : BuildingElement
+public class Building : BuildingElement, IBuildingElementOperations
 {
     public uint Version { get; set; } = 0;
     public ObservableCollection<Floor> Floors { get; set; } = new();
@@ -10,8 +10,10 @@ public class Building : BuildingElement
 
     public Building() { }
 
-    internal void AddFloor(Floor newFloor)
+    public override BuildingElement AddElement()
     {
-        Floors.Add(newFloor);
+        Floor newChild = new();
+        Floors.Add(newChild);
+        return newChild;
     }
 }

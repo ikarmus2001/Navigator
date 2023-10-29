@@ -41,7 +41,8 @@ internal static class FileManager
                 Mode = FileMode.Create,
                 Access = FileAccess.Write
             };
-            var x = new StreamWriter(Path.Combine(initialPath, filename), opts);
+            string combinedPath = Path.Combine(initialPath, filename);
+            var x = new StreamWriter(combinedPath, opts);
 
             await content.CopyToAsync(x.BaseStream);
             x.Close();

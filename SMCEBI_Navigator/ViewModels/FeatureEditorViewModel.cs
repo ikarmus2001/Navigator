@@ -90,18 +90,13 @@ internal partial class FeatureEditorViewModel : ObservableObject
 
     internal void AddChild()
     {
-        BuildingElement newChild = EditorElement switch
-        {
-            Building => new Floor(),
-            Floor => new Room(),
-            _ => throw new NotImplementedException()
-        };
+        BuildingElement newChild = EditorElement.AddElement();
         ChildElements.Add(newChild);
     }
 
     internal void AddFeature()
     {
-        _ = MarkedFeatures.Append(new MarkedFeature());
+        //_ = MarkedFeatures.Append(new MarkedFeature());
     }
 
     internal async Task GoToEditor(BuildingElement element, FA fa=FA.Modify) =>

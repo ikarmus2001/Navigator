@@ -11,4 +11,11 @@ public class Floor : BuildingElement
         Rooms = new();
     }
 
+    public override BuildingElement AddElement()
+    {
+        Room newChild = new();
+        Rooms.Add(newChild);
+        return newChild;
+    }
+
 }
