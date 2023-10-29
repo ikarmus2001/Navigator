@@ -1,12 +1,13 @@
-﻿/// https://github.com/Burtsev-Alexey/net-object-deep-copy
-
-using FA = SMCEBI_Navigator.ViewModels.FeatureAction;
+﻿using FA = SMCEBI_Navigator.ViewModels.FeatureAction;
 using System.ArrayExtensions;
 using System.Reflection;
 using SMCEBI_Navigator.Models;
 
 namespace System
 {
+    /// <summary>
+    /// https://github.com/Burtsev-Alexey/net-object-deep-copy
+    /// </summary>
     public static class ObjectExtensions
     {
         private static readonly MethodInfo CloneMethod = typeof(Object).GetMethod("MemberwiseClone", BindingFlags.NonPublic | BindingFlags.Instance);
