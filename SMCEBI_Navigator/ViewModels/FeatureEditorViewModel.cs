@@ -1,6 +1,8 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Core.Extensions;
+using CommunityToolkit.Mvvm.ComponentModel;
 using SMCEBI_Navigator.Models;
 using SMCEBI_Navigator.Views;
+using System.Collections.ObjectModel;
 using FA = SMCEBI_Navigator.ViewModels.FeatureAction;
 
 namespace SMCEBI_Navigator.ViewModels;
@@ -14,7 +16,7 @@ internal partial class FeatureEditorViewModel : ObservableObject
 
     readonly FA action;
     [ObservableProperty] public BuildingElement editorElement;
-    [ObservableProperty] public IEnumerable<BuildingElement> childElements;
+    public ObservableCollection<BuildingElement> ChildElements { get; set; }
     [ObservableProperty] public IEnumerable<MarkedFeature> markedFeatures;
 
     [ObservableProperty] public bool isSizePickerVisible = true;
@@ -50,7 +52,7 @@ internal partial class FeatureEditorViewModel : ObservableObject
     {
         FeatureName = nameof(Building);
         ChildName = nameof(Floor);
-        ChildElements = (EditorElement as Building).Floors;
+        ChildElements = (EditorElement as Building).Floors.ToObservableCollection<BuildingElement>();
 
         IsSizePickerVisible = false;
         IsStylePickerVisible = false;
@@ -76,7 +78,7 @@ internal partial class FeatureEditorViewModel : ObservableObject
     {
         FeatureName = "Floor";
         ChildName = nameof(Room);
-        ChildElements = (EditorElement as Floor).Rooms.Cast<BuildingElement>().ToList();
+        ChildElements = (EditorElement as Floor).Rooms.ToObservableCollection<BuildingElement>();
         MarkedFeatures = (EditorElement as Floor).Features;
 
         IsSizePickerVisible = false;
@@ -91,8 +93,7 @@ internal partial class FeatureEditorViewModel : ObservableObject
             Floor => new Room(),
             _ => throw new NotImplementedException()
         };
-
-        _ = ChildElements.Append(newChild);
+        ChildElements.Add(newChild);
     }
 
     internal void AddFeature()

@@ -57,5 +57,5 @@ internal static class MapStorage
 
     internal static bool IsSelected(MapConfig mapConfig) => configs[_selectedMapId] == mapConfig;
 
-    internal static void SelectMap(MapConfig mapConfig) => _selectedMapId = configs.FindIndex(x => x == mapConfig);
+    internal static void SelectMap(MapConfig mapConfig) => _selectedMapId = (configs.FindIndex(x => x == mapConfig) == -1 ? 0 : configs.FindIndex(x => x == mapConfig));
 }

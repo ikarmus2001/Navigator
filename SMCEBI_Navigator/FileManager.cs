@@ -98,6 +98,9 @@ internal static class FileManager
             PropertyNameCaseInsensitive = true,
             Converters = { new PointConverter() }
         });
+        // nie dodało piętra do obiektu fml
+        var x = JsonSerializer.Serialize<MapConfig>(editedMap);
+
         s.Seek(0, SeekOrigin.Begin);
         _ = await SaveFileAsync(s, editedMap.Building.Name + ".json");  // TODO change filename to something more persistent
     }
