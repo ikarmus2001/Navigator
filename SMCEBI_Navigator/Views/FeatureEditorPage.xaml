@@ -45,11 +45,13 @@
         <cc:ChildElementsCollection x:Name="ChildElements_CC"
                                     Items="{Binding ChildElements}" 
                                     AddClicked="ChildElements_CC_AddClicked" 
+                                    ItemSelected="ChildElements_CC_ItemSelected"
                                     ChildName_Tooltip="{Binding ChildName}" />
 
         <cc:ChildElementsCollection x:Name="FeaturesChildren_CC"
                                     Items="{Binding MarkedFeatures}" 
                                     AddClicked="Features_CC_AddClicked"
+                                    ItemSelected="FeaturesChildren_CC_ItemSelected"
                                     ChildName_Tooltip="Feature" />
 
     </VerticalStackLayout>

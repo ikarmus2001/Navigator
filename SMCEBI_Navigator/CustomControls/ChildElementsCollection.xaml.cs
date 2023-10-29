@@ -37,6 +37,7 @@ public partial class ChildElementsCollection : ContentView
 #nullable disable
 
     public event EventHandler AddClicked;
+    internal event EventHandler<SelectedBuildingElementEventArgs> ItemSelected;
 
     public ChildElementsCollection()
     {
@@ -51,16 +52,24 @@ public partial class ChildElementsCollection : ContentView
         InvalidateLayout();
     }
 
-    private async void CollectionView_SelectionChanged(object sender, Microsoft.Maui.Controls.SelectionChangedEventArgs e)
+    private async void CollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         if (e.CurrentSelection.Count == 0) return;
 
+        var selectedItem = (sender as CollectionView).SelectedItem as BuildingElement;
+        ItemSelected?.Invoke(this, new SelectedBuildingElementEventArgs(selectedItem));
+
         (sender as CollectionView).SelectedItem = null;
-        await VM.GoToEditor((Parent.BindingContext as VM).buildingRef, (BuildingElement)e.CurrentSelection.Single(), FA.Modify, Navigation);
     }
 
     private void AddFloorBtn_Clicked(object sender, EventArgs e)
     {
         AddClicked?.Invoke(this, EventArgs.Empty);
     }
+}
+
+
+internal class SelectedBuildingElementEventArgs(BuildingElement selectedBuildingElement) : EventArgs
+{
+    public BuildingElement BuildingElement = selectedBuildingElement;
 }

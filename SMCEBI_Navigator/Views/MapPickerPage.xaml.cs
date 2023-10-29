@@ -27,7 +27,7 @@ public partial class MapPickerPage : ContentPage
 
     private void MapPickerPage_Appearing(object sender, EventArgs e)
     {
-        BindingContext ??= new VM();
+        BindingContext ??= new VM(Navigation);
     }
 
     private void MapPickerPage_Loaded(object sender, EventArgs e)
@@ -42,7 +42,7 @@ public partial class MapPickerPage : ContentPage
         EditedMap = e.CurrentSelection.Single() as MapConfig;
         (sender as CollectionView).SelectedItem = null;
 
-        await VM.GoToEditor(EditedMap.Building, FA.Modify, Navigation);
+        await ((VM)BindingContext).GoToEditor(EditedMap.Building, FA.Modify);
     }
 
     private async void RadioButton_CheckedChanged(object sender, CheckedChangedEventArgs e)
@@ -59,6 +59,6 @@ public partial class MapPickerPage : ContentPage
     {
         EditedMap = new MapConfig();
         _ = MapStorage.configs.Append(EditedMap);
-        await VM.GoToEditor(EditedMap.Building, FA.Add, Navigation);
+        await ((VM)BindingContext).GoToEditor(EditedMap.Building, FA.Add);
     }
 }

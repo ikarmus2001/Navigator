@@ -9,11 +9,13 @@ namespace SMCEBI_Navigator.ViewModels;
 
 internal partial class MapPickerViewModel : ObservableObject
 {
+    private INavigation navi;
     [ObservableProperty] private ObservableCollection<MapConfig> maps;
 
-    public MapPickerViewModel()
+    public MapPickerViewModel(INavigation navi)
     {
         Maps = new ObservableCollection<MapConfig>(MapStorage.configs);
+        this.navi = navi;
     }
 
     internal void UpdateVM()
@@ -26,6 +28,6 @@ internal partial class MapPickerViewModel : ObservableObject
         navPage.ShowMap();
     }
 
-    internal static async Task GoToEditor(Building building, FA fa, INavigation navi) =>
+    internal async Task GoToEditor(Building building, FA fa) =>
         await navi.PushAsync(new FeatureEditorPage(ObjectExtensions.NavigationParams(building, building, fa)));
 }

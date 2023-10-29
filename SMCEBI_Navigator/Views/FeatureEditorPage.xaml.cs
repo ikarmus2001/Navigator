@@ -7,7 +7,7 @@ public partial class FeatureEditorPage : ContentPage
     public FeatureEditorPage(Dictionary<string, object> query)
     {
         InitializeComponent();
-        BindingContext = new VM(query);
+        BindingContext = new VM(query, Navigation);
         Loaded += FeatureEditorPage_Loaded;
         InvalidateMeasure();
     }
@@ -28,4 +28,8 @@ public partial class FeatureEditorPage : ContentPage
     {
         ((VM)BindingContext).AddFeature();
     }
+
+    private async void ChildElements_CC_ItemSelected(object sender, CustomControls.SelectedBuildingElementEventArgs e) => await ((VM)BindingContext).GoToEditor(e.BuildingElement);
+
+    private async void FeaturesChildren_CC_ItemSelected(object sender, CustomControls.SelectedBuildingElementEventArgs e) => await ((VM)BindingContext).GoToEditor(e.BuildingElement);
 }
