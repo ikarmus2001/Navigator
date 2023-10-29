@@ -8,24 +8,9 @@ public partial class App : Application
 
     public App()
     {
-        CollectionView_HeaderFooterFix();
         InitializeComponent();
         
         MainPage = new MainNavigationPage();
-    }
-
-    /// <summary>
-    /// Fixes a bug where CollectionView's Header and Footer are not added to the logical tree
-    /// https://github.com/dotnet/maui/issues/14557
-    /// https://github.com/dotnet/maui/issues/14557#issuecomment-1686149840
-    /// </summary>
-    private static void CollectionView_HeaderFooterFix()
-    {
-        CollectionViewHandler.Mapper.AppendToMapping("HeaderAndFooterFix", (_, collectionView) =>
-        {
-            collectionView.AddLogicalChild(collectionView.Header as Element);
-            collectionView.AddLogicalChild(collectionView.Footer as Element);
-        });
     }
 
     internal static async Task Initialization()
