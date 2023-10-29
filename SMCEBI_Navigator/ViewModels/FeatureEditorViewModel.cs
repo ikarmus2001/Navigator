@@ -9,12 +9,14 @@ namespace SMCEBI_Navigator.ViewModels;
 
 internal partial class FeatureEditorViewModel : ObservableObject
 {
-    internal Building buildingRef;
-    [ObservableProperty] private string featureName;
+    private readonly INavigation navi;
+    
 
+    [ObservableProperty] private string featureName;
     [ObservableProperty] private string pageTitle;
 
-    readonly FA action;
+    private readonly FA action;
+    private readonly Building buildingRef;
     [ObservableProperty] public BuildingElement editorElement;
     public ObservableCollection<BuildingElement> ChildElements { get; set; }
     [ObservableProperty] public IEnumerable<MarkedFeature> markedFeatures;
@@ -25,12 +27,13 @@ internal partial class FeatureEditorViewModel : ObservableObject
 
     [ObservableProperty] public string childName;
 
-    public FeatureEditorViewModel(IDictionary<string, object> query)
+    public FeatureEditorViewModel(IDictionary<string, object> query, INavigation navi)
     {
         buildingRef = query[nameof(Building)] as Building;
         EditorElement = query[nameof(BuildingElement)] as BuildingElement;
         action = (FA)Enum.Parse(typeof(FA), query[nameof(FA)].ToString());
         PrepareContent();
+        this.navi = navi;
     }
 
     private void PrepareContent()
@@ -101,6 +104,6 @@ internal partial class FeatureEditorViewModel : ObservableObject
         _ = MarkedFeatures.Append(new MarkedFeature());
     }
 
-    internal static async Task GoToEditor(Building building, BuildingElement element, FA fa, INavigation navi) =>
-        await navi.PushAsync(new FeatureEditorPage(ObjectExtensions.NavigationParams(building, element, fa)));
+    internal async Task GoToEditor(BuildingElement element, FA fa=FA.Modify) =>
+        await navi.PushAsync(new FeatureEditorPage(ObjectExtensions.NavigationParams(buildingRef, element, fa)));
 }
