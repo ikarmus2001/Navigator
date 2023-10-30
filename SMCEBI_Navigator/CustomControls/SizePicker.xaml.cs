@@ -1,4 +1,5 @@
 using MapBuilder_API_Base;
+using System.Collections.ObjectModel;
 
 namespace SMCEBI_Navigator.CustomControls;
 
@@ -25,12 +26,13 @@ public partial class SizePicker : ContentView
     private void AddPoint_Clicked(object sender, EventArgs e)
     {
         _ = Items.Append(new PointClass());
-        InvalidateLayout();
+        (Items as ObservableCollection<PointClass>).Add(new PointClass());
+        //InvalidateLayout();
     }
 
     private void DeletePoint_Clicked(object sender, EventArgs e)
     {
-        
+
         InvalidateLayout();
     }
 }

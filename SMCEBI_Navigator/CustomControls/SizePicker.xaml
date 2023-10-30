@@ -4,6 +4,7 @@
              xmlns:model="clr-namespace:SMCEBI_Navigator.Models"
              xmlns:pc="clr-namespace:MapBuilder_API_Base;assembly=MapBuilder_API_Base"
              x:Class="SMCEBI_Navigator.CustomControls.SizePicker"
+             x:DataType="pc:PointClass"
              x:Name="SizePickerComponent">
     <VerticalStackLayout>
         <Border StrokeThickness="2" Stroke="Coral">
@@ -27,6 +28,8 @@
                                Grid.Column="1" />
 
                             <ImageButton x:Name="DeletePoint" 
+                                         MaximumHeightRequest="50"
+                                         MaximumWidthRequest="50"
                                          Source="delete_fill0_wght400_grad0_opsz24.png"
                                          Clicked="DeletePoint_Clicked"
                                          Grid.Column="2"

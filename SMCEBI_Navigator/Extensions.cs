@@ -172,6 +172,25 @@ namespace System
                     _ => "#000000"
                 };
             }
+
+            internal static string ToColorName(this string hexName)
+            {
+                if (string.IsNullOrEmpty(hexName))
+                    return "Black";
+
+                if (!hexName.StartsWith('#'))
+                    return hexName;
+
+                return hexName.ToUpper() switch
+                {
+                    "#FF0000" => "Red",
+                    "#00FF00" => "Green",
+                    "#0000FF" => "Blue",
+                    "#000000" => "Black",
+                    "#FFFFFF" => "White",
+                    _ => "Black"
+                };
+            }
         }
     }
 

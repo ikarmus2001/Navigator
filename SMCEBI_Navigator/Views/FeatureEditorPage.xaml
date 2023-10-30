@@ -12,7 +12,10 @@
             <Setter Property="TextColor" Value="Red" />
         </Style>
     </ContentPage.Resources>
-
+    
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="Debug_ToolbarItem" Text="Debug me" Clicked="Debug_ToolbarItem_Clicked" />
+    </ContentPage.ToolbarItems>
 
     <VerticalStackLayout Padding="10">
         <Label 

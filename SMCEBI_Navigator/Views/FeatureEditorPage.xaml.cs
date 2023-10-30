@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using VM = SMCEBI_Navigator.ViewModels.FeatureEditorViewModel;
 
 namespace SMCEBI_Navigator.Views;
@@ -32,4 +33,9 @@ public partial class FeatureEditorPage : ContentPage
     private async void ChildElements_CC_ItemSelected(object sender, CustomControls.SelectedBuildingElementEventArgs e) => await ((VM)BindingContext).GoToEditor(e.BuildingElement);
 
     private async void FeaturesChildren_CC_ItemSelected(object sender, CustomControls.SelectedBuildingElementEventArgs e) => await ((VM)BindingContext).GoToEditor(e.BuildingElement);
+
+    private void Debug_ToolbarItem_Clicked(object sender, EventArgs e)
+    {
+        
+    }
 }
