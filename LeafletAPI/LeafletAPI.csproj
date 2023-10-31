@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFrameworks>net8.0;net8.0-android</TargetFrameworks> <!--;net7.0-ios;net7.0-maccatalyst-->
+		<TargetFrameworks>net8.0;net8.0-android34</TargetFrameworks> <!--;net7.0-ios;net7.0-maccatalyst-->
 		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
 		<UseMaui>true</UseMaui>
 		<SingleProject>true</SingleProject>

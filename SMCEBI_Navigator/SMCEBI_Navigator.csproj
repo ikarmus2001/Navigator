@@ -5,7 +5,7 @@
 		<!--<TargetFrameworks>net7.0-android</TargetFrameworks> --><!--;net7.0-ios;net7.0-maccatalyst--><!--
 		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net7.0-windows10.0.19041.0</TargetFrameworks>-->
 		
-		<TargetFrameworks>net8.0;net8.0-android</TargetFrameworks> <!--;net7.0-ios;net7.0-maccatalyst-->
+		<TargetFrameworks>net8.0;net8.0-android34</TargetFrameworks> <!--;net7.0-ios;net7.0-maccatalyst-->
 		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
 		<OutputType Condition="'$(TargetFramework)' != 'net8.0'">Exe</OutputType>
 		<RootNamespace>SMCEBI_Navigator</RootNamespace>
