@@ -1,0 +1,49 @@
+trigger: none
+
+
+variables:
+- name: dotnetVersion
+  value: '8.x'
+  readonly: false
+- name: nugetVersion
+  value: '>=6.7.x'
+
+jobs:
+  - job: EnvironmentPrep
+    displayName: Environment preparation
+    pool:
+      name: Self-hosted pool
+    steps:
+      - task: JavaToolInstaller@0
+        displayName: Use Java
+        # Make sure to set up environmental variable as in template: 
+        # Name: `JAVA_HOME_${versionSpec}_${jdkArchitectureOption}` and value pointing to it's JAVA_HOME 
+        # (via https://stackoverflow.com/a/72314866/14345698)
+        inputs:
+          versionSpec: 11
+          jdkArchitectureOption: x64
+          jdkSourceOption: PreInstalled
+
+      - task: UseDotNet@2
+        displayName: Install .NET SDK
+        inputs:
+          version: $(dotnetVersion)
+          includePreviewVersions: true
+          installationPath: $(Agent.ToolsDirectory)/dotnet/$(dotnetVersion)
+          packageType: sdk
+          useGlobalJson: false
+          performMultiLevelLookup: false
+
+      - task: NuGetToolInstaller@1
+        displayName: Install NuGet
+        inputs:
+          checkLatest: true
+          versionSpec: $(nugetVersion)
+
+      - task: DotNetCoreCLI@2
+        displayName: Install MAUI workload
+        inputs:
+          command: custom
+          custom: workload
+          arguments: install maui maui-android maui-windows wasm-tools
+
