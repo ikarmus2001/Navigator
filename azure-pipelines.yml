@@ -1,3 +1,6 @@
+trigger: none
+
+
 variables:
 - name: dotnetVersion
   value: '8.x'
