@@ -8,23 +8,12 @@ variables:
 - name: nugetVersion
   value: '>=6.7.x'
 
-
-resources:
-  repositories:
-  - repository: self
-    type: git
-    ref: refs/heads/PipelineTroubleshoot_dotnet8Prerelease
-
 jobs:
   - job: EnvironmentPrep
     displayName: Environment preparation
     pool:
       name: Self-hosted pool
     steps:
-      - checkout: self
-        clean: true
-        fetchTags: false
-
       - task: JavaToolInstaller@0
         displayName: Use Java
         # Make sure to set up environmental variable as in template: 
