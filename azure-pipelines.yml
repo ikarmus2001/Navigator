@@ -18,6 +18,8 @@ resources:
 jobs:
   - job: EnvironmentPrep
     displayName: Environment preparation
+    pool:
+      name: Self-hosted pool
     steps:
       - checkout: self
         clean: true
