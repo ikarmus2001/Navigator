@@ -5,9 +5,9 @@ parameters:
     displayName: Project to compile
     type: string
     values:
-      - Release
-      - Debug
-    default: Debug
+      - 'Release'
+      - 'Debug'
+    default: 'Debug'
   - name: framework
     displayName: Framework (platform)
     type: string
@@ -124,7 +124,10 @@ stages:
               zipAfterPublish: false
               publishWebProjects: false
               projects: SMCEBI_Navigator\SMCEBI_Navigator.csproj
-              arguments: '-f net8.0-android34 -c $(parameters.config)'
+              ${{ if eq(parameters.config, 'Release') }}:
+                arguments: '-f net8.0-android34 -c Release'
+              ${{ else }}:
+                arguments: '-f net8.0-android34 -c Debug'
 
           - task: AndroidSigning@3
             displayName: Signing and aligning APK file(s) **/*.apk
@@ -148,5 +151,9 @@ stages:
               zipAfterPublish: false
               publishWebProjects: false
               projects: SMCEBI_Navigator\SMCEBI_Navigator.csproj
-              arguments: '-f net8.0-windows10.0.19041.0 -c $(parameters.config)'
+              ${{ if eq(parameters.config, 'Release') }}:
+                arguments: '-f net8.0-windows10.0.19041.0 -c Release'
+              ${{ else }}:
+                arguments: '-f net8.0-windows10.0.19041.0 -c Debug'
+
 
