@@ -1,5 +1,29 @@
 trigger: none
 
+parameters:
+  - name: config
+    displayName: Project to compile
+    type: string
+    values:
+      - Release
+      - Debug
+    default: Debug
+  - name: framework
+    displayName: Framework (platform)
+    type: string
+    values:
+      - net8.0-android34
+      - net8.0-windows10.0.19041.0
+      - net8.0-windows10.0.19041.0;net8.0-android34
+    default: net8.0-windows10.0.19041.0;net8.0-android34
+  # - name: githubPublish
+  #   displayName: Publish to GitHub Releases
+  #   type: boolean
+  #   default: false
+  - name: skipEnvPrep
+    displayName: Skip environment preparation
+    type: boolean
+    default: false
 
 variables:
 - name: dotnetVersion
@@ -8,42 +32,99 @@ variables:
 - name: nugetVersion
   value: '>=6.7.x'
 
-jobs:
-  - job: EnvironmentPrep
+pool:
+  name: Self-hosted pool
+
+stages:
+- ${{ if eq(parameters.skipEnvPrep, false) }}:
+  - stage: envPrep
     displayName: Environment preparation
-    pool:
-      name: Self-hosted pool
-    steps:
-      - task: JavaToolInstaller@0
-        displayName: Use Java
-        # Make sure to set up environmental variable as in template: 
-        # Name: `JAVA_HOME_${versionSpec}_${jdkArchitectureOption}` and value pointing to it's JAVA_HOME 
-        # (via https://stackoverflow.com/a/72314866/14345698)
-        inputs:
-          versionSpec: 11
-          jdkArchitectureOption: x64
-          jdkSourceOption: PreInstalled
+    jobs:
+      - job: EnvironmentPrep
+        displayName: Environment preparation
+        steps:
+          - task: JavaToolInstaller@0
+            displayName: Use Java
+            # Make sure to set up environmental variable as in template: 
+            # Name: `JAVA_HOME_${versionSpec}_${jdkArchitectureOption}` and value pointing to it's JAVA_HOME 
+            # (via https://stackoverflow.com/a/72314866/14345698)
+            inputs:
+              versionSpec: 11
+              jdkArchitectureOption: x64
+              jdkSourceOption: PreInstalled
 
-      - task: UseDotNet@2
-        displayName: Install .NET SDK
-        inputs:
-          version: $(dotnetVersion)
-          includePreviewVersions: true
-          installationPath: $(Agent.ToolsDirectory)/dotnet/$(dotnetVersion)
-          packageType: sdk
-          useGlobalJson: false
-          performMultiLevelLookup: false
+          - task: UseDotNet@2
+            displayName: Install .NET SDK
+            inputs:
+              version: $(dotnetVersion)
+              includePreviewVersions: true
+              installationPath: $(Agent.ToolsDirectory)/dotnet/$(dotnetVersion)
+              packageType: sdk
+              useGlobalJson: false
+              performMultiLevelLookup: false
 
-      - task: NuGetToolInstaller@1
-        displayName: Install NuGet
-        inputs:
-          checkLatest: true
-          versionSpec: $(nugetVersion)
+          - task: NuGetToolInstaller@1
+            displayName: Install NuGet
+            inputs:
+              checkLatest: true
+              versionSpec: $(nugetVersion)
 
-      - task: DotNetCoreCLI@2
-        displayName: Install MAUI workload
-        inputs:
-          command: custom
-          custom: workload
-          arguments: install maui maui-android maui-windows wasm-tools
+          - task: DotNetCoreCLI@2
+            displayName: Install MAUI workload
+            inputs:
+              command: custom
+              custom: workload
+              arguments: install maui wasm-tools
+          - task: DotNetCoreCLI@2
+            displayName: Install platform specific MAUI workload
+            inputs:
+              command: custom
+              custom: workload
+              ${{ if and(contains(parameters.framework, 'android'), contains(parameters.framework, 'windows')) }}:
+                arguments: install maui-android maui-windows
+              ${{ elseif contains(parameters.framework, 'android') }}:
+                arguments: install maui-android
+              ${{ elseif contains(parameters.framework, 'windows') }}:
+                arguments: install maui-windows
+
+- ${{ if contains(parameters.framework, 'android') }}:
+  - stage: 
+    displayName: Android compilation
+    jobs:
+      - job: Android_compilation
+        displayName: Android app compilation
+        steps:
+          - task: DotNetCoreCLI@2
+            inputs:
+              command: publish
+              zipAfterPublish: false
+              arguments: |
+                SMCEBI_Navigator.csproj 
+                -f net8.0-android34
+                -c ${parameters.config} 
+          - task: AndroidSigning@3
+            displayName: Signing and aligning APK file(s) **/*.apk
+            inputs:
+              keystoreFile: a4032e3a-dc5f-4eb8-ad98-50c17f59ab1e
+              keystorePass: $(BuildParameters.keystorePass)
+              keystoreAlias: $(BuildParameters.keystoreAlias)
+              keyPass: $(BuildParameters.keystorePass)
+
+- ${{ if contains(parameters.framework, 'windows') }}:
+  - stage: 
+    displayName: Windows compilation
+    jobs:
+      - job: Windows_compilation
+        displayName: Windows app compilation
+        steps:
+          - task: DotNetCoreCLI@2
+            inputs:
+              command: publish
+              zipAfterPublish: false
+              arguments: |
+                SMCEBI_Navigator.csproj 
+                -f net8.0-windows10.0.19041.0
+                -c ${parameters.config} 
+
+
 
