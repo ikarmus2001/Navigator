@@ -123,8 +123,10 @@ stages:
               script: |
                 echo "##vso[task.setvariable variable=keystorePwd;issecret=true]$(AndroidKeystoreSigningPassword)"
                 echo "##vso[task.setvariable variable=keystoreName;issecret=false]$(AndroidKeystoreName)"
-              
 
+          - task: DownloadSecureFile@1
+            inputs:
+              secureFile: $(AndroidKeystoreName).keystore
           - task: DotNetCoreCLI@2
             displayName: Publish app
             inputs:
@@ -137,6 +139,7 @@ stages:
               ${{ else }}:
                 arguments: '-f net8.0-android34 -c Debug'
 
+          
           # - task: AndroidSigning@3
           #   displayName: Signing and aligning APK file(s) **/*.apk
           #   inputs:
