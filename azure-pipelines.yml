@@ -31,6 +31,8 @@ variables:
   readonly: false
 - name: nugetVersion
   value: '>=6.7.x'
+- group: Android signing password
+
 
 pool:
   name: Self-hosted pool
@@ -122,14 +124,14 @@ stages:
               zipAfterPublish: false
               publishWebProjects: false
               projects: SMCEBI_Navigator\SMCEBI_Navigator.csproj
-              arguments: -f net8.0-android34 -c ${parameters.config}
+              arguments: -f net8.0-android34 -c $(parameters.config)
           - task: AndroidSigning@3
             displayName: Signing and aligning APK file(s) **/*.apk
             inputs:
               keystoreFile: a4032e3a-dc5f-4eb8-ad98-50c17f59ab1e
-              keystorePass: $(BuildParameters.keystorePass)
-              keystoreAlias: $(BuildParameters.keystoreAlias)
-              keyPass: $(BuildParameters.keystorePass)
+              keystorePass: $(AndroidKeystoreSigningPassword)
+              keystoreAlias: $(AndroidKeystoreName)
+              keyPass: $(AndroidKeystoreSigningPassword)
 
 - ${{ if contains(parameters.framework, 'windows') }}:
   - stage: 
@@ -145,5 +147,5 @@ stages:
               zipAfterPublish: false
               publishWebProjects: false
               projects: SMCEBI_Navigator\SMCEBI_Navigator.csproj
-              arguments: -f net8.0-windows10.0.19041.0 -c ${parameters.config}
+              arguments: -f net8.0-windows10.0.19041.0 -c $(parameters.config)
 
