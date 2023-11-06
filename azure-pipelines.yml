@@ -120,7 +120,10 @@ stages:
           - task: CmdLine@2
             displayName: Set signingPwd
             inputs:
-              script: echo "##vso[task.setvariable variable=signingPwd;issecret=true]$(AndroidKeystoreSigningPassword)"
+              script: |
+                echo "##vso[task.setvariable variable=keystorePwd;issecret=true]$(AndroidKeystoreSigningPassword)"
+                echo "##vso[task.setvariable variable=keystoreName;issecret=false]$(AndroidKeystoreName)"
+              
 
           - task: DotNetCoreCLI@2
             displayName: Publish app
@@ -130,9 +133,9 @@ stages:
               publishWebProjects: false
               projects: SMCEBI_Navigator\SMCEBI_Navigator.csproj
               ${{ if eq(parameters.config, 'Release') }}:
-                arguments: '-f net8.0-android34 -c Release -p:AndroidSigningKeyPass=$(signingPwd) -p:AndroidSigningStorePass=$(signingPwd)'
+                arguments: '-f net8.0-android34 -c Release'
               ${{ else }}:
-                arguments: '-f net8.0-android34 -c Debug -p:AndroidSigningKeyPass=$(signingPwd) -p:AndroidSigningStorePass=$(signingPwd)'
+                arguments: '-f net8.0-android34 -c Debug'
 
           # - task: AndroidSigning@3
           #   displayName: Signing and aligning APK file(s) **/*.apk
