@@ -116,11 +116,12 @@ stages:
               jdkSourceOption: PreInstalled
 
           - task: DotNetCoreCLI@2
+            displayName: Publish app
             inputs:
               command: publish
               zipAfterPublish: false
               arguments: |
-                SMCEBI_Navigator.csproj 
+                SMCEBI_Navigator\SMCEBI_Navigator.csproj
                 -f net8.0-android34
                 -c ${parameters.config} 
           - task: AndroidSigning@3
@@ -139,11 +140,12 @@ stages:
         displayName: Windows app compilation
         steps:
           - task: DotNetCoreCLI@2
+            displayName: Publish desktop app
             inputs:
               command: publish
               zipAfterPublish: false
               arguments: |
-                SMCEBI_Navigator.csproj 
+                SMCEBI_Navigator\SMCEBI_Navigator.csproj
                 -f net8.0-windows10.0.19041.0
                 -c ${parameters.config} 
 
