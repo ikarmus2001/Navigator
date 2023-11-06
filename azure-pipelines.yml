@@ -133,7 +133,7 @@ stages:
               publishWebProjects: false
               projects: SMCEBI_Navigator\SMCEBI_Navigator.csproj
               ${{ if eq(parameters.config, 'Release') }}:
-                arguments: '-f net8.0-android34 -c Release'
+                arguments: '-f net8.0-android34 -c Release -p:AndroidSigningKeystore=$(Agent.TempDirectory)/$(AndroidKeystoreName).keystore'
               ${{ else }}:
                 arguments: '-f net8.0-android34 -c Debug'
 
