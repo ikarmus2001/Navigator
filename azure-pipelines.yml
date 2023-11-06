@@ -137,7 +137,7 @@ stages:
               ${{ if eq(parameters.config, 'Release') }}:
                 arguments: '-f net8.0-android34 -c Release -p:AndroidSigningKeystore=$(Agent.TempDirectory)/$(AndroidKeystoreName).keystore'
               ${{ else }}:
-                arguments: '-f net8.0-android34 -c Debug'
+                arguments: '-f net8.0-android34 -c Debug -p:AndroidSigningKeystore=$(Agent.TempDirectory)/$(AndroidKeystoreName).keystore'
 
           
           # - task: AndroidSigning@3
