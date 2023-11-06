@@ -43,21 +43,11 @@
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android34|AnyCPU'">
 	  <AndroidPackageFormat>apk</AndroidPackageFormat>
-	  <AndroidKeyStore>True</AndroidKeyStore>
-	  
-	  <AndroidSigningKeyAlias>env:keystoreName</AndroidSigningKeyAlias>
-	  <AndroidSigningKeyPass>env:keystorePwd</AndroidSigningKeyPass>
-	  <AndroidSigningStorePass>env:keystorePwd</AndroidSigningStorePass>
+		<!--Signing mad in CI CD-->
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android34|AnyCPU'">
 	  <AndroidPackageFormat>apk</AndroidPackageFormat>
-	  <AndroidKeyStore>True</AndroidKeyStore>
-	  
-	  <AndroidSigningKeyAlias>env:keystoreName</AndroidSigningKeyAlias>
-	  <AndroidSigningKeyPass>env:keystorePwd</AndroidSigningKeyPass>
-	  <AndroidSigningStorePass>env:keystorePwd</AndroidSigningStorePass>
-
 	  <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
 	</PropertyGroup>
 
