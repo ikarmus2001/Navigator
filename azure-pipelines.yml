@@ -117,16 +117,26 @@ stages:
               jdkArchitectureOption: x64
               jdkSourceOption: PreInstalled
 
+          - task: DownloadSecureFile@1
+            inputs:
+              secureFile: $(AndroidKeystoreName).keystore
+
           - task: CmdLine@2
             displayName: Set signingPwd
             inputs:
               script: |
-                echo "##vso[task.setvariable variable=keystorePwd;issecret=true]$(AndroidKeystoreSigningPassword)"
-                echo "##vso[task.setvariable variable=keystoreName;issecret=false]$(AndroidKeystoreName)"
+                echo ##vso[task.setvariable variable=keystorePwd;issecret=true]$(AndroidKeystoreSigningPassword)
+                echo ##vso[task.setvariable variable=keystoreName;issecret=false]$(AndroidKeystoreName)
 
-          - task: DownloadSecureFile@1
+          - task: CmdLine@2
+            displayName: Show env variables
             inputs:
-              secureFile: $(AndroidKeystoreName).keystore
+              script: |
+                echo Path temp equals $(Agent.TempDirectory)
+                echo Path keystore equals $(Agent.TempDirectory)\%keystoreName%.keystore
+                echo pwd equals %keystorePwd% 
+          
+
           - task: DotNetCoreCLI@2
             displayName: Publish app
             inputs:
@@ -135,9 +145,9 @@ stages:
               publishWebProjects: false
               projects: SMCEBI_Navigator\SMCEBI_Navigator.csproj
               ${{ if eq(parameters.config, 'Release') }}:
-                arguments: '-f net8.0-android34 -c Release -p:AndroidSigningKeystore=$(Agent.TempDirectory)/$(AndroidKeystoreName).keystore'
+                arguments: '-f net8.0-android34 -c Release -p:AndroidSigningKeystore=$(Agent.TempDirectory)\$(AndroidKeystoreName).keystore'
               ${{ else }}:
-                arguments: '-f net8.0-android34 -c Debug -p:AndroidSigningKeystore=$(Agent.TempDirectory)/$(AndroidKeystoreName).keystore'
+                arguments: '-f net8.0-android34 -c Debug -p:AndroidSigningKeystore=$(Agent.TempDirectory)\$(AndroidKeystoreName).keystore'
 
           
           # - task: AndroidSigning@3
