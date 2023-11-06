@@ -125,17 +125,17 @@ stages:
               publishWebProjects: false
               projects: SMCEBI_Navigator\SMCEBI_Navigator.csproj
               ${{ if eq(parameters.config, 'Release') }}:
-                arguments: '-f net8.0-android34 -c Release'
+                arguments: '-f net8.0-android34 -c Release -p:AndroidSigningKeyPass={password} -p:AndroidSigningStorePass=$(AndroidKeystoreSigningPassword)'
               ${{ else }}:
-                arguments: '-f net8.0-android34 -c Debug'
+                arguments: '-f net8.0-android34 -c Debug -p:AndroidSigningKeyPass={password} -p:AndroidSigningStorePass=$(AndroidKeystoreSigningPassword)'
 
-          - task: AndroidSigning@3
-            displayName: Signing and aligning APK file(s) **/*.apk
-            inputs:
-              keystoreFile: a4032e3a-dc5f-4eb8-ad98-50c17f59ab1e
-              keystorePass: $(AndroidKeystoreSigningPassword)
-              keystoreAlias: $(AndroidKeystoreName)
-              keyPass: $(AndroidKeystoreSigningPassword)
+          # - task: AndroidSigning@3
+          #   displayName: Signing and aligning APK file(s) **/*.apk
+          #   inputs:
+          #     keystoreFile: a4032e3a-dc5f-4eb8-ad98-50c17f59ab1e
+          #     keystorePass: $(AndroidKeystoreSigningPassword)
+          #     keystoreAlias: $(AndroidKeystoreName)
+          #     keyPass: $(AndroidKeystoreSigningPassword)
 
 - ${{ if contains(parameters.framework, 'windows') }}:
   - stage: 
