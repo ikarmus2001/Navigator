@@ -124,7 +124,8 @@ stages:
               zipAfterPublish: false
               publishWebProjects: false
               projects: SMCEBI_Navigator\SMCEBI_Navigator.csproj
-              arguments: -f net8.0-android34 -c $(parameters.config)
+              arguments: '-f net8.0-android34 -c $(parameters.config)'
+
           - task: AndroidSigning@3
             displayName: Signing and aligning APK file(s) **/*.apk
             inputs:
@@ -147,5 +148,5 @@ stages:
               zipAfterPublish: false
               publishWebProjects: false
               projects: SMCEBI_Navigator\SMCEBI_Navigator.csproj
-              arguments: -f net8.0-windows10.0.19041.0 -c $(parameters.config)
+              arguments: '-f net8.0-windows10.0.19041.0 -c $(parameters.config)'
 
