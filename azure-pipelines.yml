@@ -136,6 +136,7 @@ stages:
                 echo Path keystore equals $(Agent.TempDirectory)\%keystoreName%.keystore
                 echo pwd equals %keystorePwd% 
           
+
           - task: DotNetCoreCLI@2
             displayName: Publish app
             inputs:
@@ -144,9 +145,9 @@ stages:
               publishWebProjects: false
               projects: SMCEBI_Navigator\SMCEBI_Navigator.csproj
               ${{ if eq(parameters.config, 'Release') }}:
-                arguments: '-f net8.0-android34 -c Release -p:AndroidSigningKeystore=$(Agent.TempDirectory)\%keystoreName%.keystore'
+                arguments: '-f net8.0-android34 -c Release -p:AndroidSigningKeystore=$(Agent.TempDirectory)\$(AndroidKeystoreName).keystore'
               ${{ else }}:
-                arguments: '-f net8.0-android34 -c Debug -p:AndroidSigningKeystore=$(Agent.TempDirectory)\%keystoreName%.keystore'
+                arguments: '-f net8.0-android34 -c Debug -p:AndroidSigningKeystore=$(Agent.TempDirectory)\$(AndroidKeystoreName).keystore'
 
           
           # - task: AndroidSigning@3
