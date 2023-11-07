@@ -166,7 +166,7 @@ stages:
             inputs:
               pathToPublish: $(Build.ArtifactStagingDirectory)
               artifactName: '$(Parameters.Framework)_$(Parameters.Config)_$(Build.BuildNumber)'
-              publishLocation: FilePath
+              publishLocation: Container # Azure Pipelines
 
 - ${{ if contains(parameters.framework, 'windows') }}:
   - stage: 
