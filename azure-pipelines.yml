@@ -152,10 +152,21 @@ stages:
           - task: AndroidSigning@3
             displayName: Signing and aligning APK file(s) **/*.apk
             inputs:
+              zipalign: true
               keystoreFile: $(AndroidKeystoreName).keystore
               keystorePass: $(AndroidKeystoreSigningPassword)
               keystoreAlias: $(AndroidKeystoreName)
               keyPass: $(AndroidKeystoreSigningPassword)
+            
+          - task: CopyFiles@2
+            inputs:
+              contents: '$(Build.SourcesDirectory)/SMCEBI_Navigator/bin/$(Parameters.Config)'
+              targetFolder: $(Build.ArtifactStagingDirectory)
+          - task: PublishBuildArtifacts@1
+            inputs:
+              pathToPublish: $(Build.ArtifactStagingDirectory)
+              artifactName: '$(Parameters.Framework)_$(Parameters.Config)_$(Build.BuildNumber)'
+              publishLocation: FilePath
 
 - ${{ if contains(parameters.framework, 'windows') }}:
   - stage: 
@@ -185,5 +196,12 @@ stages:
                 arguments: '-f net8.0-windows10.0.19041.0 -c Release'
               ${{ else }}:
                 arguments: '-f net8.0-windows10.0.19041.0 -c Debug'
-
-
+          - task: CopyFiles@2
+            inputs:
+              contents: '$(Build.SourcesDirectory)/SMCEBI_Navigator/bin/$(Parameters.Config)'
+              targetFolder: $(Build.ArtifactStagingDirectory)
+          - task: PublishBuildArtifacts@1
+            inputs:
+              pathToPublish: $(Build.ArtifactStagingDirectory)
+              artifactName: '$(Parameters.Framework)_$(Parameters.Config)_$(Build.BuildNumber)'
+              publishLocation: FilePath
