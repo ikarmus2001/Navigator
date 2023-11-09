@@ -92,7 +92,7 @@ stages:
 
 - ${{ if contains(parameters.framework, 'android') }}:
   - stage: 
-    displayName: Android compilation
+    displayName: Compilation
     jobs:
       - job: Android_compilation
         displayName: Android app compilation
@@ -169,41 +169,38 @@ stages:
               artifactName: 'Android_$(Parameters.Framework)_$(Build.BuildNumber)'
               publishLocation: Container # Azure Pipelines
 
-- ${{ if contains(parameters.framework, 'windows') }}:
-  - stage: 
-    displayName: Windows compilation
-    jobs:
-      - job: Windows_compilation
-        displayName: Windows app compilation
-        steps:
-          - task: UseDotNet@2
-            displayName: Use .NET SDK $(dotnetVersion)
-            inputs:
-              version: $(dotnetVersion)
-              includePreviewVersions: true
-              installationPath: $(Agent.ToolsDirectory)/dotnet/$(dotnetVersion)
-              packageType: sdk
-              useGlobalJson: false
-              performMultiLevelLookup: false
-              
-          - task: DotNetCoreCLI@2
-            displayName: Publish desktop app
-            inputs:
-              command: publish
-              zipAfterPublish: false
-              publishWebProjects: false
-              projects: SMCEBI_Navigator\SMCEBI_Navigator.csproj
-              ${{ if eq(parameters.config, 'Release') }}:
-                arguments: '-f net8.0-windows10.0.19041.0 -c Release'
-              ${{ else }}:
-                arguments: '-f net8.0-windows10.0.19041.0 -c Debug'
-          - task: CopyFiles@2
-            inputs:
-              contents: '$(Build.SourcesDirectory)/SMCEBI_Navigator/bin'
-              targetFolder: $(Build.ArtifactStagingDirectory)
-          
-          - task: PublishBuildArtifacts@1
-            inputs:
-              pathToPublish: $(Build.ArtifactStagingDirectory)
-              artifactName: 'Android_$(Parameters.Framework)_$(Build.BuildNumber)'
-              publishLocation: Container # Azure Pipelines
+      - ${{ if contains(parameters.framework, 'windows') }}:
+        - job: Windows_compilation
+          displayName: Windows app compilation
+          steps:
+            - task: UseDotNet@2
+              displayName: Use .NET SDK $(dotnetVersion)
+              inputs:
+                version: $(dotnetVersion)
+                includePreviewVersions: true
+                installationPath: $(Agent.ToolsDirectory)/dotnet/$(dotnetVersion)
+                packageType: sdk
+                useGlobalJson: false
+                performMultiLevelLookup: false
+                
+            - task: DotNetCoreCLI@2
+              displayName: Publish desktop app
+              inputs:
+                command: publish
+                zipAfterPublish: false
+                publishWebProjects: false
+                projects: SMCEBI_Navigator\SMCEBI_Navigator.csproj
+                ${{ if eq(parameters.config, 'Release') }}:
+                  arguments: '-f net8.0-windows10.0.19041.0 -c Release'
+                ${{ else }}:
+                  arguments: '-f net8.0-windows10.0.19041.0 -c Debug'
+            - task: CopyFiles@2
+              inputs:
+                contents: '$(Build.SourcesDirectory)/SMCEBI_Navigator/bin'
+                targetFolder: $(Build.ArtifactStagingDirectory)
+            
+            - task: PublishBuildArtifacts@1
+              inputs:
+                pathToPublish: $(Build.ArtifactStagingDirectory)
+                artifactName: 'Android_$(Parameters.Framework)_$(Build.BuildNumber)'
+                publishLocation: Container # Azure Pipelines 
