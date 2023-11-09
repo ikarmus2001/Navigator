@@ -160,12 +160,13 @@ stages:
             
           - task: CopyFiles@2
             inputs:
-              contents: '$(Build.SourcesDirectory)/SMCEBI_Navigator/bin/$(Parameters.Config)'
+              contents: '$(Build.SourcesDirectory)/SMCEBI_Navigator/bin/'
               targetFolder: $(Build.ArtifactStagingDirectory)
+
           - task: PublishBuildArtifacts@1
             inputs:
               pathToPublish: $(Build.ArtifactStagingDirectory)
-              artifactName: '$(Parameters.Framework)_$(Parameters.Config)_$(Build.BuildNumber)'
+              artifactName: 'Android_$(Parameters.Framework)_$(Build.BuildNumber)'
               publishLocation: Container # Azure Pipelines
 
 - ${{ if contains(parameters.framework, 'windows') }}:
@@ -198,10 +199,11 @@ stages:
                 arguments: '-f net8.0-windows10.0.19041.0 -c Debug'
           - task: CopyFiles@2
             inputs:
-              contents: '$(Build.SourcesDirectory)/SMCEBI_Navigator/bin/$(Parameters.Config)'
+              contents: '$(Build.SourcesDirectory)/SMCEBI_Navigator/bin'
               targetFolder: $(Build.ArtifactStagingDirectory)
+          
           - task: PublishBuildArtifacts@1
             inputs:
               pathToPublish: $(Build.ArtifactStagingDirectory)
-              artifactName: '$(Parameters.Framework)_$(Parameters.Config)_$(Build.BuildNumber)'
-              publishLocation: FilePath
+              artifactName: 'Android_$(Parameters.Framework)_$(Build.BuildNumber)'
+              publishLocation: Container # Azure Pipelines
