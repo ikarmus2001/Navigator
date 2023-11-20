@@ -205,47 +205,40 @@ stages:
           - task: PublishPipelineArtifact@1
             inputs:
               targetPath: $(Build.ArtifactStagingDirectory)/$(Build.BuildNumber)_net8_0-android34
-              artifactName: 'Android_$(Parameters.Framework)_$(Build.BuildNumber)'
+              artifactName: 'Android_${{ Parameters.Framework }}_$(Build.BuildNumber)'
               publishLocation: pipeline
+    
     - ${{ if contains(parameters.framework, 'windows') }}:
       - job: 
         displayName: Windows # (tmp mock)
         steps:
           - checkout: none
+
+          - task: UseDotNet@2
+            displayName: Use .NET SDK $(dotnetVersion)
+            inputs:
+              version: $(dotnetVersion)
+              includePreviewVersions: true
+              installationPath: $(Agent.ToolsDirectory)/dotnet/$(dotnetVersion)
+              packageType: sdk
+              useGlobalJson: false
+              performMultiLevelLookup: false
+
+          - task: DotNetCoreCLI@2
+            displayName: Run unit tests
+            inputs:
+              command: test
+              projects: '**/NavigatorTests.csproj'
+              arguments: --configuration ${{ parameters.config }} --collect "Code coverage" --settings $(Build.SourcesDirectory)/.runsettings
+
           - task: CopyFiles@2
             inputs:
               sourceFolder: $(Build.BinariesDirectory)\$(Build.BuildNumber)_net8_0-windows10_0_19041_0
-              contents: '**\win10-x64\AppPackages\**'
+              contents: '**\AppPackages\**'
               targetFolder: $(Build.ArtifactStagingDirectory)\$(Build.BuildNumber)_net8_0-windows10_0_19041_0
 
           - task: PublishPipelineArtifact@1
             inputs:
               targetPath: $(Build.ArtifactStagingDirectory)\$(Build.BuildNumber)_net8_0-windows10_0_19041_0
-              artifactName: 'Windows_$(Parameters.Framework)_$(Build.BuildNumber)'
+              artifactName: 'Windows_${{ Parameters.Framework }}_$(Build.BuildNumber)'
               publishLocation: pipeline
-
-# - ${{ if eq(parameters.skipPublish, false) }}:
-#   - stage: 
-#     displayName: Publishing artifacts
-#     jobs:
-#       - ${{ if contains(parameters.framework, 'android') }}:
-#         - job:
-#           displayName: Android
-#           steps:
-#             - checkout: none
-#             - task: PublishPipelineArtifact@1
-#               inputs:
-#                 targetPath: $(Build.ArtifactStagingDirectory)/$(Build.BuildNumber)_net8_0-android34
-#                 artifactName: 'Android_$(Parameters.Framework)_$(Build.BuildNumber)'
-#                 publishLocation: pipeline
-
-#       - ${{ if contains(parameters.framework, 'windows') }}:
-#         - job:
-#           displayName: Windows
-#           steps:
-#             - checkout: none
-#             - task: PublishPipelineArtifact@1
-#               inputs:
-#                 targetPath: $(Build.ArtifactStagingDirectory)\$(Build.BuildNumber)_net8_0-windows10_0_19041_0
-#                 artifactName: 'Windows_$(Parameters.Framework)_$(Build.BuildNumber)'
-#                 publishLocation: pipeline
