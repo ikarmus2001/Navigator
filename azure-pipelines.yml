@@ -228,7 +228,7 @@ stages:
             displayName: Run unit tests
             inputs:
               command: test
-              projects: '**/NavigatorTest.csproj'
+              projects: '**/NavigatorTests.csproj'
               arguments: --configuration ${{ parameters.config }} --collect "Code coverage"
 
           - task: CopyFiles@2
