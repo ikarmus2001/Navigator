@@ -12,7 +12,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LeafletAPI", "LeafletAPI\Le
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MapBuilder_API_Base", "MapBuilder_API_Base\MapBuilder_API_Base.csproj", "{D05CF129-DA8B-4D69-8BC1-203CE8C23AB5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NavigatorTests", "NavigatorTests\NavigatorTests.csproj", "{C393F64A-A7E4-4196-8C2C-D0C62EED2C69}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NavigatorTests", "NavigatorTests\NavigatorTests.csproj", "{C393F64A-A7E4-4196-8C2C-D0C62EED2C69}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8270095B-EC92-4FA1-AD9C-FECD346C1B9B}"
+	ProjectSection(SolutionItems) = preProject
+		.runsettings = .runsettings
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
