@@ -201,6 +201,12 @@ stages:
               sourceFolder: $(Build.BinariesDirectory)\$(Build.BuildNumber)_net8_0-android34
               contents: '**\publish\*-Signed.apk'
               targetFolder: $(Build.ArtifactStagingDirectory)\$(Build.BuildNumber)_net8_0-android34
+
+          - task: PublishPipelineArtifact@1
+            inputs:
+              targetPath: $(Build.ArtifactStagingDirectory)/$(Build.BuildNumber)_net8_0-android34
+              artifactName: 'Android_$(Parameters.Framework)_$(Build.BuildNumber)'
+              publishLocation: pipeline
     - ${{ if contains(parameters.framework, 'windows') }}:
       - job: 
         displayName: Windows # (tmp mock)
@@ -212,28 +218,34 @@ stages:
               contents: '**\win10-x64\AppPackages\**'
               targetFolder: $(Build.ArtifactStagingDirectory)\$(Build.BuildNumber)_net8_0-windows10_0_19041_0
 
-- ${{ if eq(parameters.skipPublish, false) }}:
-  - stage: 
-    displayName: Publishing artifacts
-    jobs:
-      - ${{ if contains(parameters.framework, 'android') }}:
-        - job:
-          displayName: Android
-          steps:
-            - checkout: none
-            - task: PublishPipelineArtifact@1
-              inputs:
-                targetPath: $(Build.ArtifactStagingDirectory)/$(Build.BuildNumber)_net8_0-android34
-                artifactName: 'Android_$(Parameters.Framework)_$(Build.BuildNumber)'
-                publishLocation: pipeline
+          - task: PublishPipelineArtifact@1
+            inputs:
+              targetPath: $(Build.ArtifactStagingDirectory)\$(Build.BuildNumber)_net8_0-windows10_0_19041_0
+              artifactName: 'Windows_$(Parameters.Framework)_$(Build.BuildNumber)'
+              publishLocation: pipeline
 
-      - ${{ if contains(parameters.framework, 'windows') }}:
-        - job:
-          displayName: Windows
-          steps:
-            - checkout: none
-            - task: PublishPipelineArtifact@1
-              inputs:
-                targetPath: $(Build.ArtifactStagingDirectory)\$(Build.BuildNumber)_net8_0-windows10_0_19041_0
-                artifactName: 'Windows_$(Parameters.Framework)_$(Build.BuildNumber)'
-                publishLocation: pipeline
+# - ${{ if eq(parameters.skipPublish, false) }}:
+#   - stage: 
+#     displayName: Publishing artifacts
+#     jobs:
+#       - ${{ if contains(parameters.framework, 'android') }}:
+#         - job:
+#           displayName: Android
+#           steps:
+#             - checkout: none
+#             - task: PublishPipelineArtifact@1
+#               inputs:
+#                 targetPath: $(Build.ArtifactStagingDirectory)/$(Build.BuildNumber)_net8_0-android34
+#                 artifactName: 'Android_$(Parameters.Framework)_$(Build.BuildNumber)'
+#                 publishLocation: pipeline
+
+#       - ${{ if contains(parameters.framework, 'windows') }}:
+#         - job:
+#           displayName: Windows
+#           steps:
+#             - checkout: none
+#             - task: PublishPipelineArtifact@1
+#               inputs:
+#                 targetPath: $(Build.ArtifactStagingDirectory)\$(Build.BuildNumber)_net8_0-windows10_0_19041_0
+#                 artifactName: 'Windows_$(Parameters.Framework)_$(Build.BuildNumber)'
+#                 publishLocation: pipeline
