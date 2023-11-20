@@ -151,7 +151,7 @@ stages:
               inputs:
                 sourceFolder: $(Build.SourcesDirectory)/SMCEBI_Navigator
                 contents: bin/**
-                targetFolder: $(Build.Build.BinariesDirectory)/$(Build.BuildNumber)_net8_0-android34_$(System.PlanId)_$(parameters.config) 
+                targetFolder: $(Build.BinariesDirectory)/$(Build.BuildNumber)_net8_0-android34_$(System.PlanId)_$(parameters.config) 
                 # fix https://learn.microsoft.com/en-us/azure/devops/pipelines/process/run-number?view=azure-devops&tabs=yaml
       - ${{ if contains(parameters.framework, 'windows') }}:
         - job: Windows_compilation
@@ -182,7 +182,7 @@ stages:
               inputs:
                 sourceFolder: $(Build.SourcesDirectory)/SMCEBI_Navigator
                 contents: bin/**
-                targetFolder: $(Build.Build.BinariesDirectory)/$(Build.BuildNumber)_net8_0-windows10_0_19041_0_$(System.PlanId)_$(parameters.config)
+                targetFolder: $(Build.BinariesDirectory)/$(Build.BuildNumber)_net8_0-windows10_0_19041_0_$(System.PlanId)_$(parameters.config)
 
 
 - stage: 
@@ -203,7 +203,7 @@ stages:
         steps:
           - task: CopyFiles@2
             inputs:
-              sourceFolder: $(Build.Build.BinariesDirectory)/$(Build.BuildNumber)_net8_0-windows10_0_19041_0_$(System.PlanId)_$(parameters.config)
+              sourceFolder: $(Build.BinariesDirectory)/$(Build.BuildNumber)_net8_0-windows10_0_19041_0_$(System.PlanId)_$(parameters.config)
               contents: '**'
               targetFolder: $(Build.ArtifactStagingDirectory)/$(Build.BuildNumber)_net8_0-windows10_0_19041_0_$(System.PlanId)_$(parameters.config)
 
