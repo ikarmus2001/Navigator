@@ -38,7 +38,6 @@ public class MapObjectStyle
     {
         return new Dictionary<string, string?>() 
         {
-            {nameof(FillColor), this.FillColor },
             {nameof(FillOpacity), this.FillOpacity.ToString() },
             {nameof(Weight), this.Weight.ToString() },
             {nameof(Opacity), this.Opacity.ToString() }
@@ -56,6 +55,7 @@ public class MapObjectStyle
 
         return $@"var {this.Name} = {{
             color: '{this.Color}'
+            {nameof(FillColor)}: '{this.FillColor}',
             {optionalParameters}
         }};";
     }

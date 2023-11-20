@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:model="clr-namespace:SMCEBI_Navigator.Models"
-             xmlns:cc="clr-namespace:SMCEBI_Navigator.CustomControls"
-             x:DataType="cc:ChildElementsCollection"
-             x:Class="SMCEBI_Navigator.CustomControls.ChildElementsCollection">
-    <CollectionView x:Name="Children_CollectionView"
-                    SelectionMode="Single" 
-                    SelectionChanged="CollectionView_SelectionChanged"
-                    Margin="0, 5, 0, 5">
+<ContentView
+    x:Class="SMCEBI_Navigator.CustomControls.ChildElementsCollection"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:cc="clr-namespace:SMCEBI_Navigator.CustomControls"
+    xmlns:model="clr-namespace:SMCEBI_Navigator.Models"
+    x:DataType="cc:ChildElementsCollection">
+    <CollectionView
+        x:Name="Children_CollectionView"
+        Margin="0,5,0,5"
+        SelectionChanged="CollectionView_SelectionChanged"
+        SelectionMode="Single">
         <CollectionView.ItemTemplate>
             <DataTemplate x:DataType="model:BuildingElement">
-                <Border Stroke="red" StrokeThickness="4" Padding="10" StrokeShape="RoundRectangle 5, 5, 5, 5">
+                <Border
+                    Padding="10"
+                    Stroke="red"
+                    StrokeShape="RoundRectangle 5, 5, 5, 5"
+                    StrokeThickness="4">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -22,20 +28,24 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
-                        <Label Text="{Binding Name}" 
-                           Grid.Column="0" MinimumHeightRequest="20" />
-                        
+                        <Label
+                            Grid.Column="0"
+                            MinimumHeightRequest="20"
+                            Text="{Binding Name}" />
+
                     </Grid>
                 </Border>
             </DataTemplate>
         </CollectionView.ItemTemplate>
         <CollectionView.Footer>
-            <HorizontalStackLayout HorizontalOptions="End" Margin="5">
-                <Border StrokeShape="RoundRectangle 5" Margin="0,0,5,0">
-                    <ImageButton x:Name="AddFloorBtn"
-                                 Source="add_fill0_wght400_grad0_opsz24.png" 
-                                 HeightRequest="50" WidthRequest="50" 
-                                 Clicked="AddFloorBtn_Clicked" />
+            <HorizontalStackLayout Margin="5" HorizontalOptions="End">
+                <Border Margin="0,0,5,0" StrokeShape="RoundRectangle 5">
+                    <ImageButton
+                        x:Name="AddFloorBtn"
+                        Clicked="AddFloorBtn_Clicked"
+                        HeightRequest="50"
+                        Source="add_fill0_wght400_grad0_opsz24.png"
+                        WidthRequest="50" />
                 </Border>
             </HorizontalStackLayout>
         </CollectionView.Footer>
