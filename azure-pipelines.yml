@@ -50,6 +50,8 @@ stages:
         displayName: Environment preparation
         steps:
         - ${{ if contains(parameters.framework, 'android') }}:
+          - checkout: none
+
           - task: JavaToolInstaller@0
             displayName: Ensure java is installed
             # Make sure to set up environmental variable as in template: 
@@ -193,20 +195,22 @@ stages:
       - job: 
         displayName: Android # (tmp mock)
         steps:
+          - checkout: none
           - task: CopyFiles@2
             inputs:
-              sourceFolder: $(Build.BinariesDirectory)/$(Build.BuildNumber)_net8_0-android34
-              contents: '**'
-              targetFolder: $(Build.ArtifactStagingDirectory)/$(Build.BuildNumber)_net8_0-android34
+              sourceFolder: $(Build.BinariesDirectory)\$(Build.BuildNumber)_net8_0-android34
+              contents: '**\publish\*-Signed.apk'
+              targetFolder: $(Build.ArtifactStagingDirectory)\$(Build.BuildNumber)_net8_0-android34
     - ${{ if contains(parameters.framework, 'windows') }}:
       - job: 
         displayName: Windows # (tmp mock)
         steps:
+          - checkout: none
           - task: CopyFiles@2
             inputs:
-              sourceFolder: $(Build.BinariesDirectory)/$(Build.BuildNumber)_net8_0-windows10_0_19041_0
+              sourceFolder: $(Build.BinariesDirectory)\$(Build.BuildNumber)_net8_0-windows10_0_19041_0
               contents: '**\win10-x64\AppPackages\**'
-              targetFolder: $(Build.ArtifactStagingDirectory)/$(Build.BuildNumber)_net8_0-windows10_0_19041_0
+              targetFolder: $(Build.ArtifactStagingDirectory)\$(Build.BuildNumber)_net8_0-windows10_0_19041_0
 
 - ${{ if eq(parameters.skipPublish, false) }}:
   - stage: 
@@ -216,18 +220,20 @@ stages:
         - job:
           displayName: Android
           steps:
-            - task: PublishBuildArtifacts@1
+            - checkout: none
+            - task: PublishPipelineArtifact@1
               inputs:
-                pathToPublish: $(Build.ArtifactStagingDirectory)/$(Build.BuildNumber)_net8_0-android34
+                targetPath: $(Build.ArtifactStagingDirectory)/$(Build.BuildNumber)_net8_0-android34
                 artifactName: 'Android_$(Parameters.Framework)_$(Build.BuildNumber)'
-                publishLocation: Container # Azure Pipelines 
+                publishLocation: pipeline
 
       - ${{ if contains(parameters.framework, 'windows') }}:
         - job:
           displayName: Windows
           steps:
-            - task: PublishBuildArtifacts@1
+            - checkout: none
+            - task: PublishPipelineArtifact@1
               inputs:
-                pathToPublish: $(Build.ArtifactStagingDirectory)/$(Build.BuildNumber)_net8_0-windows10_0_19041_0
+                targetPath: $(Build.ArtifactStagingDirectory)\$(Build.BuildNumber)_net8_0-windows10_0_19041_0
                 artifactName: 'Windows_$(Parameters.Framework)_$(Build.BuildNumber)'
-                publishLocation: Container # Azure Pipelines
+                publishLocation: pipeline
