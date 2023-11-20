@@ -207,11 +207,18 @@ stages:
               targetPath: $(Build.ArtifactStagingDirectory)/$(Build.BuildNumber)_net8_0-android34
               artifactName: 'Android_$(Parameters.Framework)_$(Build.BuildNumber)'
               publishLocation: pipeline
+    
     - ${{ if contains(parameters.framework, 'windows') }}:
       - job: 
         displayName: Windows # (tmp mock)
         steps:
           - checkout: none
+          - task: DotNetCoreCLI@2
+            displayName: Run unit tests
+            inputs:
+              command: test
+              arguments: '--configuration $(parameters.config) --collect "Code coverage"'
+
           - task: CopyFiles@2
             inputs:
               sourceFolder: $(Build.BinariesDirectory)\$(Build.BuildNumber)_net8_0-windows10_0_19041_0
