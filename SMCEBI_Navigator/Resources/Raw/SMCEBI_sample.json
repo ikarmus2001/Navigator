@@ -1,6 +1,6 @@
 {
   "building": {
-    "name": "SMCEBI",
+    "name": "SMCEBI_sample",
     "version": 1,
     "corners": [
       [ 0, 0 ],

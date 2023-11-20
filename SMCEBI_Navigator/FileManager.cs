@@ -8,6 +8,13 @@ internal static class FileManager
 {
     private static readonly IFileSaver fileSaver = new FileSaverImplementation();
 
+    private static JsonSerializerOptions s_writeOptions = new()
+    {
+        IncludeFields = true,
+        PropertyNameCaseInsensitive = true,
+        Converters = { new PointConverter() }
+    };
+
     /// <summary>
     /// Transforms string to stream and saves it to file
     /// </summary>
@@ -30,7 +37,7 @@ internal static class FileManager
     internal static async Task<bool> SaveFileAsync(Stream content, string filename, bool isUserChoosingLocation = false, string initialPath = null)
     {
         initialPath ??= FileSystem.AppDataDirectory;
-        
+
         //if (!filename.StartsWith('\\'))
         //    filename = '\\' + filename;
 
@@ -88,21 +95,16 @@ internal static class FileManager
         }
     }
 
-    internal static async Task SaveMap(MapConfig editedMap)
+    internal static async Task SaveMap(MapConfig editedMap, string pathOverride = null)
     {
         //HtmlChangeId++;
         //ObjChangeId++;
-        Stream s = new MemoryStream();
-        await JsonSerializer.SerializeAsync(s, editedMap, new JsonSerializerOptions()
-        {
-            IncludeFields = true,
-            PropertyNameCaseInsensitive = true,
-            Converters = { new PointConverter() }
-        });
+        MemoryStream s = new();
+        await JsonSerializer.SerializeAsync(s, editedMap, s_writeOptions);
         // nie dodało piętra do obiektu fml
         var x = JsonSerializer.Serialize<MapConfig>(editedMap);
 
         s.Seek(0, SeekOrigin.Begin);
-        _ = await SaveFileAsync(s, editedMap.Building.Name + ".json");  // TODO change filename to something more persistent
+        _ = await SaveFileAsync(s, editedMap.Building.Name + ".json", initialPath: pathOverride);  // TODO change filename to something more persistent
     }
 }

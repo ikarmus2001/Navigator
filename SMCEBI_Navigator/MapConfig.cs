@@ -1,6 +1,8 @@
 ﻿using MapBuilder_API_Base;
 using SMCEBI_Navigator.Models;
 
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("NavigatorTests")]
+
 namespace SMCEBI_Navigator;
 
 internal sealed class MapConfig
