@@ -151,8 +151,9 @@ stages:
             inputs:
               sourceFolder: $(Build.SourcesDirectory)/SMCEBI_Navigator
               contents: bin/**
-              targetFolder: $(Build.BinariesDirectory)/$(Build.BuildNumber)_net8_0-android34_$(System.PlanId)_$(parameters.config) 
+              targetFolder: $(Build.BinariesDirectory)/$(Build.BuildNumber)_net8_0-android34
               # fix https://learn.microsoft.com/en-us/azure/devops/pipelines/process/run-number?view=azure-devops&tabs=yaml
+    
     - ${{ if contains(parameters.framework, 'windows') }}:
       - job: Windows_compilation
         displayName: Windows app compilation
@@ -182,7 +183,7 @@ stages:
             inputs:
               sourceFolder: $(Build.SourcesDirectory)/SMCEBI_Navigator
               contents: bin/**
-              targetFolder: $(Build.BinariesDirectory)/$(Build.BuildNumber)_net8_0-windows10_0_19041_0_$(System.PlanId)_$(parameters.config)
+              targetFolder: $(Build.BinariesDirectory)/$(Build.BuildNumber)_net8_0-windows10_0_19041_0
 
 
 - stage: 
@@ -194,18 +195,18 @@ stages:
         steps:
           - task: CopyFiles@2
             inputs:
-              sourceFolder: $(Build.BinariesDirectory)/$(Build.BuildNumber)_net8_0-android34_$(System.PlanId)_$(parameters.config)
+              sourceFolder: $(Build.BinariesDirectory)/$(Build.BuildNumber)_net8_0-android34
               contents: '**'
-              targetFolder: $(Build.ArtifactStagingDirectory)/$(Build.BuildNumber)_net8_0-android34_$(System.PlanId)_$(parameters.config)
+              targetFolder: $(Build.ArtifactStagingDirectory)/$(Build.BuildNumber)_net8_0-android34
     - ${{ if contains(parameters.framework, 'windows') }}:
       - job: 
         displayName: Windows # (tmp mock)
         steps:
           - task: CopyFiles@2
             inputs:
-              sourceFolder: $(Build.BinariesDirectory)/$(Build.BuildNumber)_net8_0-windows10_0_19041_0_$(System.PlanId)_$(parameters.config)
-              contents: '**'
-              targetFolder: $(Build.ArtifactStagingDirectory)/$(Build.BuildNumber)_net8_0-windows10_0_19041_0_$(System.PlanId)_$(parameters.config)
+              sourceFolder: $(Build.BinariesDirectory)/$(Build.BuildNumber)_net8_0-windows10_0_19041_0
+              contents: '**\win10-x64\AppPackages\**'
+              targetFolder: $(Build.ArtifactStagingDirectory)/$(Build.BuildNumber)_net8_0-windows10_0_19041_0
 
 - ${{ if eq(parameters.skipPublish, false) }}:
   - stage: 
@@ -217,7 +218,7 @@ stages:
           steps:
             - task: PublishBuildArtifacts@1
               inputs:
-                pathToPublish: $(Build.ArtifactStagingDirectory)/$(Build.BuildNumber)_net8_0-android34_$(System.PlanId)_$(parameters.config)
+                pathToPublish: $(Build.ArtifactStagingDirectory)/$(Build.BuildNumber)_net8_0-android34
                 artifactName: 'Android_$(Parameters.Framework)_$(Build.BuildNumber)'
                 publishLocation: Container # Azure Pipelines 
 
@@ -227,6 +228,6 @@ stages:
           steps:
             - task: PublishBuildArtifacts@1
               inputs:
-                pathToPublish: $(Build.ArtifactStagingDirectory)/$(Build.BuildNumber)_net8_0-windows10_0_19041_0_$(System.PlanId)_$(parameters.config)
+                pathToPublish: $(Build.ArtifactStagingDirectory)/$(Build.BuildNumber)_net8_0-windows10_0_19041_0
                 artifactName: 'Windows_$(Parameters.Framework)_$(Build.BuildNumber)'
                 publishLocation: Container # Azure Pipelines
