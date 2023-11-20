@@ -228,7 +228,7 @@ stages:
             displayName: Run unit tests
             inputs:
               command: test
-              arguments: '--configuration $(parameters.config) --collect "Code coverage"'
+              arguments: --configuration ${{ parameters.config }} --collect "Code coverage"
 
           - task: CopyFiles@2
             inputs:
