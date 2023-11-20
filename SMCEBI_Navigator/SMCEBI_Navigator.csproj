@@ -5,7 +5,7 @@
 		<!--<TargetFrameworks>net7.0-android</TargetFrameworks> --><!--;net7.0-ios;net7.0-maccatalyst--><!--
 		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net7.0-windows10.0.19041.0</TargetFrameworks>-->
 		
-		<TargetFrameworks>net8.0;net8.0-android</TargetFrameworks> <!--;net7.0-ios;net7.0-maccatalyst-->
+		<TargetFrameworks>net8.0-android34</TargetFrameworks> <!--;net7.0-ios;net7.0-maccatalyst-->
 		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
 		<OutputType Condition="'$(TargetFramework)' != 'net8.0'">Exe</OutputType>
 		<RootNamespace>SMCEBI_Navigator</RootNamespace>
@@ -42,13 +42,13 @@
 		<HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android|AnyCPU'">
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android34|AnyCPU'">
 	  <AndroidPackageFormat>apk</AndroidPackageFormat>
-	  <AndroidKeyStore>True</AndroidKeyStore>
+		<!--Signing mad in CI CD-->
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android|AnyCPU'">
-	  <AndroidKeyStore>False</AndroidKeyStore>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android34|AnyCPU'">
+	  <AndroidPackageFormat>apk</AndroidPackageFormat>
 	  <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
 	</PropertyGroup>
 
@@ -80,7 +80,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
-		<PackageReference Include="CommunityToolkit.Maui" Version="6.0.0" />
+		<PackageReference Include="CommunityToolkit.Maui" Version="6.1.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.*" />
 	</ItemGroup>
