@@ -24,6 +24,10 @@ parameters:
     displayName: Skip environment preparation
     type: boolean
     default: false
+  - name: skipPublish
+    displayName: Skip artifacts publishing
+    type: boolean
+    default: false
 
 variables:
 - name: dotnetVersion
@@ -90,85 +94,65 @@ stages:
             ${{ elseif contains(parameters.framework, 'windows') }}:
               arguments: install maui-windows
 
-- ${{ if contains(parameters.framework, 'android') }}:
+
   - stage: 
     displayName: Compilation
     jobs:
-      - job: Android_compilation
-        displayName: Android app compilation
-        steps:
-          - task: UseDotNet@2
-            displayName: Use .NET SDK $(dotnetVersion)
-            inputs:
-              version: $(dotnetVersion)
-              includePreviewVersions: true
-              installationPath: $(Agent.ToolsDirectory)/dotnet/$(dotnetVersion)
-              packageType: sdk
-              useGlobalJson: false
-              performMultiLevelLookup: false
+      - ${{ if contains(parameters.framework, 'android') }}:
+        - job: Android_compilation
+          displayName: Android app compilation
+          steps:
+            - task: UseDotNet@2
+              displayName: Use .NET SDK $(dotnetVersion)
+              inputs:
+                version: $(dotnetVersion)
+                includePreviewVersions: true
+                installationPath: $(Agent.ToolsDirectory)/dotnet/$(dotnetVersion)
+                packageType: sdk
+                useGlobalJson: false
+                performMultiLevelLookup: false
 
-          - task: JavaToolInstaller@0
-            displayName: Use JAVA_HOME
-            # Make sure to set up environmental variable as in template: 
-            # Name: `JAVA_HOME_${versionSpec}_${jdkArchitectureOption}` and value pointing to its JAVA_HOME 
-            # (via https://stackoverflow.com/a/72314866/14345698)
-            inputs:
-              versionSpec: 11
-              jdkArchitectureOption: x64
-              jdkSourceOption: PreInstalled
+            - task: JavaToolInstaller@0
+              displayName: Use JAVA_HOME
+              # Make sure to set up environmental variable as in template: 
+              # Name: `JAVA_HOME_${versionSpec}_${jdkArchitectureOption}` and value pointing to its JAVA_HOME 
+              # (via https://stackoverflow.com/a/72314866/14345698)
+              inputs:
+                versionSpec: 11
+                jdkArchitectureOption: x64
+                jdkSourceOption: PreInstalled
 
-          - task: DownloadSecureFile@1
-            inputs:
-              secureFile: $(AndroidKeystoreName).keystore
+            - task: DownloadSecureFile@1
+              inputs:
+                secureFile: $(AndroidKeystoreName).keystore
 
-          # - task: CmdLine@2
-          #   displayName: Set signingPwd
-          #   inputs:
-          #     script: |
-          #       echo ##vso[task.setvariable variable=keystorePwd;issecret=true]$(AndroidKeystoreSigningPassword)
-          #       echo ##vso[task.setvariable variable=keystoreName;issecret=false]$(AndroidKeystoreName)
+            - task: DotNetCoreCLI@2
+              displayName: Publish app
+              inputs:
+                command: publish
+                zipAfterPublish: false
+                publishWebProjects: false
+                projects: SMCEBI_Navigator\SMCEBI_Navigator.csproj
+                ${{ if eq(parameters.config, 'Release') }}:
+                  arguments: '-f net8.0-android34 -c Release'
+                ${{ else }}:
+                  arguments: '-f net8.0-android34 -c Debug'
 
-          # - task: CmdLine@2
-          #   displayName: Show env variables
-          #   inputs:
-          #     script: |
-          #       echo Path temp equals $(Agent.TempDirectory)
-          #       echo Path keystore equals $(Agent.TempDirectory)\%keystoreName%.keystore
-          #       echo pwd equals %keystorePwd% 
-          
-
-          - task: DotNetCoreCLI@2
-            displayName: Publish app
-            inputs:
-              command: publish
-              zipAfterPublish: false
-              publishWebProjects: false
-              projects: SMCEBI_Navigator\SMCEBI_Navigator.csproj
-              ${{ if eq(parameters.config, 'Release') }}:
-                arguments: '-f net8.0-android34 -c Release'
-              ${{ else }}:
-                arguments: '-f net8.0-android34 -c Debug'
-
-          - task: AndroidSigning@3
-            displayName: Signing and aligning APK file(s) **/*.apk
-            inputs:
-              zipalign: true
-              keystoreFile: $(AndroidKeystoreName).keystore
-              keystorePass: $(AndroidKeystoreSigningPassword)
-              keystoreAlias: $(AndroidKeystoreName)
-              keyPass: $(AndroidKeystoreSigningPassword)
-            
-          - task: CopyFiles@2
-            inputs:
-              contents: '$(Build.SourcesDirectory)/SMCEBI_Navigator/bin/'
-              targetFolder: $(Build.ArtifactStagingDirectory)
-
-          - task: PublishBuildArtifacts@1
-            inputs:
-              pathToPublish: $(Build.ArtifactStagingDirectory)
-              artifactName: 'Android_$(Parameters.Framework)_$(Build.BuildNumber)'
-              publishLocation: Container # Azure Pipelines
-
+            - task: AndroidSigning@3
+              displayName: Signing and aligning APK file(s) **/*.apk
+              inputs:
+                zipalign: true
+                keystoreFile: $(AndroidKeystoreName).keystore
+                keystorePass: $(AndroidKeystoreSigningPassword)
+                keystoreAlias: $(AndroidKeystoreName)
+                keyPass: $(AndroidKeystoreSigningPassword)
+              
+            - task: CopyFiles@2
+              inputs:
+                sourceFolder: $(Build.SourcesDirectory)/SMCEBI_Navigator
+                contents: bin/**
+                targetFolder: $(Build.Build.BinariesDirectory)/$(Build.BuildNumber)_net8_0-android34_$(System.PlanId)_$(parameters.config) 
+                # fix https://learn.microsoft.com/en-us/azure/devops/pipelines/process/run-number?view=azure-devops&tabs=yaml
       - ${{ if contains(parameters.framework, 'windows') }}:
         - job: Windows_compilation
           displayName: Windows app compilation
@@ -196,11 +180,53 @@ stages:
                   arguments: '-f net8.0-windows10.0.19041.0 -c Debug'
             - task: CopyFiles@2
               inputs:
-                contents: '$(Build.SourcesDirectory)/SMCEBI_Navigator/bin'
-                targetFolder: $(Build.ArtifactStagingDirectory)
-            
+                sourceFolder: $(Build.SourcesDirectory)/SMCEBI_Navigator
+                contents: bin/**
+                targetFolder: $(Build.Build.BinariesDirectory)/$(Build.BuildNumber)_net8_0-windows10_0_19041_0_$(System.PlanId)_$(parameters.config)
+
+
+- stage: 
+  displayName: Testing assemblies
+  jobs:
+    - ${{ if contains(parameters.framework, 'android') }}:
+      - job: 
+        displayName: Android # (tmp mock)
+        steps:
+          - task: CopyFiles@2
+            inputs:
+              sourceFolder: $(Build.BinariesDirectory)/$(Build.BuildNumber)_net8_0-android34_$(System.PlanId)_$(parameters.config)
+              contents: '**'
+              targetFolder: $(Build.ArtifactStagingDirectory)/$(Build.BuildNumber)_net8_0-android34_$(System.PlanId)_$(parameters.config)
+    - ${{ if contains(parameters.framework, 'windows') }}:
+      - job: 
+        displayName: Windows # (tmp mock)
+        steps:
+          - task: CopyFiles@2
+            inputs:
+              sourceFolder: $(Build.Build.BinariesDirectory)/$(Build.BuildNumber)_net8_0-windows10_0_19041_0_$(System.PlanId)_$(parameters.config)
+              contents: '**'
+              targetFolder: $(Build.ArtifactStagingDirectory)/$(Build.BuildNumber)_net8_0-windows10_0_19041_0_$(System.PlanId)_$(parameters.config)
+
+- ${{ if eq(parameters.skipPublish, false) }}:
+  - stage: 
+    displayName: Publishing artifacts
+    jobs:
+      - ${{ if contains(parameters.framework, 'android') }}:
+        - job:
+          displayName: Android
+          steps:
             - task: PublishBuildArtifacts@1
               inputs:
-                pathToPublish: $(Build.ArtifactStagingDirectory)
+                pathToPublish: $(Build.ArtifactStagingDirectory)/$(Build.BuildNumber)_net8_0-android34_$(System.PlanId)_$(parameters.config)
                 artifactName: 'Android_$(Parameters.Framework)_$(Build.BuildNumber)'
                 publishLocation: Container # Azure Pipelines 
+
+      - ${{ if contains(parameters.framework, 'windows') }}:
+        - job:
+          displayName: Windows
+          steps:
+            - task: PublishBuildArtifacts@1
+              inputs:
+                pathToPublish: $(Build.ArtifactStagingDirectory)/$(Build.BuildNumber)_net8_0-windows10_0_19041_0_$(System.PlanId)_$(parameters.config)
+                artifactName: 'Windows_$(Parameters.Framework)_$(Build.BuildNumber)'
+                publishLocation: Container # Azure Pipelines
