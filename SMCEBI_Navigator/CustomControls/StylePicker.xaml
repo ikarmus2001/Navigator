@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SMCEBI_Navigator.CustomControls.StylePicker"
              xmlns:model="clr-namespace:SMCEBI_Navigator.Models"
+             Loaded="ContentView_Loaded"
              x:DataType="model:ElementStyle">
     <Border StrokeThickness="2" Stroke="Blue" Padding="10, 5, 10, 5">
         <Grid>
@@ -36,6 +37,7 @@
 
             <Picker x:Name="FillColor_Picker" 
                     Grid.Column="0" Grid.Row="2" 
+                    SelectedIndexChanged="FillColor_Picker_SelectedIndexChanged"
                     VerticalOptions="Center" HorizontalOptions="Center" />
 
             <Rectangle x:Name="FillColor_PreviewRect" 
@@ -89,6 +91,7 @@
 
             <Picker x:Name="BackgroundColor_Picker" 
                     Grid.Row="2" Grid.Column="6"
+                    SelectedIndexChanged="BackgroundColor_Picker_SelectedIndexChanged"
                     VerticalOptions="Center" HorizontalOptions="Center" />
 
             <Rectangle x:Name="BackgroundColor_PreviewRect" 

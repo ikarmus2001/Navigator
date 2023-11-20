@@ -19,8 +19,7 @@ public partial class ElementPreview : ContentView
     public static readonly BindableProperty ControlVisibilityProperty = BindableProperty.Create(
         propertyName: nameof(ControlVisibility),
         returnType: typeof(bool),
-        declaringType: typeof(ElementPreview),
-        defaultValue: true);
+        declaringType: typeof(ElementPreview));
 
     public bool ControlVisibility
     {

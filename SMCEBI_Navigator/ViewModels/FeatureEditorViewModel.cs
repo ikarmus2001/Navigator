@@ -1,69 +1,77 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Core.Extensions;
+using CommunityToolkit.Mvvm.ComponentModel;
 using SMCEBI_Navigator.Models;
+using SMCEBI_Navigator.Views;
+using System.Collections.ObjectModel;
+using FA = SMCEBI_Navigator.ViewModels.FeatureAction;
 
 namespace SMCEBI_Navigator.ViewModels;
 
 internal partial class FeatureEditorViewModel : ObservableObject
 {
-    internal Building buildingRef;
-    [ObservableProperty] private string featureName;
+    private readonly INavigation navi;
+    
 
+    [ObservableProperty] private string featureName;
     [ObservableProperty] private string pageTitle;
 
-    FeatureAction action;
+    private readonly FA action;
+    private readonly Building buildingRef;
     [ObservableProperty] public BuildingElement editorElement;
-
-    private Type editorType;
-
-    [ObservableProperty] public List<BuildingElement> childElements;
-
-    [ObservableProperty] public List<BuildingElement_Feature> markedFeatures;
+    public ObservableCollection<BuildingElement> ChildElements { get; set; }
+    [ObservableProperty] public IEnumerable<MarkedFeature> markedFeatures;
 
     [ObservableProperty] public bool isSizePickerVisible = true;
     [ObservableProperty] public bool isStylePickerVisible = true;
     [ObservableProperty] public bool isPreviewVisible = false;
 
+    [ObservableProperty] public string childName;
 
-    //internal delegate Action<BuildingElement> SaveDelegate();
-
-    //internal event Action<BuildingElement> SaveEvent;
-
-    public FeatureEditorViewModel(IDictionary<string, object> query)
+    public FeatureEditorViewModel(IDictionary<string, object> query, INavigation navi)
     {
         buildingRef = query[nameof(Building)] as Building;
         EditorElement = query[nameof(BuildingElement)] as BuildingElement;
-        //action = (FeatureAction)Enum.Parse(typeof(FeatureAction), query[nameof(FeatureAction)].ToString());
-        editorType = query[nameof(Type)] as Type;
-        PrepareContent(editorType);
+        action = (FA)Enum.Parse(typeof(FA), query[nameof(FA)].ToString());
+        PrepareContent();
+        this.navi = navi;
     }
 
-    private void PrepareContent(Type elementType)
+    private void PrepareContent()
     {
-        // TODO IK it look awful, cant find suitable syntax for type pattern matching switch
-        if (elementType == typeof(Floor))
+        Action p = EditorElement switch
         {
-            PrepareFloor();
-        }
-        else if (elementType == typeof(Room))
-        {
-            PrepareRoom();
-        }
-        else if (elementType == typeof(MarkedFeature))
-        {
-            PrepareFeature();
-        }
-        PageTitle = $"{Enum.GetName(typeof(FeatureAction), action)} {FeatureName}";
+            Building => PrepareBuilding,
+            Floor => PrepareFloor,
+            Room => PrepareRoom,
+            MarkedFeature => PrepareFeature,
+            _ => throw new NotImplementedException()
+        };
+        p();
+
+        PageTitle = $"{Enum.GetName(typeof(FA), action)} {FeatureName}";
+    }
+
+    private void PrepareBuilding()
+    {
+        FeatureName = nameof(Building);
+        ChildName = nameof(Floor);
+        ChildElements = (EditorElement as Building).Floors.ToObservableCollection<BuildingElement>();
+
+        IsSizePickerVisible = false;
+        IsStylePickerVisible = false;
     }
 
     private void PrepareFeature()
     {
         FeatureName = "Feature";
+        ChildName = "Subfeature";
         MarkedFeatures = (EditorElement as MarkedFeature).Features;
     }
 
     private void PrepareRoom()
     {
         FeatureName = "Room";
+        ChildName = null;
         ChildElements = null;
         MarkedFeatures = (EditorElement as Room).Features;
         IsPreviewVisible = true;
@@ -72,7 +80,8 @@ internal partial class FeatureEditorViewModel : ObservableObject
     private void PrepareFloor()
     {
         FeatureName = "Floor";
-        ChildElements = (EditorElement as Floor).Rooms.Cast<BuildingElement>().ToList();
+        ChildName = nameof(Room);
+        ChildElements = (EditorElement as Floor).Rooms.ToObservableCollection<BuildingElement>();
         MarkedFeatures = (EditorElement as Floor).Features;
 
         IsSizePickerVisible = false;
@@ -81,22 +90,15 @@ internal partial class FeatureEditorViewModel : ObservableObject
 
     internal void AddChild()
     {
-        BuildingElement newChild = editorType switch
-        {
-            Type t when t == typeof(Floor) => new Room(),
-            Type t when t == typeof(Room) => new MarkedFeature(),
-            _ => throw new NotImplementedException()
-        };
-
+        BuildingElement newChild = EditorElement.AddElement();
         ChildElements.Add(newChild);
     }
 
-    //internal async Task<bool> Save()
-    //{
-    //    if (action == FeatureAction.Add)
-    //    {
+    internal void AddFeature()
+    {
+        //_ = MarkedFeatures.Append(new MarkedFeature());
+    }
 
-    //    }
-    //    return true;
-    //}
+    internal async Task GoToEditor(BuildingElement element, FA fa=FA.Modify) =>
+        await navi.PushAsync(new FeatureEditorPage(ObjectExtensions.NavigationParams(buildingRef, element, fa)));
 }

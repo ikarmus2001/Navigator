@@ -9,8 +9,6 @@ public partial class MapDisplayPage : ContentPage
         
     }
 
-
-
     private View LoadingScreen()
     {
         return new VerticalStackLayout()
@@ -53,7 +51,7 @@ public partial class MapDisplayPage : ContentPage
             }
         };
 
-        if (string.IsNullOrEmpty(injectedHtml))
+        if (string.IsNullOrEmpty(injectedHtml) && MapStorage.Current != null)
             mapView = await MapStorage.Current.GetView();
         else
             mapView = new WebView() { Source = new HtmlWebViewSource() { Html = injectedHtml } };

@@ -5,28 +5,23 @@ namespace SMCEBI_Navigator;
 public partial class MainNavigationPage : NavigationPage
 {
 	public MapDisplayPage mapDisplay;
+    private readonly Page newPage;
 
 	public MainNavigationPage()
 	{
 		mapDisplay = new();
 		InitializeComponent();
-		Navigation.PushAsync(new MapPickerPage());
-
-        Loaded += MainNavigationPage_Loaded;
-	}
+        Appearing += MainNavigationPage_Appearing;
+        newPage = new MapPickerPage();
+    }
 
     public MainNavigationPage(Page page)
     {
         mapDisplay = new();
         InitializeComponent();
-        Navigation.PushAsync(page);
+        newPage = page;
 
-        Loaded += MainNavigationPage_Loaded;
-    }
-
-    internal async void ShowEditor(Dictionary<string, object> query)
-    {
-        await Navigation.PushAsync(new MainNavigationPage(new MapEditorPage(query)));
+        Appearing += MainNavigationPage_Appearing;
     }
 
     internal async void ShowMap()
@@ -34,9 +29,12 @@ public partial class MainNavigationPage : NavigationPage
         await Navigation.PushAsync(mapDisplay);
     }
 
-    private async void MainNavigationPage_Loaded(object sender, EventArgs e)
+    private async void MainNavigationPage_Appearing(object sender, EventArgs e)
     {
-        this.Window.MinimumWidth = 1000;
+        if (!App.IsInitialized)
+            await App.Initialization();
+
         await mapDisplay.UpdateDisplay();
+        await Navigation.PushAsync(newPage);
     }
 }

@@ -1,20 +1,19 @@
+using System.Collections.ObjectModel;
+
 namespace SMCEBI_Navigator.Models;
 
-public class Building : BuildingElement
+public class Building : BuildingElement, IBuildingElementOperations
 {
-    public uint Version { get; set; }
-    public List<Floor> Floors { get; set; }
-    
+    public uint Version { get; set; } = 0;
+    public ObservableCollection<Floor> Floors { get; set; } = new();
 
-    public Building()
-    {
-        Name = "";
-        Floors = new();
-        Version = 0;
-    }
 
-    internal void AddFloor(Floor newFloor)
+    public Building() { }
+
+    public override BuildingElement AddElement()
     {
-        Floors.Add(newFloor);
+        Floor newChild = new();
+        Floors.Add(newChild);
+        return newChild;
     }
 }

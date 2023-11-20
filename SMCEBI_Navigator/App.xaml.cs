@@ -4,67 +4,35 @@ namespace SMCEBI_Navigator;
 
 public partial class App : Application
 {
-	public App()
-	{
-        CollectionView_HeaderFooterFix();
-        AppInitialization();
-        InitializeComponent();
+    internal static bool IsInitialized = false;
 
+    public App()
+    {
+        InitializeComponent();
+        
         MainPage = new MainNavigationPage();
     }
 
-    /// <summary>
-    /// https://github.com/dotnet/maui/issues/14557
-    /// https://github.com/dotnet/maui/issues/14557#issuecomment-1686149840
-    /// </summary>
-    private void CollectionView_HeaderFooterFix()
+    internal static async Task Initialization()
     {
-        CollectionViewHandler.Mapper.AppendToMapping("HeaderAndFooterFix", (_, collectionView) =>
-        {
-            collectionView.AddLogicalChild(collectionView.Header as Element);
-            collectionView.AddLogicalChild(collectionView.Footer as Element);
-        });
+//#if DEBUG
+//        Preferences.Clear();
+//#endif
+        await CheckFirstRun();
+        FileManager.ReloadMaps();
+        IsInitialized = true;
     }
 
-    private void AppInitialization()
+    private static async Task CheckFirstRun()
     {
-        CheckFirstRun();
-        var x = Directory.GetFiles(FileSystem.AppDataDirectory);
-        foreach (string path in x)
+        if (!Preferences.ContainsKey("Configured"))
         {
-            string content = File.ReadAllText(path);
-            MapStorage.UnparseSavedConfigs(content);
-        }
-    }
-
-    // light/dark mode, language, styles and university group settings
-    private void CheckFirstRun()
-    {
-        if (!Preferences.ContainsKey("Configured")/*Path.Exists(prefPath)*/)
-        {
-            SaveDefaultMap();
+            await FileManager.UnpackSampleMaps();
             InitializePreferences();
         }
-
-        //var settings = JsonSerializer.Deserialize<>(new StreamReader(prefPath).ReadToEnd());
-
     }
 
-    private static void SaveDefaultMap()
-    {
-        using Stream fs = FileSystem.Current.OpenAppPackageFileAsync("defaultMap.json").Result;
-        var opts = new FileStreamOptions()
-        {
-            Mode = FileMode.CreateNew,
-            Access = FileAccess.Write
-        };
-        var x = new StreamWriter(Path.Combine(FileSystem.AppDataDirectory + "/defaultMap.json"), opts);
-
-        fs.CopyTo(x.BaseStream);
-        x.Close();
-    }
-
-    private void InitializePreferences()
+    private static void InitializePreferences()
     {
         Preferences.Set("DarkMode", (UInt16)AppTheme.Unspecified);
         Preferences.Set("Language", "pl-PL");

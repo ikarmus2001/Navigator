@@ -206,11 +206,6 @@ public partial class MapBuilder : IMapBuilder
         throw new NotImplementedException();
     }
 
-    public void mockBody()
-    {
-        _htmlBody = tmp_bodybuilder();
-    }
-
     public void AddFloor()
     {
         throw new NotImplementedException();

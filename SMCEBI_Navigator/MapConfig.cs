@@ -7,6 +7,8 @@ internal sealed class MapConfig
 {
     public int HtmlChangeId { get; set; }
     public int ObjChangeId { get; set; }
+
+    // TODO use versioned htmls to avoid unnecessary parsing
     public Tuple<uint, string> VersionedCachedHtml { get; set; }
     internal MapEngine Engine { get; set; }
     public Tuple<uint, uint> MapSize { get; set; }
@@ -21,7 +23,7 @@ internal sealed class MapConfig
     }
 
     ///<summary>
-    ///Gets newest html from versionedCachedHtml, if it's not up to date, updates it via Build method
+    /// Gets newest html from versionedCachedHtml, if it's not up to date, updates it via Build method
     ///</summary>
     internal async Task<WebView> GetView()
     {

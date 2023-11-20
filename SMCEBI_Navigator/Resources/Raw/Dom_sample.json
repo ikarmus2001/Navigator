@@ -1,0 +1,61 @@
+{
+  "building": {
+    "name": "Dom",
+    "version": 2,
+    "corners": [
+      [ 0, 0 ],
+      [ 100, 0 ],
+      [ 100, 100 ],
+      [ 0, 100 ]
+    ],
+    "features": null,
+    "style": {
+      "name": "buildingStyle",
+      "linecolor": "yellow"
+    },
+    "floors": [
+      {
+        "name": "Floor 1",
+        "corners": [
+          [ 0, 0 ],
+          [ 100, 0 ],
+          [ 100, 100 ],
+          [ 0, 100 ]
+        ],
+        "features": null,
+        "style": {
+          "name": "floor1Style",
+          "linecolor": "grey"
+        },
+        "rooms": [
+          {
+            "name": "Room1",
+            "corners": [
+              [ 0, 0 ],
+              [ 10, 0 ],
+              [ 10, 10 ],
+              [ 0, 10 ]
+            ],
+            "style": {
+              "name": "roomStyle",
+              "linecolor": "green"
+            }
+          },
+          {
+            "name": "Room2",
+            "corners": [
+              [ 10, 10 ],
+              [ 20, 10 ],
+              [ 20, 20 ],
+              [ 10, 20 ]
+            ],
+            "style": {
+              "name": "roomStyle",
+              "linecolor": "green"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

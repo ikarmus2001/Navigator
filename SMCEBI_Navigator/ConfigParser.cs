@@ -20,7 +20,7 @@ internal static class ConfigParser
 
     private static async Task<LeafletAPI.MapBuilder> ParseToLeaflet(MapConfig config)
     {
-        MapBuilder builder = new MapBuilder();
+        MapBuilder builder = new();
         builder.SetBuildingShape(config.Building.Corners, config.Building.Style.ToLeafletApi());
 
         foreach (var floor in config.Building.Floors)
@@ -38,12 +38,13 @@ internal static class ConfigParser
 
     internal static LeafletAPI.Models.MapObjectStyle ToLeafletApi(this ElementStyle style)
     {
-        var parsed = new LeafletAPI.Models.MapObjectStyle(style.Name, style.LineColor);
-
-        parsed.Opacity = float.Parse(style.LineOpacity ?? "1", CultureInfo.InvariantCulture.NumberFormat);
-        parsed.Weight = float.Parse(style.LineWidth ?? "0", CultureInfo.InvariantCulture.NumberFormat);
-        parsed.FillColor = style.FillColor ?? "";
-        parsed.FillOpacity = float.Parse(style.FillOpacity ?? "1", CultureInfo.InvariantCulture.NumberFormat);
+        var parsed = new LeafletAPI.Models.MapObjectStyle(style.Name, style.LineColor)
+        {
+            Opacity = float.Parse(style.LineOpacity ?? "1", CultureInfo.InvariantCulture.NumberFormat),
+            Weight = float.Parse(style.LineWidth ?? "0", CultureInfo.InvariantCulture.NumberFormat),
+            FillColor = style.FillColor ?? "",
+            FillOpacity = float.Parse(style.FillOpacity ?? "1", CultureInfo.InvariantCulture.NumberFormat)
+        };
 
         return parsed;
     }

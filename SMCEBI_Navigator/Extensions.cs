@@ -1,12 +1,13 @@
-﻿/// https://github.com/Burtsev-Alexey/net-object-deep-copy
-
-
-using System.Collections.Generic;
-using System.Reflection;
+﻿using FA = SMCEBI_Navigator.ViewModels.FeatureAction;
 using System.ArrayExtensions;
+using System.Reflection;
+using SMCEBI_Navigator.Models;
 
 namespace System
 {
+    /// <summary>
+    /// https://github.com/Burtsev-Alexey/net-object-deep-copy
+    /// </summary>
     public static class ObjectExtensions
     {
         private static readonly MethodInfo CloneMethod = typeof(Object).GetMethod("MemberwiseClone", BindingFlags.NonPublic | BindingFlags.Instance);
@@ -79,6 +80,9 @@ namespace System
         {
             return Color.FromArgb(hexColor);
         }
+
+        internal static Dictionary<string, object> NavigationParams(Building b, BuildingElement be, FA fa) =>
+            new() { { nameof(Building), b }, { nameof(BuildingElement), be }, { nameof(FA), fa } };
     }
 
     public class ReferenceEqualityComparer : EqualityComparer<Object>
@@ -166,6 +170,25 @@ namespace System
                     "black" => "#000000",
                     "white" => "#FFFFFF",
                     _ => "#000000"
+                };
+            }
+
+            internal static string ToColorName(this string hexName)
+            {
+                if (string.IsNullOrEmpty(hexName))
+                    return "Black";
+
+                if (!hexName.StartsWith('#'))
+                    return hexName;
+
+                return hexName.ToUpper() switch
+                {
+                    "#FF0000" => "Red",
+                    "#00FF00" => "Green",
+                    "#0000FF" => "Blue",
+                    "#000000" => "Black",
+                    "#FFFFFF" => "White",
+                    _ => "Black"
                 };
             }
         }

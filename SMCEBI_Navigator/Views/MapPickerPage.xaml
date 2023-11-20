@@ -1,29 +1,40 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="SMCEBI_Navigator.Views.MapPickerPage"
-             xmlns:vm="clr-namespace:SMCEBI_Navigator.ViewModels"
-             xmlns:local="clr-namespace:SMCEBI_Navigator"
-             xmlns:model="clr-namespace:SMCEBI_Navigator.Models"
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             x:DataType="vm:MapPickerViewModel"
-             
-             Title="Wybór mapy">
+<ContentPage
+    x:Class="SMCEBI_Navigator.Views.MapPickerPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:SMCEBI_Navigator"
+    xmlns:model="clr-namespace:SMCEBI_Navigator.Models"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:SMCEBI_Navigator.ViewModels"
+    Title="Wybór mapy"
+    x:DataType="vm:MapPickerViewModel">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Dodaj mapę" IconImageSource="add_fill0_wght400_grad0_opsz24.png" />
-        <ToolbarItem Text="See Map" IconImageSource="add_fill0_wght400_grad0_opsz24.png" Clicked="ToolbarItem_ShowMap_Clicked" />
+        <ToolbarItem
+            Clicked="ToolbarItem_ShowMap_Clicked"
+            IconImageSource="map_fill0_wght200_grad0_opsz24.png"
+            Text="Show map" />
+
+        <ToolbarItem
+            Clicked="ToolbarItem_AddMap_Clicked"
+            IconImageSource="add_fill0_wght400_grad0_opsz24.png"
+            Text="Add map" />
     </ContentPage.ToolbarItems>
 
-    <CollectionView x:Name="maps_collectionView"
-                        SelectionMode="Single"
-                        ItemsSource="{Binding Maps}"
-                        SelectionChanged="maps_collectionView_SelectionChanged"
-                        ItemSizingStrategy="MeasureAllItems">
+    <CollectionView
+        x:Name="Maps_collectionView"
+        ItemSizingStrategy="MeasureAllItems"
+        ItemsSource="{Binding Maps}"
+        SelectionChanged="Maps_collectionView_SelectionChanged"
+        SelectionMode="Single">
         <CollectionView.ItemTemplate>
             <DataTemplate x:DataType="local:MapConfig">
-                <Border Margin="10, 2" Padding="10,5,10,5" StrokeThickness="2">
-                    <Grid MinimumHeightRequest="20"  >
+                <Border
+                    Margin="10,2"
+                    Padding="10,5,10,5"
+                    StrokeThickness="2">
+                    <Grid MinimumHeightRequest="20">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
                             <RowDefinition Height="*" />
@@ -35,35 +46,47 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
+                        <Label Grid.Column="0" Text="{Binding Building.Name}" />
+
+
+
                         <Label
-                                    Grid.Column="0"
-                                    Text="{Binding Building.Name}" />
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            MinimumHeightRequest="20"
+                            Text="{Binding Building.Floors.Count, StringFormat='Ilość pięter: {0}'}" />
 
-
-
-                        <Label Text="{Binding Building.Floors.Count, StringFormat='Ilość pięter: {0}'}" 
-                                   Grid.Column="1" Grid.Row="0" 
-                                   MinimumHeightRequest="20"/>
-
-                        <CollectionView ItemsSource="{Binding Building.Floors}" SelectionMode="None" 
-                                            Grid.Column="1" Grid.Row="1" 
-                                            HorizontalOptions="End" MinimumHeightRequest="20">
+                        <CollectionView
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            HorizontalOptions="End"
+                            ItemsSource="{Binding Building.Floors}"
+                            MinimumHeightRequest="20"
+                            SelectionMode="None">
                             <CollectionView.ItemTemplate>
                                 <DataTemplate x:DataType="model:Floor">
-                                    <Label Text="{Binding Name}" MinimumHeightRequest="20" />
+                                    <Label MinimumHeightRequest="20" Text="{Binding Name}" />
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>
                         </CollectionView>
 
-                        <ImageButton Source="more_vert_fill0_wght200_grad0_opsz24_end.png" WidthRequest="32" HeightRequest="32"
-                                         Clicked="ImageButton_Clicked"
-                                         VerticalOptions="Center" HorizontalOptions="Center"
-                                         Grid.Column="2" Grid.Row="0" Grid.RowSpan="2" />
+                        <ImageButton
+                            Grid.Row="0"
+                            Grid.RowSpan="2"
+                            Grid.Column="2"
+                            HeightRequest="32"
+                            HorizontalOptions="Center"
+                            Source="more_vert_fill0_wght200_grad0_opsz24_end.png"
+                            VerticalOptions="Center"
+                            WidthRequest="32" />
 
-                        <RadioButton GroupName="collection_radio" 
-                                     Grid.Column="3" Grid.Row="0" Grid.RowSpan="2" 
-                                     IsChecked="{Binding IsSelected, Mode=TwoWay}" 
-                                     CheckedChanged="RadioButton_CheckedChanged" />
+                        <RadioButton
+                            Grid.Row="0"
+                            Grid.RowSpan="2"
+                            Grid.Column="3"
+                            CheckedChanged="RadioButton_CheckedChanged"
+                            GroupName="collection_radio"
+                            IsChecked="{Binding IsSelected, Mode=TwoWay}" />
 
 
                     </Grid>
@@ -71,7 +94,4 @@
             </DataTemplate>
         </CollectionView.ItemTemplate>
     </CollectionView>
-
-    <!--</ScrollView>-->
-    <!--</FlexLayout>-->
 </ContentPage>
