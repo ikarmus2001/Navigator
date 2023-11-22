@@ -21,7 +21,6 @@ stages:
     variables: 
       Environment: QA
     jobs:
-    - template: azure-pipelines.yml
-      parameters:
+    - template: appCompilation.yml
         
 
