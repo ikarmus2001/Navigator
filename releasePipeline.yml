@@ -18,7 +18,20 @@ variables:
 - group: Android signing password
 
 stages:
+  - template: unitTestStage.yml
+
   - template: appCompilation.yml
     parameters:
       config: Release
+      framework: net8.0-windows10.0.19041.0
 
+  - template: appCompilation.yml
+      parameters:
+        config: Release
+        framework: net8.0-android34
+
+  - template: GithubReleaseStage.yml
+    parameters:
+
+  - template: GithubReleaseStage.yml
+    parameters:

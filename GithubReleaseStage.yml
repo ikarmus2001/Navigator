@@ -1,9 +1,11 @@
-trigger: none
+parameters:
+- parameter: artifactName
+  
 
 steps:
 - checkout: none
-
-- task: DownloadPipelineArtifact@2
+- download: 
+  artifact: 
   inputs:
     buildType: 'specific'
     project: 'SMCEBI Navigator'

@@ -17,10 +17,6 @@ parameters:
     displayName: Skip environment preparation
     type: boolean
     default: false
-  - name: skipPublish
-    displayName: Skip artifacts publishing
-    type: boolean
-    default: false
 
 stages:
 - ${{ if eq(parameters.skipEnvPrep, false) }}:
@@ -129,13 +125,18 @@ stages:
               keystorePass: $(AndroidKeystoreSigningPassword)
               keystoreAlias: $(AndroidKeystoreName)
               keyPass: $(AndroidKeystoreSigningPassword)
-            
-          - task: CopyFiles@2
-            inputs:
-              sourceFolder: $(Build.SourcesDirectory)/SMCEBI_Navigator
-              contents: bin/**
-              targetFolder: $(Build.BinariesDirectory)/$(Build.BuildNumber)_net8_0-android34
-              # fix https://learn.microsoft.com/en-us/azure/devops/pipelines/process/run-number?view=azure-devops&tabs=yaml
+          
+          - publish:
+            target: '$(Build.SourcesDirectory)/SMCEBI_Navigator/bin'
+            displayName: Publish full compiled app
+            artifact: '$(Build.BuildNumber)_${{ parameters.framework }}'
+
+          # - task: CopyFiles@2
+          #   inputs:
+          #     sourceFolder: $(Build.SourcesDirectory)/SMCEBI_Navigator
+          #     contents: bin/**
+          #     targetFolder: $(Build.BinariesDirectory)/$(Build.BuildNumber)_net8_0-android34
+          #     # fix https://learn.microsoft.com/en-us/azure/devops/pipelines/process/run-number?view=azure-devops&tabs=yaml
     
     - ${{ if contains(parameters.framework, 'windows') }}:
       - job: Windows_compilation
@@ -162,8 +163,16 @@ stages:
                 arguments: '-f net8.0-windows10.0.19041.0 -c Release'
               ${{ else }}:
                 arguments: '-f net8.0-windows10.0.19041.0 -c Debug'
-          - task: CopyFiles@2
-            inputs:
-              sourceFolder: $(Build.SourcesDirectory)/SMCEBI_Navigator
-              contents: bin/**
-              targetFolder: $(Build.BinariesDirectory)/$(Build.BuildNumber)_net8_0-windows10_0_19041_0
+
+          - publish:  
+            target: '$(Build.SourcesDirectory)/SMCEBI_Navigator/bin'
+            displayName: Publish full compiled app
+            artifact: '$(Build.BuildNumber)_${{ parameters.framework }}'
+
+          # - task: CopyFiles@2
+          #   inputs:
+          #     sourceFolder: $(Build.SourcesDirectory)/SMCEBI_Navigator
+          #     contents: bin/**
+          #     targetFolder: $(Build.BinariesDirectory)/$(Build.BuildNumber)_net8_0-windows10_0_19041_0
+
+          # drop artifacts
