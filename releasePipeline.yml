@@ -22,16 +22,15 @@ variables:
   value: ''
 
 stages:
-  - stage: testing
-    jobs:
-    - template: unitTestStage.yml
-
-
   - template: appCompilation.yml
     parameters:
       config: Release
       framework: net8.0-windows10.0.19041.0
       outputArtifactName: WindowsArtifactName
+
+  - stage: testing
+    jobs:
+      - template: unitTestStage.yml
 
   - template: appCompilation.yml
     parameters:
@@ -39,7 +38,6 @@ stages:
       framework: net8.0-android34
       outputArtifactName: AndroidArtifactName
 
-  
   - stage: Deployment
     jobs:  
       - template: GithubReleaseJob.yml
