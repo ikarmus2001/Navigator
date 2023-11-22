@@ -22,14 +22,6 @@ parameters:
     type: boolean
     default: false
 
-variables:
-- name: dotnetVersion
-  value: '8.x'
-  readonly: false
-- name: nugetVersion
-  value: '>=6.7.x'
-- group: Android signing password
-
 stages:
 - ${{ if eq(parameters.skipEnvPrep, false) }}:
   - stage: envPrep

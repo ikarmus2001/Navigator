@@ -6,10 +6,16 @@
 trigger:
 - main
 
-
-
 pool:
   name: Self-hosted pool
+
+variables:
+- name: dotnetVersion
+  value: '8.x'
+  readonly: false
+- name: nugetVersion
+  value: '>=6.7.x'
+- group: Android signing password
 
 stages:
   - stage: Full_compilation
