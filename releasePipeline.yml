@@ -22,7 +22,9 @@ variables:
   value: ''
 
 stages:
-  - template: unitTestStage.yml
+  - stage: testing
+    jobs:
+    - template: unitTestStage.yml
 
 
   - template: appCompilation.yml
