@@ -4,19 +4,19 @@ parameters:
 
 jobs:
   - job:
-  steps:
-    - checkout: none
-    - download: current
-      displayName: Download artifact $(artifactName)
-      artifact: $(artifactName)
+    steps:
+      - checkout: none
+      - download: current
+        displayName: Download artifact $(artifactName)
+        artifact: $(artifactName)
 
-    - task: GitHubRelease@1
-      inputs:
-        repositoryName: $(Build.Repository.Name)
-        target: $(Build.SourceVersion)
-        tagSource: userSpecifiedTag
-        tag: $(currentVersionName)
-        gitHubConnection: GitHub_ikarmus2001
-        action: create
-        assets: '$(Pipeline.Workspace)'
-        isDraft: true
+      - task: GitHubRelease@1
+        inputs:
+          repositoryName: $(Build.Repository.Name)
+          target: $(Build.SourceVersion)
+          tagSource: userSpecifiedTag
+          tag: $(currentVersionName)
+          gitHubConnection: GitHub_ikarmus2001
+          action: create
+          assets: '$(Pipeline.Workspace)'
+          isDraft: true
