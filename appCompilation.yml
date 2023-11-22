@@ -17,6 +17,8 @@ parameters:
     displayName: Skip environment preparation
     type: boolean
     default: false
+  - name: outputArtifactName
+    type: string
   
 
 stages:
