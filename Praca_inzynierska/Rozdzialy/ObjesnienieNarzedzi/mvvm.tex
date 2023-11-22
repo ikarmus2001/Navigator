@@ -1,0 +1,24 @@
+\subsection{MVVM}
+MVVM to akronim Model-View-Viewmodel (w tłumaczeniu Model - Widok - Model widoku), czyli programistycznego wzorca projektowego. \\
+Polega na wprowadzeniu separacji pomiędzy modelem danych i sposobem ich obróbki, widokami je reprezentującymi oraz operacjami pomiędzy nimi. \\
+Jego główną zaletą jest możliwość oddzielenia ogólnych założeń programu od szczegółów integracji z platformą 
+- w projekcie~\cite{Halaczkiewicz_Navigator_GitHub} jest to wyraźnie zarysowane dzięki przyjętej 
+konwencji nazewniczej plików (postfix -Model, -ViewModel lub -View).
+Na rysunku~\ref{fig:MVVM_diagram} możemy zaobserwować zależność komunikacji klas stworzonych z wykorzystaniem właśnie tego wzorca.
+
+\begin{figure}[!htp]
+    \centering
+    \begin{tikzpicture}[
+        minimum height=1cm,
+        block/.style={rectangle, draw=black!60, fill=green!30, thick, rounded corners=2mm}
+        ]
+            \node[block] (Model) {Model};
+            \node[block] (ViewModel) [right=of Model] {ViewModel};
+            \node[block] (View) [right=of ViewModel] {View};
+            
+            \draw[->] (Model.east) -- node[anchor=east]{} (ViewModel.west);
+            \draw[->] (ViewModel.west) -- node[anchor=east]{} (View.east);
+    \end{tikzpicture}
+    \caption{Zależności między klasami w MVVM~\cite{mvvm}}
+    \label{fig:MVVM_diagram}
+\end{figure}

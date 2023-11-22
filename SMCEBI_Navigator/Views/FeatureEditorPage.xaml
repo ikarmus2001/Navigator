@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="SMCEBI_Navigator.Views.FeatureEditorPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:cc="clr-namespace:SMCEBI_Navigator.CustomControls"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:SMCEBI_Navigator.ViewModels"
+    Title="{Binding PageTitle}"
+    x:DataType="vm:FeatureEditorViewModel">
+    <ContentPage.Resources>
+        <Style x:Key="InvalidEntryStyle" TargetType="Entry">
+            <Setter Property="TextColor" Value="Red" />
+        </Style>
+    </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            x:Name="Debug_ToolbarItem"
+            Clicked="Debug_ToolbarItem_Clicked"
+            Text="Debug me" />
+    </ContentPage.ToolbarItems>
+
+    <VerticalStackLayout Padding="10">
+        <Label
+            Padding="0,0,0,5"
+            HorizontalOptions="Start"
+            Text="{Binding FeatureName, StringFormat='{0} name'}" />
+        <Entry Placeholder="{Binding FeatureName, StringFormat='{0} name'}" Text="{Binding EditorElement.Name, Mode=TwoWay}">
+            <Entry.Behaviors>
+                <toolkit:TextValidationBehavior
+                    InvalidStyle="{StaticResource InvalidEntryStyle}"
+                    RegexPattern="^[\w\s\-._]+$"
+                    ToolTipProperties.Text="Cannot contain &lt;, &gt;" />
+            </Entry.Behaviors>
+        </Entry>
+
+        <cc:StylePicker
+            x:Name="StylePicker_CC"
+            Padding="0,15,0,5"
+            IsVisible="{Binding IsStylePickerVisible}"
+            StyleItem="{Binding EditorElement.Style}" />
+
+        <cc:SizePicker
+            x:Name="SizePicker_CC"
+            IsVisible="{Binding IsSizePickerVisible}"
+            Items="{Binding EditorElement.Corners}" />
+
+        <cc:ElementPreview
+            x:Name="ElementPreview_CC"
+            Margin="10"
+            ControlVisibility="{Binding IsPreviewVisible}"
+            HeightRequest="100"
+            PreviewElement="{Binding EditorElement, Mode=OneWay}"
+            WidthRequest="100" />
+
+        <cc:ChildElementsCollection
+            x:Name="ChildElements_CC"
+            AddClicked="ChildElements_CC_AddClicked"
+            ChildName_Tooltip="{Binding ChildName}"
+            ItemSelected="ChildElements_CC_ItemSelected"
+            Items="{Binding ChildElements}" />
+
+        <cc:ChildElementsCollection
+            x:Name="FeaturesChildren_CC"
+            AddClicked="Features_CC_AddClicked"
+            ChildName_Tooltip="Feature"
+            ItemSelected="FeaturesChildren_CC_ItemSelected"
+            Items="{Binding MarkedFeatures}" />
+
+    </VerticalStackLayout>
+</ContentPage>

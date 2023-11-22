@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="SMCEBI_Navigator.Views.MapPickerPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:SMCEBI_Navigator"
+    xmlns:model="clr-namespace:SMCEBI_Navigator.Models"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:SMCEBI_Navigator.ViewModels"
+    Title="Wybór mapy"
+    x:DataType="vm:MapPickerViewModel">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            Clicked="ToolbarItem_ShowMap_Clicked"
+            IconImageSource="map_fill0_wght200_grad0_opsz24.png"
+            Text="Show map" />
+
+        <ToolbarItem
+            Clicked="ToolbarItem_AddMap_Clicked"
+            IconImageSource="add_fill0_wght400_grad0_opsz24.png"
+            Text="Add map" />
+    </ContentPage.ToolbarItems>
+
+    <CollectionView
+        x:Name="Maps_collectionView"
+        ItemSizingStrategy="MeasureAllItems"
+        ItemsSource="{Binding Maps}"
+        SelectionChanged="Maps_collectionView_SelectionChanged"
+        SelectionMode="Single">
+        <CollectionView.ItemTemplate>
+            <DataTemplate x:DataType="local:MapConfig">
+                <Border
+                    Margin="10,2"
+                    Padding="10,5,10,5"
+                    StrokeThickness="2">
+                    <Grid MinimumHeightRequest="20">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5*" />
+                            <ColumnDefinition Width="5*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Label Grid.Column="0" Text="{Binding Building.Name}" />
+
+
+
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            MinimumHeightRequest="20"
+                            Text="{Binding Building.Floors.Count, StringFormat='Ilość pięter: {0}'}" />
+
+                        <CollectionView
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            HorizontalOptions="End"
+                            ItemsSource="{Binding Building.Floors}"
+                            MinimumHeightRequest="20"
+                            SelectionMode="None">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="model:Floor">
+                                    <Label MinimumHeightRequest="20" Text="{Binding Name}" />
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+
+                        <ImageButton
+                            Grid.Row="0"
+                            Grid.RowSpan="2"
+                            Grid.Column="2"
+                            HeightRequest="32"
+                            HorizontalOptions="Center"
+                            Source="more_vert_fill0_wght200_grad0_opsz24_end.png"
+                            VerticalOptions="Center"
+                            WidthRequest="32" />
+
+                        <RadioButton
+                            Grid.Row="0"
+                            Grid.RowSpan="2"
+                            Grid.Column="3"
+                            CheckedChanged="RadioButton_CheckedChanged"
+                            GroupName="collection_radio"
+                            IsChecked="{Binding IsSelected, Mode=TwoWay}" />
+
+
+                    </Grid>
+                </Border>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
+</ContentPage>

@@ -5,7 +5,19 @@ VisualStudioVersion = 17.0.31611.283
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SMCEBI_Navigator", "SMCEBI_Navigator\SMCEBI_Navigator.csproj", "{BA6FFD15-76E5-409E-B150-F967E2A9EEE9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Tests\Tests.csproj", "{E053DF5A-EC40-4B5A-8FA5-D3C807A0EB99}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LeafletAPI", "LeafletAPI\LeafletAPI.csproj", "{17C8AEF4-15C6-485B-9E3B-57C69D95AFA8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D05CF129-DA8B-4D69-8BC1-203CE8C23AB5} = {D05CF129-DA8B-4D69-8BC1-203CE8C23AB5}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MapBuilder_API_Base", "MapBuilder_API_Base\MapBuilder_API_Base.csproj", "{D05CF129-DA8B-4D69-8BC1-203CE8C23AB5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NavigatorTests", "NavigatorTests\NavigatorTests.csproj", "{C393F64A-A7E4-4196-8C2C-D0C62EED2C69}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8270095B-EC92-4FA1-AD9C-FECD346C1B9B}"
+	ProjectSection(SolutionItems) = preProject
+		.runsettings = .runsettings
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,10 +31,18 @@ Global
 		{BA6FFD15-76E5-409E-B150-F967E2A9EEE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BA6FFD15-76E5-409E-B150-F967E2A9EEE9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BA6FFD15-76E5-409E-B150-F967E2A9EEE9}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{E053DF5A-EC40-4B5A-8FA5-D3C807A0EB99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E053DF5A-EC40-4B5A-8FA5-D3C807A0EB99}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E053DF5A-EC40-4B5A-8FA5-D3C807A0EB99}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E053DF5A-EC40-4B5A-8FA5-D3C807A0EB99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17C8AEF4-15C6-485B-9E3B-57C69D95AFA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17C8AEF4-15C6-485B-9E3B-57C69D95AFA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17C8AEF4-15C6-485B-9E3B-57C69D95AFA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17C8AEF4-15C6-485B-9E3B-57C69D95AFA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D05CF129-DA8B-4D69-8BC1-203CE8C23AB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D05CF129-DA8B-4D69-8BC1-203CE8C23AB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D05CF129-DA8B-4D69-8BC1-203CE8C23AB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D05CF129-DA8B-4D69-8BC1-203CE8C23AB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C393F64A-A7E4-4196-8C2C-D0C62EED2C69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C393F64A-A7E4-4196-8C2C-D0C62EED2C69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C393F64A-A7E4-4196-8C2C-D0C62EED2C69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C393F64A-A7E4-4196-8C2C-D0C62EED2C69}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

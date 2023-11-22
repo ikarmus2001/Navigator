@@ -3,6 +3,9 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# signing files
+*.keystore
+
 # User-specific files
 *.rsuser
 *.suo
@@ -681,3 +684,8 @@ TSWLatexianTemp*
 
 
 Praca_inzynierska/main.pdf
+/SMCEBI_Navigator/Resources/Leaflet1.9.4/leaflet-src.js
+/SMCEBI_Navigator/Resources/Leaflet1.9.4/leaflet-src.esm.js.map
+/SMCEBI_Navigator/Resources/Leaflet1.9.4/leaflet-src.esm.js
+/SMCEBI_Navigator/Resources/Leaflet1.9.4/leaflet-src.js.map
+/Doxyfile

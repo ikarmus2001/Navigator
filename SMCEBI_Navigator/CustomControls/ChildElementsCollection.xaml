@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="SMCEBI_Navigator.CustomControls.ChildElementsCollection"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:cc="clr-namespace:SMCEBI_Navigator.CustomControls"
+    xmlns:model="clr-namespace:SMCEBI_Navigator.Models"
+    x:DataType="cc:ChildElementsCollection">
+    <CollectionView
+        x:Name="Children_CollectionView"
+        Margin="0,5,0,5"
+        SelectionChanged="CollectionView_SelectionChanged"
+        SelectionMode="Single">
+        <CollectionView.ItemTemplate>
+            <DataTemplate x:DataType="model:BuildingElement">
+                <Border
+                    Padding="10"
+                    Stroke="red"
+                    StrokeShape="RoundRectangle 5, 5, 5, 5"
+                    StrokeThickness="4">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Label
+                            Grid.Column="0"
+                            MinimumHeightRequest="20"
+                            Text="{Binding Name}" />
+
+                    </Grid>
+                </Border>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+        <CollectionView.Footer>
+            <HorizontalStackLayout Margin="5" HorizontalOptions="End">
+                <Border Margin="0,0,5,0" StrokeShape="RoundRectangle 5">
+                    <ImageButton
+                        x:Name="AddFloorBtn"
+                        Clicked="AddFloorBtn_Clicked"
+                        HeightRequest="50"
+                        Source="add_fill0_wght400_grad0_opsz24.png"
+                        WidthRequest="50" />
+                </Border>
+            </HorizontalStackLayout>
+        </CollectionView.Footer>
+    </CollectionView>
+</ContentView>

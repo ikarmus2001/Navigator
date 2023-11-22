@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<RunSettings>
+    <DataCollectionRunSettings>
+        <DataCollectors>
+            <DataCollector friendlyName="Code coverage">
+                <Configuration>
+                    <ModulePaths>
+                        <Exclude>
+                            <ModulePath>communitytoolkit.maui.core.dll</ModulePath>
+                        </Exclude>
+                    </ModulePaths>
+                </Configuration>
+            </DataCollector>
+        </DataCollectors>
+    </DataCollectionRunSettings>
+</RunSettings>

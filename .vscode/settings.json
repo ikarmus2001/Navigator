@@ -1,0 +1,4 @@
+{
+    "dotnet.defaultSolution": "SMCEBI_Navigator.sln",
+    "cmake.configureOnOpen": false
+}
