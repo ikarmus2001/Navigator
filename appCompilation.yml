@@ -83,8 +83,6 @@ stages:
     - ${{ if contains(parameters.framework, 'android') }}:
       - job: Android_compilation
         displayName: Android app compilation
-        variables:
-          
         steps:
           - task: UseDotNet@2
             displayName: Use .NET SDK $(dotnetVersion)
