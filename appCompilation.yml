@@ -1,5 +1,3 @@
-trigger: none
-
 parameters:
   - name: config
     displayName: Project to compile
@@ -31,10 +29,6 @@ variables:
 - name: nugetVersion
   value: '>=6.7.x'
 - group: Android signing password
-
-
-pool:
-  name: Self-hosted pool
 
 stages:
 - ${{ if eq(parameters.skipEnvPrep, false) }}:
