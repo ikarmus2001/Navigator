@@ -37,12 +37,13 @@ stages:
       framework: net8.0-android34
       outputArtifactName: AndroidArtifactName
 
+  
   - stage: Deployment
     jobs:  
-      - template: GithubReleaseStage.yml
+      - template: GithubReleaseJob.yml
         parameters:
           artifactName: $(WindowsArtifactName)
 
-      - template: GithubReleaseStage.yml
+      - template: GithubReleaseJob.yml
         parameters:
           artifactName: $(AndroidArtifactName)

@@ -4,11 +4,12 @@ parameters:
 
 jobs:
   - job:
-    steps:
+  steps:
     - checkout: none
-    - download: 
-      artifact: ${{ parameters.artifactName }}
-  
+    - download: current
+      displayName: Download artifact $(artifactName)
+      artifact: $(artifactName)
+
     - task: GitHubRelease@1
       inputs:
         repositoryName: $(Build.Repository.Name)

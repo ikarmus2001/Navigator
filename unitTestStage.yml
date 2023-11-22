@@ -1,26 +1,24 @@
 
 
-- stage: 
-  displayName: Testing assemblies
-  jobs:
-    - job:
-      displayName: Testing assemblies
-      steps:
-        - checkout: none
-        - task: UseDotNet@2
-          displayName: Use .NET SDK $(dotnetVersion)
-          inputs:
-            version: $(dotnetVersion)
-            includePreviewVersions: true
-            installationPath: $(Agent.ToolsDirectory)/dotnet/$(dotnetVersion)
-            packageType: sdk
-            useGlobalJson: false
-            performMultiLevelLookup: false
+jobs:
+  - job:
+    displayName: Testing assemblies
+    steps:
+      - checkout: none
+      - task: UseDotNet@2
+        displayName: Use .NET SDK $(dotnetVersion)
+        inputs:
+          version: $(dotnetVersion)
+          includePreviewVersions: true
+          installationPath: $(Agent.ToolsDirectory)/dotnet/$(dotnetVersion)
+          packageType: sdk
+          useGlobalJson: false
+          performMultiLevelLookup: false
 
-        - task: DotNetCoreCLI@2
-          displayName: Run unit tests
-          inputs:
-            command: test
-            projects: '**/NavigatorTests.csproj'
-            arguments: --configuration ${{ parameters.config }} --collect "Code coverage" --settings $(Build.SourcesDirectory)/.runsettings
+      - task: DotNetCoreCLI@2
+        displayName: Run unit tests
+        inputs:
+          command: test
+          projects: '**/NavigatorTests.csproj'
+          arguments: --configuration ${{ parameters.config }} --collect "Code coverage" --settings $(Build.SourcesDirectory)/.runsettings
 

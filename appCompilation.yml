@@ -17,6 +17,7 @@ parameters:
     displayName: Skip environment preparation
     type: boolean
     default: false
+  
 
 stages:
 - ${{ if eq(parameters.skipEnvPrep, false) }}:
@@ -80,6 +81,8 @@ stages:
     - ${{ if contains(parameters.framework, 'android') }}:
       - job: Android_compilation
         displayName: Android app compilation
+        variables:
+          
         steps:
           - task: UseDotNet@2
             displayName: Use .NET SDK $(dotnetVersion)
@@ -131,6 +134,9 @@ stages:
             displayName: Publish full compiled app
             artifact: '$(Build.BuildNumber)_${{ parameters.framework }}'
 
+          - pwsh: |
+            echo "##vso[task.setvariable variable=outputArtifactName;isOutput=true]$(Build.BuildNumber)_${{ parameters.framework }}"
+
           # - task: CopyFiles@2
           #   inputs:
           #     sourceFolder: $(Build.SourcesDirectory)/SMCEBI_Navigator
@@ -168,6 +174,9 @@ stages:
             target: '$(Build.SourcesDirectory)/SMCEBI_Navigator/bin'
             displayName: Publish full compiled app
             artifact: '$(Build.BuildNumber)_${{ parameters.framework }}'
+
+          - pwsh: |
+            echo "##vso[task.setvariable variable=outputArtifactName;isOutput=true]$(Build.BuildNumber)_${{ parameters.framework }}"
 
           # - task: CopyFiles@2
           #   inputs:
