@@ -1,25 +1,21 @@
 parameters:
-- parameter: artifactName
+- name: artifactName
+  type: string
+
+jobs:
+  - job:
+    steps:
+    - checkout: none
+    - download: 
+      artifact: ${{ parameters.artifactName }}
   
-
-steps:
-- checkout: none
-- download: 
-  artifact: 
-  inputs:
-    buildType: 'specific'
-    project: 'SMCEBI Navigator'
-    specificBuildWithTriggering: true
-    buildVersionToDownload: 'latest'
-    targetPath: '$(Pipeline.Workspace)'
-
-- task: GitHubRelease@1
-  inputs:
-    repositoryName: $(Build.Repository.Name)
-    target: $(Build.SourceVersion)
-    tagSource: userSpecifiedTag
-    tag: $(currentVersionName)
-    gitHubConnection: GitHub_ikarmus2001
-    action: create
-    assets: '$(Pipeline.Workspace)'
-    isDraft: true
+    - task: GitHubRelease@1
+      inputs:
+        repositoryName: $(Build.Repository.Name)
+        target: $(Build.SourceVersion)
+        tagSource: userSpecifiedTag
+        tag: $(currentVersionName)
+        gitHubConnection: GitHub_ikarmus2001
+        action: create
+        assets: '$(Pipeline.Workspace)'
+        isDraft: true
