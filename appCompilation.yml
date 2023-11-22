@@ -134,8 +134,8 @@ stages:
             displayName: Publish full compiled app
             artifact: '$(Build.BuildNumber)_${{ parameters.framework }}'
 
-          - pwsh: |
-            echo "##vso[task.setvariable variable=outputArtifactName;isOutput=true]$(Build.BuildNumber)_${{ parameters.framework }}"
+          - pwsh: echo "##vso[task.setvariable variable=outputArtifactName;isOutput=true]$(Build.BuildNumber)_${{ parameters.framework }}"
+            displayName: Export artifact name to pipeline
 
           # - task: CopyFiles@2
           #   inputs:
@@ -175,8 +175,8 @@ stages:
             displayName: Publish full compiled app
             artifact: '$(Build.BuildNumber)_${{ parameters.framework }}'
 
-          - pwsh: |
-            echo "##vso[task.setvariable variable=outputArtifactName;isOutput=true]$(Build.BuildNumber)_${{ parameters.framework }}"
+          - pwsh: echo "##vso[task.setvariable variable=outputArtifactName;isOutput=true]$(Build.BuildNumber)_${{ parameters.framework }}"
+            displayName: Export artifact name to pipeline
 
           # - task: CopyFiles@2
           #   inputs:
