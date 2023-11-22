@@ -16,22 +16,33 @@ variables:
 - name: nugetVersion
   value: '>=6.7.x'
 - group: Android signing password
+- name: WindowsArtifactName
+  value: ''
+- name: AndroidArtifactName
+  value: ''
 
 stages:
   - template: unitTestStage.yml
+
 
   - template: appCompilation.yml
     parameters:
       config: Release
       framework: net8.0-windows10.0.19041.0
+      outputArtifactName: WindowsArtifactName
 
   - template: appCompilation.yml
-      parameters:
-        config: Release
-        framework: net8.0-android34
-
-  - template: GithubReleaseStage.yml
     parameters:
+      config: Release
+      framework: net8.0-android34
+      outputArtifactName: AndroidArtifactName
 
-  - template: GithubReleaseStage.yml
-    parameters:
+  - stage: Deployment
+    jobs:  
+      - template: GithubReleaseStage.yml
+        parameters:
+          artifactName: $(WindowsArtifactName)
+
+      - template: GithubReleaseStage.yml
+        parameters:
+          artifactName: $(AndroidArtifactName)
