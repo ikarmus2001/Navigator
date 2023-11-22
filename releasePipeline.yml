@@ -18,12 +18,7 @@ variables:
 - group: Android signing password
 
 stages:
-  - stage: Full_compilation
-    displayName:  Compiling for all platforms
-    variables: 
-      CompilationConfig: Release
-    jobs:
-    - template: appCompilation.yml
-      parameters:
-        config: ${{ variables.CompilationConfig }}
+  - template: appCompilation.yml
+    parameters:
+      config: Release
 
