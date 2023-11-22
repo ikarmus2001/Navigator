@@ -6,10 +6,6 @@
 trigger:
 - main
 
-resources:
-  pipelines:
-  - pipeline: compilationPipeline
-    source: YamlCompilation
 
 
 pool:
