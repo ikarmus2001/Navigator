@@ -23,7 +23,7 @@ parameters:
 
 stages:
 - ${{ if eq(parameters.skipEnvPrep, false) }}:
-  - stage: envPrep
+  - stage:
     displayName: Environment preparation
     jobs:
       - job: EnvironmentPrep
