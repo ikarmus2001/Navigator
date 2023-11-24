@@ -46,6 +46,15 @@ stages:
       outputArtifactName: AndroidArtifactName
       dotnetVersion: $(dotnetSdkVersion)
 
+  - stage: Quick debug
+    jobs:
+      - job:
+        steps:
+          - pwsh: echo $(WindowsArtifactName)
+            displayName: logging $(WindowsArtifactName)
+          - pwsh: echo $(WindowsArtifactName)
+            displayName: logging $(AndroidArtifactName)
+
   - stage: Deployment
     jobs:  
       - template: GithubReleaseJob.yml
