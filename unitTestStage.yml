@@ -22,5 +22,5 @@ jobs:
         inputs:
           command: test
           projects: '**/NavigatorTests.csproj'
-          arguments: --configuration ${{ parameters.config }} --collect "Code coverage" --settings $(Build.SourcesDirectory)/.runsettings
+          arguments: --collect "Code coverage" --settings $(Build.SourcesDirectory)/.runsettings
 
