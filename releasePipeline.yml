@@ -31,6 +31,7 @@ stages:
       config: Release
       framework: net8.0-windows10.0.19041.0
       outputArtifactName: WindowsArtifactName
+      dotnetVersion: $(dotnetSdkVersion)
 
   - stage: testing
     jobs:
@@ -41,6 +42,7 @@ stages:
       config: Release
       framework: net8.0-android34
       outputArtifactName: AndroidArtifactName
+      dotnetVersion: $(dotnetSdkVersion)
 
   - stage: Deployment
     jobs:  

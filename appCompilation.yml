@@ -1,4 +1,6 @@
 parameters:
+  - name: dotnetVersion
+    type: string
   - name: config
     displayName: Project to compile
     type: string
@@ -32,9 +34,9 @@ stages:
           - task: UseDotNet@2
             displayName: Use .NET SDK
             inputs:
-              version: ${{ parameters.dotnetSdkVersion }}
+              version: ${{ parameters.dotnetVersion }}
               includePreviewVersions: true
-              installationPath: $(Agent.ToolsDirectory)/dotnet/$(dotnetSdkVersion)
+              installationPath: $(Agent.ToolsDirectory)/dotnet/$(dotnetVersion)
               packageType: sdk
               useGlobalJson: false
               performMultiLevelLookup: false
@@ -94,9 +96,9 @@ stages:
           - task: UseDotNet@2
             displayName: Use .NET SDK
             inputs:
-              version: ${{ parameters.dotnetSdkVersion }}
+              version: ${{ parameters.dotnetVersion }}
               includePreviewVersions: true
-              installationPath: $(Agent.ToolsDirectory)/dotnet/$(dotnetSdkVersion)
+              installationPath: $(Agent.ToolsDirectory)/dotnet/$(dotnetVersion)
               packageType: sdk
               useGlobalJson: false
               performMultiLevelLookup: false
