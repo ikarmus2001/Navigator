@@ -26,7 +26,7 @@ stages:
         inputs:
           version: $(dotnetVersion)
           includePreviewVersions: true
-          installationPath: ${{ Agent.ToolsDirectory }}/dotnet/${{ dotnetVersion }}'
+          installationPath: $(Agent.ToolsDirectory)/dotnet/${{ dotnetVersion }}'
           packageType: sdk
           useGlobalJson: false
           performMultiLevelLookup: false
