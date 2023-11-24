@@ -9,18 +9,17 @@ stages:
     - job: EnvironmentPrep
       displayName: Environment preparation
       steps:
-      - ${{ if contains(parameters.framework, 'android') }}:
-        - checkout: none
+      - checkout: none
 
-        - task: JavaToolInstaller@0
-          displayName: Ensure java is installed
-          # Make sure to set up environmental variable as in template: 
-          # Name: `JAVA_HOME_${versionSpec}_${jdkArchitectureOption}` and value pointing to it's JAVA_HOME 
-          # (via https://stackoverflow.com/a/72314866/14345698)
-          inputs:
-            versionSpec: 11
-            jdkArchitectureOption: x64
-            jdkSourceOption: PreInstalled
+      - task: JavaToolInstaller@0
+        displayName: Ensure java is installed
+        # Make sure to set up environmental variable as in template: 
+        # Name: `JAVA_HOME_${versionSpec}_${jdkArchitectureOption}` and value pointing to it's JAVA_HOME 
+        # (via https://stackoverflow.com/a/72314866/14345698)
+        inputs:
+          versionSpec: 11
+          jdkArchitectureOption: x64
+          jdkSourceOption: PreInstalled
 
       - task: UseDotNet@2
         displayName: Install .NET SDK
