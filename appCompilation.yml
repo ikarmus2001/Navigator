@@ -129,20 +129,19 @@ stages:
               keystoreAlias: $(AndroidKeystoreName)
               keyPass: $(AndroidKeystoreSigningPassword)
           
-          - publish:
-            target: '$(Build.SourcesDirectory)/SMCEBI_Navigator/bin'
-            displayName: Publish full compiled app
+          # - task: CopyFiles@2
+          #   inputs:
+          #     sourceFolder: $(Build.SourcesDirectory)/SMCEBI_Navigator/bin
+          #     contents: '**'
+          #     targetFolder: $(Build.BinariesDirectory)/$(Build.BuildNumber)_net8_0-windows10_0_19041_0
+
+          - publish: $(Build.SourcesDirectory)/SMCEBI_Navigator/bin
+            target: pipeline
+            displayName: Publish compiled app
             artifact: '$(Build.BuildNumber)_${{ parameters.framework }}'
 
           - pwsh: echo "##vso[task.setvariable variable=outputArtifactName;isOutput=true]$(Build.BuildNumber)_${{ parameters.framework }}"
             displayName: Export artifact name to pipeline
-
-          # - task: CopyFiles@2
-          #   inputs:
-          #     sourceFolder: $(Build.SourcesDirectory)/SMCEBI_Navigator
-          #     contents: bin/**
-          #     targetFolder: $(Build.BinariesDirectory)/$(Build.BuildNumber)_net8_0-android34
-          #     # fix https://learn.microsoft.com/en-us/azure/devops/pipelines/process/run-number?view=azure-devops&tabs=yaml
     
     - ${{ if contains(parameters.framework, 'windows') }}:
       - job: Windows_compilation
@@ -170,18 +169,20 @@ stages:
               ${{ else }}:
                 arguments: '-f net8.0-windows10.0.19041.0 -c Debug'
 
-          - publish:  
-            target: '$(Build.SourcesDirectory)/SMCEBI_Navigator/bin'
+          # - task: CopyFiles@2
+          #   inputs:
+          #     sourceFolder: $(Build.SourcesDirectory)/SMCEBI_Navigator/bin
+          #     contents: '**'
+          #     targetFolder: $(Build.BinariesDirectory)/$(Build.BuildNumber)_net8_0-windows10_0_19041_0
+
+          - publish: $(Build.SourcesDirectory)/SMCEBI_Navigator/bin
+            target: pipeline
             displayName: Publish full compiled app
             artifact: '$(Build.BuildNumber)_${{ parameters.framework }}'
 
           - pwsh: echo "##vso[task.setvariable variable=outputArtifactName;isOutput=true]$(Build.BuildNumber)_${{ parameters.framework }}"
             displayName: Export artifact name to pipeline
 
-          # - task: CopyFiles@2
-          #   inputs:
-          #     sourceFolder: $(Build.SourcesDirectory)/SMCEBI_Navigator
-          #     contents: bin/**
-          #     targetFolder: $(Build.BinariesDirectory)/$(Build.BuildNumber)_net8_0-windows10_0_19041_0
+          
 
           # drop artifacts
