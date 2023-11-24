@@ -50,10 +50,10 @@ stages:
     jobs:
       - job:
         steps:
-          - pwsh: echo $(WindowsArtifactName)
-            displayName: logging $(WindowsArtifactName)
-          - pwsh: echo $(WindowsArtifactName)
-            displayName: logging $(AndroidArtifactName)
+          - pwsh: echo $[WindowsArtifactName]
+            displayName: logging $[WindowsArtifactName]
+          - pwsh: echo $[WindowsArtifactName]
+            displayName: logging $[AndroidArtifactName]
 
   - stage: Deployment
     jobs:  
