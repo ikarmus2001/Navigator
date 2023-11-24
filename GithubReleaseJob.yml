@@ -4,12 +4,12 @@ parameters:
 
 jobs:
   - job:
-    displayName: Github Release ${{ parameters.artifactName }}
+    displayName: Github Release $(parameters.artifactName)
     steps:
       - checkout: none
       - download: current
-        displayName: Download artifact ${{ parameters.artifactName }}
-        artifact: $(artifactName)
+        displayName: Download artifact $(parameters.artifactName)
+        artifact: $(parameters.artifactName)
 
       - task: GitHubRelease@1
         inputs:
@@ -19,5 +19,5 @@ jobs:
           tag: $(currentVersionName)
           gitHubConnection: GitHub_ikarmus2001
           action: create
-          assets: '$(Pipeline.Workspace)'
+          assets: $(Pipeline.Workspace)
           isDraft: true
