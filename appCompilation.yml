@@ -88,6 +88,9 @@ stages:
 
           - pwsh: echo "##vso[task.setvariable variable=outputArtifactName;isOutput=true]$(Build.BuildNumber)_${{ parameters.framework }}"
             displayName: Export artifact name to pipeline
+
+          - pwsh: echo $(properties.outputArtifactName)
+            displayName: Echo outputted name
     
     - ${{ if contains(parameters.framework, 'windows') }}:
       - job: Windows_compilation
@@ -128,5 +131,5 @@ stages:
           - pwsh: echo "##vso[task.setvariable variable=outputArtifactName;isOutput=true]$(Build.BuildNumber)_${{ parameters.framework }}"
             displayName: Export artifact name to pipeline
 
-          - pwsh: echo $(outputArtifactName)
+          - pwsh: echo $(properties.outputArtifactName)
             displayName: Echo outputted name
