@@ -10,7 +10,7 @@ pool:
   name: Self-hosted pool
 
 variables:
-- name: dotnetVersion
+- name: dotnetSdkVersion
   value: '8.x'
   readonly: false
 - name: nugetVersion
@@ -22,6 +22,10 @@ variables:
   value: ''
 
 stages:
+  - template: envPreparationStage.yml
+    parameters:
+      dotnetVersion: $(dotnetSdkVersion)
+
   - template: appCompilation.yml
     parameters:
       config: Release

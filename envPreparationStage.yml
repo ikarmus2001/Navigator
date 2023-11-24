@@ -1,0 +1,65 @@
+parameters:
+- name: dotnetVersion
+  type: string
+
+stages:
+- stage:
+    displayName: Environment preparation
+    jobs:
+      - job: EnvironmentPrep
+        displayName: Environment preparation
+        steps:
+        - ${{ if contains(parameters.framework, 'android') }}:
+          - checkout: none
+
+          - task: JavaToolInstaller@0
+            displayName: Ensure java is installed
+            # Make sure to set up environmental variable as in template: 
+            # Name: `JAVA_HOME_${versionSpec}_${jdkArchitectureOption}` and value pointing to it's JAVA_HOME 
+            # (via https://stackoverflow.com/a/72314866/14345698)
+            inputs:
+              versionSpec: 11
+              jdkArchitectureOption: x64
+              jdkSourceOption: PreInstalled
+
+        - task: UseDotNet@2
+          displayName: Install .NET SDK
+          inputs:
+            version: $(dotnetVersion)
+            includePreviewVersions: true
+            installationPath: $(Agent.ToolsDirectory)/dotnet/$(dotnetVersion)
+            packageType: sdk
+            useGlobalJson: false
+            performMultiLevelLookup: false
+
+        - task: NuGetToolInstaller@1
+          displayName: Install NuGet
+          inputs:
+            checkLatest: true
+            versionSpec: $(nugetVersion)
+
+        - task: DotNetCoreCLI@2
+          displayName: Install pwsh
+          inputs:
+            command: custom
+            custom: tool
+            arguments: install --global PowerShell
+
+        - task: DotNetCoreCLI@2
+          displayName: Install MAUI workload
+          inputs:
+            command: custom
+            custom: workload
+            arguments: install maui wasm-tools
+
+        - task: DotNetCoreCLI@2
+          displayName: Install platform specific MAUI workload
+          inputs:
+            command: custom
+            custom: workload
+            ${{ if and(contains(parameters.framework, 'android'), contains(parameters.framework, 'windows')) }}:
+              arguments: install maui-android maui-windows
+            ${{ elseif contains(parameters.framework, 'android') }}:
+              arguments: install maui-android
+            ${{ elseif contains(parameters.framework, 'windows') }}:
+              arguments: install maui-windows
