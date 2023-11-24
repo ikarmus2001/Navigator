@@ -26,7 +26,7 @@ stages:
         inputs:
           version: ${{ parameters.dotnetVersion }}
           includePreviewVersions: true
-          installationPath: $(Agent.ToolsDirectory)/dotnet/$(dotnetVersion)
+          installationPath: $(Agent.ToolsDirectory)/dotnet/${{ parameters.dotnetVersion }}
           packageType: sdk
           useGlobalJson: false
           performMultiLevelLookup: false
@@ -43,6 +43,7 @@ stages:
           command: custom
           custom: tool
           arguments: install --global PowerShell
+        continueOnError: true # https://github.com/dotnet/sdk/issues/10310 tool already installed, not good solution ://
 
       - task: DotNetCoreCLI@2
         displayName: Install MAUI workload
