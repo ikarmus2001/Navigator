@@ -24,7 +24,7 @@ stages:
       - task: UseDotNet@2
         displayName: Install .NET SDK
         inputs:
-          version: $(dotnetVersion)
+          version: ${{ parameters.dotnetVersion }}
           includePreviewVersions: true
           installationPath: $(Agent.ToolsDirectory)/dotnet/$(dotnetVersion)
           packageType: sdk
