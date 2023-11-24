@@ -32,11 +32,11 @@ stages:
         displayName: Android app compilation
         steps:
           - task: UseDotNet@2
-            displayName: Use .NET SDK
+            displayName: Use .NET SDK ${{ parameters.dotnetVersion }}
             inputs:
               version: ${{ parameters.dotnetVersion }}
               includePreviewVersions: true
-              installationPath: $(Agent.ToolsDirectory)/dotnet/$(dotnetVersion)
+              installationPath: $(Agent.ToolsDirectory)/dotnet/${{ parameters.dotnetVersion }}
               packageType: sdk
               useGlobalJson: false
               performMultiLevelLookup: false
