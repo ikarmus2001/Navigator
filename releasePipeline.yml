@@ -68,7 +68,7 @@ stages:
       outputArtifactName: AndroidArtifactName
       dotnetVersion: $(dotnetSdkVersion)
 
-  - stage: Quick_debug
+  - stage: FurtherDebug
     jobs:
       - job:
         steps:
