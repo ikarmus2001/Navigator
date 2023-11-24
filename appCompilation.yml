@@ -30,7 +30,7 @@ stages:
         displayName: Android app compilation
         steps:
           - task: UseDotNet@2
-            displayName: Use .NET SDK ${{ dotnetSdkVersion }}
+            displayName: Use .NET SDK
             inputs:
               version: ${{ parameters.dotnetSdkVersion }}
               includePreviewVersions: true
@@ -92,7 +92,7 @@ stages:
         displayName: Windows app compilation
         steps:
           - task: UseDotNet@2
-            displayName: Use .NET SDK ${{ dotnetSdkVersion }}
+            displayName: Use .NET SDK
             inputs:
               version: ${{ parameters.dotnetSdkVersion }}
               includePreviewVersions: true
