@@ -26,6 +26,28 @@ stages:
     parameters:
       dotnetVersion: $(dotnetSdkVersion)
 
+  - stage: Quick_debug
+    jobs:
+      - job: EmptyVars
+        steps:
+          - pwsh: echo $[WindowsArtifactName]
+            displayName: logging $[WindowsArtifactName]
+          - pwsh: echo $[WindowsArtifactName]
+            displayName: logging $[AndroidArtifactName]
+      - job:
+        displayName: Assignment
+        steps:
+          - pwsh: echo "##vso[task.setvariable variable=WindowsArtifactName]whatevertestingWin"
+            displayName: Export artifact name to pipeline
+          - pwsh: echo "##vso[task.setvariable variable=AndroidArtifactName]whatevertestingAndroid"
+            displayName: Export artifact name to pipeline
+      - job: filled
+        steps:
+          - pwsh: echo $[WindowsArtifactName]
+            displayName: logging $[WindowsArtifactName]
+          - pwsh: echo $[WindowsArtifactName]
+            displayName: logging $[AndroidArtifactName]
+
   - template: appCompilation.yml
     parameters:
       config: Release
