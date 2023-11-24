@@ -30,9 +30,9 @@ stages:
         displayName: Android app compilation
         steps:
           - task: UseDotNet@2
-            displayName: Use .NET SDK $(dotnetVersion)
+            displayName: Use .NET SDK ${{ dotnetVersion }}
             inputs:
-              version: $(dotnetVersion)
+              version: ${{ parameters.dotnetVersion }}
               includePreviewVersions: true
               installationPath: $(Agent.ToolsDirectory)/dotnet/$(dotnetVersion)
               packageType: sdk
@@ -92,9 +92,9 @@ stages:
         displayName: Windows app compilation
         steps:
           - task: UseDotNet@2
-            displayName: Use .NET SDK $(dotnetVersion)
+            displayName: Use .NET SDK ${{ dotnetVersion }}
             inputs:
-              version: $(dotnetVersion)
+              version: ${{ parameters.dotnetVersion }}
               includePreviewVersions: true
               installationPath: $(Agent.ToolsDirectory)/dotnet/$(dotnetVersion)
               packageType: sdk
