@@ -1,4 +1,6 @@
-
+parameters:
+  - name: dotnetVersion
+    type: string
 
 jobs:
   - job:
@@ -6,11 +8,11 @@ jobs:
     steps:
       - checkout: none
       - task: UseDotNet@2
-        displayName: Use .NET SDK $(dotnetVersion)
+        displayName: Use .NET SDK ${{ parameters.dotnetVersion }}
         inputs:
-          version: $(dotnetVersion)
+          version: ${{ parameters.dotnetVersion }}
           includePreviewVersions: true
-          installationPath: $(Agent.ToolsDirectory)/dotnet/$(dotnetVersion)
+          installationPath: $(Agent.ToolsDirectory)/dotnet/${{ parameters.dotnetVersion }}
           packageType: sdk
           useGlobalJson: false
           performMultiLevelLookup: false

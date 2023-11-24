@@ -33,9 +33,11 @@ stages:
       outputArtifactName: WindowsArtifactName
       dotnetVersion: $(dotnetSdkVersion)
 
-  - stage: testing
+  - stage: Testing
     jobs:
       - template: unitTestStage.yml
+        parameters:
+          dotnetVersion: $(dotnetSdkVersion)
 
   - template: appCompilation.yml
     parameters:
