@@ -22,7 +22,7 @@ stages:
           jdkSourceOption: PreInstalled
 
       - task: UseDotNet@2
-        displayName: Install .NET SDK
+        displayName: Install .NET SDK ${{ parameters.dotnetVersion }}
         inputs:
           version: ${{ parameters.dotnetVersion }}
           includePreviewVersions: true
