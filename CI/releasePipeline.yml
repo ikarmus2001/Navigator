@@ -50,6 +50,10 @@ stages:
             displayName: logging $(WindowsArtifactName)
           - pwsh: Write-Host $(WindowsArtifactName)
             displayName: logging $(AndroidArtifactName)
+          - pwsh: Write-Host "$env:WINDOWSARTIFACTNAME"
+            displayName: logging $(WindowsArtifactName)
+          - pwsh: Write-Host "$env:ANDROIDARTIFACTNAME"
+            displayName: logging $(AndroidArtifactName)
 
   - template: templates/appCompilation.yml
     parameters:

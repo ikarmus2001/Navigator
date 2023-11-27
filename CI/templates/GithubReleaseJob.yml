@@ -5,6 +5,10 @@ parameters:
 jobs:
   - job:
     displayName: Github Release $(parameters.artifactName)
+    ${{ if contains(parameters.artifactName, 'windows') }}:
+      dependsOn: Windows_compilation
+    ${{ if contains(parameters.artifactName, 'android') }}:
+      dependsOn: Android_compilation
     steps:
       - checkout: none
 
