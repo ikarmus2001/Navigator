@@ -8,10 +8,10 @@ jobs:
     steps:
       - checkout: none
 
-      - pwsh: echo $(outputArtifactName)
+      - script: echo $(outputArtifactName)
         displayName: Export artifact name to pipeline
 
-      - pwsh: echo $(parameters.artifactName)
+      - script: echo $(parameters.artifactName)
         displayName: Parameters name
 
       - download: current

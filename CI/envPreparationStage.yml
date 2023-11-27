@@ -37,13 +37,13 @@ stages:
           checkLatest: true
           versionSpec: $(nugetVersion)
 
-      - task: DotNetCoreCLI@2
-        displayName: Install pwsh
-        inputs:
-          command: custom
-          custom: tool
-          arguments: install --global PowerShell
-        continueOnError: true # https://github.com/dotnet/sdk/issues/10310 tool already installed, not good solution ://
+      # - task: DotNetCoreCLI@2
+      #   displayName: Install pwsh
+      #   inputs:
+      #     command: custom
+      #     custom: tool
+      #     arguments: install --global PowerShell
+      #   continueOnError: true # https://github.com/dotnet/sdk/issues/10310 tool already installed, not good solution ://
 
       - task: DotNetCoreCLI@2
         displayName: Install MAUI workload
