@@ -39,9 +39,9 @@ stages:
         displayName: Assignment
         steps:
           - checkout: none
-          - pwsh: echo "##vso[task.setvariable variable=WindowsArtifactName;isOutput=true]whatevertestingWin"
+          - pwsh: Write-Host "##vso[task.setvariable variable=WindowsArtifactName;isOutput=true]whatevertestingWin"
             displayName: Export artifact name to pipeline
-          - pwsh: echo "##vso[task.setvariable variable=AndroidArtifactName;isOutput=true]whatevertestingAndroid"
+          - pwsh: Write-Host "##vso[task.setvariable variable=AndroidArtifactName;isOutput=true]whatevertestingAndroid"
             displayName: Export artifact name to pipeline
       - job: filled
         steps:
