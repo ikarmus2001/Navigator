@@ -31,24 +31,24 @@ stages:
       - job: EmptyVars
         steps:
           - checkout: none
-          - script: echo $(WindowsArtifactName)
+          - pwsh: Write-Host $(WindowsArtifactName)
             displayName: logging $(WindowsArtifactName)
-          - script: echo $(WindowsArtifactName)
+          - pwsh: Write-Host $(WindowsArtifactName)
             displayName: logging $(AndroidArtifactName)
       - job:
         displayName: Assignment
         steps:
           - checkout: none
-          - script: echo "##vso[task.setvariable variable=WindowsArtifactName;isOutput=true]whatevertestingWin"
+          - pwsh: echo "##vso[task.setvariable variable=WindowsArtifactName;isOutput=true]whatevertestingWin"
             displayName: Export artifact name to pipeline
-          - script: echo "##vso[task.setvariable variable=AndroidArtifactName;isOutput=true]whatevertestingAndroid"
+          - pwsh: echo "##vso[task.setvariable variable=AndroidArtifactName;isOutput=true]whatevertestingAndroid"
             displayName: Export artifact name to pipeline
       - job: filled
         steps:
           - checkout: none
-          - script: echo $(WindowsArtifactName)
+          - pwsh: Write-Host $(WindowsArtifactName)
             displayName: logging $(WindowsArtifactName)
-          - script: echo $(WindowsArtifactName)
+          - pwsh: Write-Host $(WindowsArtifactName)
             displayName: logging $(AndroidArtifactName)
 
   - template: templates/appCompilation.yml
@@ -75,9 +75,9 @@ stages:
     jobs:
       - job:
         steps:
-          - script: echo $(WindowsArtifactName)
+          - pwsh: Write-Host $(WindowsArtifactName)
             displayName: logging $(WindowsArtifactName)
-          - script: echo $(WindowsArtifactName)
+          - pwsh: Write-Host $(WindowsArtifactName)
             displayName: logging $(AndroidArtifactName)
 
   - stage: Deployment

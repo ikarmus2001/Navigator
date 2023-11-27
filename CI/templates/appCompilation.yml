@@ -86,10 +86,10 @@ stages:
             displayName: Publish compiled app
             artifact: '$(Build.BuildNumber)_${{ parameters.framework }}'
 
-          - script: echo "##vso[task.setvariable variable=outputArtifactName;isOutput=true]$(Build.BuildNumber)_${{ parameters.framework }}"
+          - pwsh: echo "##vso[task.setvariable variable=outputArtifactName;isOutput=true]$(Build.BuildNumber)_${{ parameters.framework }}"
             displayName: Export artifact name to pipeline
 
-          - script: echo $(properties.outputArtifactName)
+          - pwsh: Write-Host $(properties.outputArtifactName)
             displayName: Echo outputted name
     
     - ${{ if contains(parameters.framework, 'windows') }}:
@@ -128,8 +128,8 @@ stages:
             displayName: Publish full compiled app
             artifact: '$(Build.BuildNumber)_${{ parameters.framework }}'
 
-          - script: echo "##vso[task.setvariable variable=outputArtifactName;isOutput=true]$(Build.BuildNumber)_${{ parameters.framework }}"
+          - pwsh: echo "##vso[task.setvariable variable=outputArtifactName;isOutput=true]$(Build.BuildNumber)_${{ parameters.framework }}"
             displayName: Export artifact name to pipeline
 
-          - script: echo $[properties.outputArtifactName]
+          - pwsh: Write-Host $[properties.outputArtifactName]
             displayName: Echo outputted name
