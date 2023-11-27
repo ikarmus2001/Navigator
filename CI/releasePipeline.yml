@@ -22,7 +22,7 @@ variables:
   value: ''
 
 stages:
-  - template: CI/envPreparationStage.yml
+  - template: templates/envPreparationStage.yml
     parameters:
       dotnetVersion: $(dotnetSdkVersion)
 
@@ -48,7 +48,7 @@ stages:
           - script: echo $[WindowsArtifactName]
             displayName: logging $[AndroidArtifactName]
 
-  - template: CI/appCompilation.yml
+  - template: templates/appCompilation.yml
     parameters:
       config: Release
       framework: net8.0-windows10.0.19041.0
@@ -57,7 +57,7 @@ stages:
 
   - stage: Testing
     jobs:
-      - template: CI/unitTestStage.yml
+      - template: templates/unitTestStage.yml
         parameters:
           dotnetVersion: $(dotnetSdkVersion)
 
@@ -79,10 +79,10 @@ stages:
 
   - stage: Deployment
     jobs:  
-      - template: CI/GithubReleaseJob.yml
+      - template: templates/GithubReleaseJob.yml
         parameters:
           artifactName: $[WindowsArtifactName]
 
-      - template: CI/GithubReleaseJob.yml
+      - template: templates/GithubReleaseJob.yml
         parameters:
           artifactName: $[AndroidArtifactName]
