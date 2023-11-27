@@ -85,11 +85,15 @@ stages:
             displayName: logging $(AndroidArtifactName)
 
   - stage: Deployment
-    jobs:  
-      - template: templates/GithubReleaseJob.yml
-        parameters:
-          artifactName: $[WindowsArtifactName]
+    jobs:
+      - job: EmptyJob
+        steps:
+          - pwsh: echo cokolwiek
 
       - template: templates/GithubReleaseJob.yml
         parameters:
-          artifactName: $[AndroidArtifactName]
+          artifactName: $(WindowsArtifactName)
+
+      - template: templates/GithubReleaseJob.yml
+        parameters:
+          artifactName: $(AndroidArtifactName)
