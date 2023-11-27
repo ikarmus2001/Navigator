@@ -30,23 +30,26 @@ stages:
     jobs:
       - job: EmptyVars
         steps:
-          - script: echo $[WindowsArtifactName]
-            displayName: logging $[WindowsArtifactName]
-          - script: echo $[WindowsArtifactName]
-            displayName: logging $[AndroidArtifactName]
+          - checkout: none
+          - script: echo $(WindowsArtifactName)
+            displayName: logging $(WindowsArtifactName)
+          - script: echo $(WindowsArtifactName)
+            displayName: logging $(AndroidArtifactName)
       - job:
         displayName: Assignment
         steps:
-          - script: echo "##vso[task.setvariable variable=WindowsArtifactName]whatevertestingWin"
+          - checkout: none
+          - script: echo "##vso[task.setvariable variable=WindowsArtifactName;isOutput=true]whatevertestingWin"
             displayName: Export artifact name to pipeline
-          - script: echo "##vso[task.setvariable variable=AndroidArtifactName]whatevertestingAndroid"
+          - script: echo "##vso[task.setvariable variable=AndroidArtifactName;isOutput=true]whatevertestingAndroid"
             displayName: Export artifact name to pipeline
       - job: filled
         steps:
-          - script: echo $[WindowsArtifactName]
-            displayName: logging $[WindowsArtifactName]
-          - script: echo $[WindowsArtifactName]
-            displayName: logging $[AndroidArtifactName]
+          - checkout: none
+          - script: echo $(WindowsArtifactName)
+            displayName: logging $(WindowsArtifactName)
+          - script: echo $(WindowsArtifactName)
+            displayName: logging $(AndroidArtifactName)
 
   - template: templates/appCompilation.yml
     parameters:
