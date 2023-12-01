@@ -44,11 +44,11 @@ stages:
               jdkSourceOption: PreInstalled
 
         - task: UseDotNet@2
-          displayName: Install .NET SDK
+          displayName: Install .NET SDK ${{ parameters.dotnetVersion }}
           inputs:
-            version: $(dotnetVersion)
+            version: ${{ parameters.dotnetVersion }}
             includePreviewVersions: true
-            installationPath: $(Agent.ToolsDirectory)/dotnet/$(dotnetVersion)
+            installationPath: $(Agent.ToolsDirectory)/dotnet/${{ parameters.dotnetVersion }}
             packageType: sdk
             useGlobalJson: false
             performMultiLevelLookup: false
@@ -86,11 +86,11 @@ stages:
         displayName: Android app compilation
         steps:
           - task: UseDotNet@2
-            displayName: Use .NET SDK $(dotnetVersion)
+            displayName: Use .NET SDK ${{ parameters.dotnetVersion }}
             inputs:
-              version: $(dotnetVersion)
+              version: ${{ parameters.dotnetVersion }}
               includePreviewVersions: true
-              installationPath: $(Agent.ToolsDirectory)/dotnet/$(dotnetVersion)
+              installationPath: $(Agent.ToolsDirectory)/dotnet/${{ parameters.dotnetVersion }}
               packageType: sdk
               useGlobalJson: false
               performMultiLevelLookup: false
