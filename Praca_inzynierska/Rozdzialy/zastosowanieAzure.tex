@@ -1,0 +1,65 @@
+\section{Zastosowanie platformy Microsoft Azure}
+% zmiana tytułu rozdziału?
+
+% W tym rozdziale planuję opisać w jaki sposób tworzone są kompletne pipeline'y, 
+% dlaczego są one tak istotne (najlepiej na przykładzie anegdotycznym?).
+% Po krótkim wstępie zaprezentuję jak skonfigurowany jest mój pipeline,
+% na jakie elementy należy zwrócić uwagę, jaki jest efekt końcowy jego działania.
+
+Zaraz po stworzeniu software'u, najważniejszym etapem jest możliwość szybkiego i bezpiecznego dostarczenia go do odbiorców.
+% Czy ten fragment nie jest za mało konkretny? Coś takiego może się znaleźć w pracy dyplomowej?
+W najmniejszych projektach po skompilowaniu aplikacji zazwyczaj wystarczyło skopiowanie plików
+i przeniesienie ich na końcowe urządzenie. O ile jest to najprostsze i najbardziej oczywiste rozwiązanie,
+jest ono zdecydowanie najmniej wydajne na dłuższą metę.
+
+Wydanie nowej wersji programu możemy w uproszczony sposób przedstawić jako cykl na poniższym rysunku~\ref{fig:cyklZmian}.
+Za każdym razem gdy zostaną wprowadzone jakiekolwiek zmiany, należy przygotować nową wersję (kompilacja),
+umieścić ją w odpowiedniej lokalizacji (czy to będzie sklep z aplikacjami, strona internetowa czy nośnik cyfrowy),
+a następnie poinformować o tym użytkownika (przykładowo wyświetlić powiadomienie o dostępności aktualizacji).
+
+
+\begin{figure}[!htp]
+    \centering
+    \begin{tikzpicture}[
+        minimum height=1cm,
+        block/.style={rectangle, draw=black!60, fill=green!30, thick, rounded corners=2mm}
+        ]
+            \node[block] (codeChange) {1. Wprowadzenie zmian w kodzie};
+            \node[block] (compilation) [right=of codeChange] {2. Kompilacja rozwiązania};
+            \node[block] (publish) [below=of compilation] {3. Publikacja plików};
+            \node[block] (newVerInfo) [below=of codeChange] {4. Poinformowanie o nowej wersji};
+
+            \draw[->] (codeChange.east) -- node[anchor=east]{} (compilation.west);
+            \draw[->] (compilation.south) -- node[anchor=south]{} (publish.north);
+            \draw[->] (publish.west) -- node[anchor=west]{} (newVerInfo.east);
+            \draw[dotted] (newVerInfo.north) -- node[anchor=north]{} (codeChange.south);
+            
+    \end{tikzpicture}
+    \caption{Uproszczony proces wydawania nowej wersji oprogramowania}
+    \label{fig:cyklZmian}
+\end{figure}
+
+Wraz ze wzrostem częstotliwości wprowadzania zmian, ilości urządzeń oraz ograniczeniem dostępu do nich,
+potrzeba automatyzacji tego procesu staje się coraz bardziej realna.
+Prócz przyspieszenia działania, jej główną zaletą jest ograniczenie błędów i niedopatrzeń człowieka.
+Im bardziej złożony jest nasz proces wydawczy, tym więcej czasu i wysiłku wymaga pilnowanie jego poprawności -
+zautomatyzowanie go daje gwarancję, że żaden z kroków nie zostanie pominięty lub niepoprawnie wykonany.
+
+Istnieje kilka zagadnień, które należy rozważyć podczas planowania zintegrowania do naszego projektu pipeline'a CI/CD,
+czyli podzielonego na kroki procesu, który automatyzuje wspomniane wyżej czynności.
+\begin{enumerate}
+    \item Ilość czasu potrzebnego do przygotowania konfiguracji
+    \item Czy pipeline ma działać w chmurze, czy na własnym urządzeniu
+\end{enumerate}
+
+Chociaż początkowo może wydawać się to zbędnym nakładem pracy, z upływem czasu zwraca się on z nawiązką.
+Jeżeli nasz projekt ma być rozwijany przez więcej osób, w większej perspektywie czasowej, to oprócz jego standardowych
+zalet, zyskujemy również spokój współautorów, którzy nie muszą znać szczegółów procesu wydawczego i mogą skupić się
+na tworzeniu jego zawartości.
+
+W zależności od naszych możliwości finansowych oraz zaopatrzeniowych, możemy wynająć maszynę wirtualną
+lub zainstalować odpowiednie oprogramowanie CI/CD na własnej maszynie. 
+Jeżeli wolimy nie martwić się o sprawy sprzętowe, wygodniejszym rozwiązaniem jest chmura,
+ale jeśli dysponujemy sprzętem to skorzystanie z niego będzie tańszą opcją. % czy ja to musze jakoś potwierdzać? czy to wystarczy?
+
+
