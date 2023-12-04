@@ -1,5 +1,5 @@
 \section{Zastosowanie platformy Microsoft Azure}
-% zmiana tytułu rozdziału?
+\todo{zmiana tytułu rozdziału?}
 
 % W tym rozdziale planuję opisać w jaki sposób tworzone są kompletne pipeline'y, 
 % dlaczego są one tak istotne (najlepiej na przykładzie anegdotycznym?).
@@ -7,11 +7,12 @@
 % na jakie elementy należy zwrócić uwagę, jaki jest efekt końcowy jego działania.
 
 Zaraz po stworzeniu software'u, najważniejszym etapem jest możliwość szybkiego i bezpiecznego dostarczenia go do odbiorców.
-% Czy ten fragment nie jest za mało konkretny? Coś takiego może się znaleźć w pracy dyplomowej?
 W najmniejszych projektach po skompilowaniu aplikacji zazwyczaj wystarczyło skopiowanie plików
 i przeniesienie ich na końcowe urządzenie. O ile jest to najprostsze i najbardziej oczywiste rozwiązanie,
 jest ono zdecydowanie najmniej wydajne na dłuższą metę.
+\todo[size=\scriptsize]{Czy ten fragment nie jest za mało konkretny? Coś takiego może się znaleźć w pracy dyplomowej?}
 
+\subsection[pipelineIntro]{Wprowadzenie}
 Wydanie nowej wersji programu możemy w uproszczony sposób przedstawić jako cykl na poniższym rysunku~\ref{fig:cyklZmian}.
 Za każdym razem gdy zostaną wprowadzone jakiekolwiek zmiany, należy przygotować nową wersję (kompilacja),
 umieścić ją w odpowiedniej lokalizacji (czy to będzie sklep z aplikacjami, strona internetowa czy nośnik cyfrowy),
@@ -49,17 +50,59 @@ Istnieje kilka zagadnień, które należy rozważyć podczas planowania zintegro
 czyli podzielonego na kroki procesu, który automatyzuje wspomniane wyżej czynności.
 \begin{enumerate}
     \item Ilość czasu potrzebnego do przygotowania konfiguracji
+
+    Chociaż początkowo może wydawać się to zbędnym nakładem pracy, z upływem czasu zwraca się on z nawiązką.
+    Jeżeli nasz projekt ma być rozwijany przez więcej osób, w większej perspektywie czasowej, 
+    to oprócz jego standardowych zalet, zyskujemy również spokój współautorów, 
+    którzy nie muszą znać szczegółów procesu wydawczego i mogą skupić się na tworzeniu jego zawartości.
+
+    Często przygotowanie takiej konfiguracji jest skomplikowane i czasochłonne, 
+    więc do tego zadania zatrudnia się dobrze zorientowanych specjalistów.
+
     \item Czy pipeline ma działać w chmurze, czy na własnym urządzeniu
+
+    W zależności od naszych możliwości finansowych oraz zaopatrzeniowych, możemy wynająć maszynę wirtualną
+    lub zainstalować odpowiednie oprogramowanie CI/CD na własnej maszynie. 
+    Jeżeli wolimy nie martwić się o sprawy sprzętowe, wygodniejszym rozwiązaniem jest chmura,
+    ale jeśli dysponujemy sprzętem, to prawdopodobnie skorzystanie z niego będzie tańszą opcją. 
+    \todo[size=\scriptsize]{czy ja to muszę jakoś potwierdzać? czy to wystarczy?}
 \end{enumerate}
 
-Chociaż początkowo może wydawać się to zbędnym nakładem pracy, z upływem czasu zwraca się on z nawiązką.
-Jeżeli nasz projekt ma być rozwijany przez więcej osób, w większej perspektywie czasowej, to oprócz jego standardowych
-zalet, zyskujemy również spokój współautorów, którzy nie muszą znać szczegółów procesu wydawczego i mogą skupić się
-na tworzeniu jego zawartości.
 
-W zależności od naszych możliwości finansowych oraz zaopatrzeniowych, możemy wynająć maszynę wirtualną
-lub zainstalować odpowiednie oprogramowanie CI/CD na własnej maszynie. 
-Jeżeli wolimy nie martwić się o sprawy sprzętowe, wygodniejszym rozwiązaniem jest chmura,
-ale jeśli dysponujemy sprzętem to skorzystanie z niego będzie tańszą opcją. % czy ja to musze jakoś potwierdzać? czy to wystarczy?
+\subsection[pipelineSafety]{Bezpieczeństwo}
+Ważnym aspektem jest również bezpieczeństwo - wrażliwe dane, takie jak certyfikaty używane do podpisywania aplikacji czy
+hasła dostępowe do serwerów powinny być udostępnione jak najmniejszej ilości osób.
+
+W momencie gdy każdy z deweloperów uaktualnia aplikację ręcznie, musi dysponować tymi informacjami,
+zaś korzystając z pipeline'a taki dostęp mają wyłącznie wyselekcjonowane osoby zarządzające procesem.
+Zmniejszenie dostępności tych informacji sprawia, że ryzyko wykradnięcia tych danych jest niemal zerowe.
+
+Przykładowo duża firma, która tworzy popularną przeglądarkę internetową, zostaje okradnięta z certyfikatów i haseł - 
+będąc w posiadaniu tak istotnych danych, ktoś może stworzyć własną aplikację, która przykładowo wykrada personalia użytkowników, 
+a następnie podszyć się pod prawdziwą aplikację. 
+Tego rodzaju straty prowadzą do bardzo poważnych konsekwencji, na co nie możemy sobie pozwolić.
+\newpage
+
+\subsection[pipelinePreparation]{Przygotowanie pipeline'a}
+Istotę pipeline'a jesteśmy w stanie przekazać w najprostszy sposób za pomocą skryptu - 
+zaprogramujemy listę kroków, które za każdym razem zostaną wykonane w ten sam sposób~\footnote{
+    Z dokładnością do środowiska, w którym skrypt zostanie uruchomiony, oraz sposobu działania narzędzi~\cite{compilerDeterminism}
+}.
 
 
+Jednak dysponujemy już nowoczesnymi narzędziami, które wprowadzają kolejny poziom abstrakcji.
+Dobrym przykładem będzie skorzystanie z .NET Core SDK - o ile musimy poznać sposób skorzystania z niego,
+to wywołanie terminalowe zostaje zastąpione wygodnym interfejsem graficznym lub zadaniem, dzięki którym jesteśmy 
+odciążeni z wpisywania słów kluczowych, a jedynie wybieramy je z rozwijanej listy.
+\todo[size=\scriptsize]{Oczywiście to jest do poprawki}
+
+Spotkałem się z opiniami, że korzystanie z konkretnego dostawcy takiego narzędzia negatywnie wpływa na elastyczność 
+takiego pipeline'a - w przypadku potrzeby zmiany narzędzia CI/CD, mogą pojawić się komplikacje, 
+przykładowo różnice w składni, limitach przechowywania poufnych danych, sposób działania~\footnote{
+    Niekompatybilność przekazywania zmiennych, konwencje nazewnicze, dostępność szablonów zadań
+} itp.
+Aby zabezpieczyć się przed takimi problemami należy wrócić do korzeni i własnoręcznie napisać modularne skrypty,
+które będą odporne na takie zmiany. 
+Niestety haseł tak łatwo nie przeniesiemy \todo{zmienić, to tylko myśl}
+
+Najpopularnie
