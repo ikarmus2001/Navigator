@@ -62,7 +62,7 @@ stages:
               tagSource: userSpecifiedTag
               tag: $(currentVersionName)
               gitHubConnection: GitHub_ikarmus2001
-              action: create
+              action: edit
               assets: $(Pipeline.Workspace)\$(WindowsArtifactName)
               isDraft: true
 
@@ -82,5 +82,5 @@ stages:
               tag: $(currentVersionName)
               gitHubConnection: GitHub_ikarmus2001
               action: edit
-              assets: $(Pipeline.Workspace)\$(AndroidArtifactName)
+              assets: $(Pipeline.Workspace)\$(AndroidArtifactName)\Release\net8.0-android34\publish\pl.ikarmus.Navigator-Signed.apk
               isDraft: true
