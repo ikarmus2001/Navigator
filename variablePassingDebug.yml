@@ -5,6 +5,9 @@
 
 trigger: none
 
+pool:
+  name: Self-hosted pool
+
 variables:
 - name: WindowsArtifactName
   value: ''
