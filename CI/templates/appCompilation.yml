@@ -89,8 +89,6 @@ stages:
         - pwsh: Write-Host "##vso[task.setvariable variable=outputArtifactName;isOutput=true]$(Build.BuildNumber)_${{ parameters.framework }}"
           displayName: Export artifact name to pipeline
 
-        - pwsh: Write-Host $(properties.outputArtifactName)
-          displayName: Echo outputted name
     
     
     - job: Windows_compilation
@@ -126,11 +124,8 @@ stages:
         #     targetFolder: $(Build.BinariesDirectory)/$(Build.BuildNumber)_net8_0-windows10_0_19041_0
 
         - publish: $(Build.SourcesDirectory)/SMCEBI_Navigator/bin
-          displayName: Publish full compiled app
+          displayName: Publish compiled app
           artifact: '$(Build.BuildNumber)_${{ parameters.framework }}'
 
         - pwsh: Write-Host "##vso[task.setvariable variable=outputArtifactName;isOutput=true]$(Build.BuildNumber)_${{ parameters.framework }}"
           displayName: Export artifact name to pipeline
-
-        - pwsh: Write-Host $(properties.outputArtifactName)
-          displayName: Echo outputted name
