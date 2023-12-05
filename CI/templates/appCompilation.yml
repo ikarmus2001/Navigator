@@ -59,7 +59,7 @@ stages:
           displayName: Publish app
           inputs:
             command: publish
-            zipAfterPublish: false
+            zipAfterPublish: true
             publishWebProjects: false
             projects: SMCEBI_Navigator\SMCEBI_Navigator.csproj
             ${{ if eq(parameters.config, 'Release') }}:
@@ -109,7 +109,7 @@ stages:
           displayName: Publish desktop app
           inputs:
             command: publish
-            zipAfterPublish: false
+            zipAfterPublish: true
             publishWebProjects: false
             projects: SMCEBI_Navigator\SMCEBI_Navigator.csproj
             ${{ if eq(parameters.config, 'Release') }}:
