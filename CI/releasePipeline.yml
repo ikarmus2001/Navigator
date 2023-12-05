@@ -17,43 +17,14 @@ variables:
   value: '>=6.7.x'
 - group: Android signing password
 - name: WindowsArtifactName
-  value: ''
+  value: $(Build.BuildNumber)_net8.0-windows10.0.19041.0
 - name: AndroidArtifactName
-  value: ''
+  value: $(Build.BuildNumber)_net8.0-android34
 
 stages:
   - template: templates/envPreparationStage.yml
     parameters:
       dotnetVersion: $(dotnetSdkVersion)
-
-  - stage: Quick_debug
-    jobs:
-      - job: EmptyVars
-        steps:
-          - checkout: none
-          - pwsh: Write-Host $(WindowsArtifactName)
-            displayName: logging $(WindowsArtifactName)
-          - pwsh: Write-Host $(WindowsArtifactName)
-            displayName: logging $(AndroidArtifactName)
-      - job:
-        displayName: Assignment
-        steps:
-          - checkout: none
-          - pwsh: Write-Host "##vso[task.setvariable variable=WindowsArtifactName;isOutput=true]whatevertestingWin"
-            displayName: Export artifact name to pipeline
-          - pwsh: Write-Host "##vso[task.setvariable variable=AndroidArtifactName;isOutput=true]whatevertestingAndroid"
-            displayName: Export artifact name to pipeline
-      - job: filled
-        steps:
-          - checkout: none
-          - pwsh: Write-Host $(WindowsArtifactName)
-            displayName: logging $(WindowsArtifactName)
-          - pwsh: Write-Host $(WindowsArtifactName)
-            displayName: logging $(AndroidArtifactName)
-          - pwsh: Write-Host "$env:WINDOWSARTIFACTNAME"
-            displayName: logging $(WindowsArtifactName)
-          - pwsh: Write-Host "$env:ANDROIDARTIFACTNAME"
-            displayName: logging $(AndroidArtifactName)
 
   - template: templates/appCompilation.yml
     parameters:
@@ -75,25 +46,41 @@ stages:
       outputArtifactName: AndroidArtifactName
       dotnetVersion: $(dotnetSdkVersion)
 
-  - stage: FurtherDebug
-    jobs:
-      - job:
-        steps:
-          - pwsh: Write-Host $(WindowsArtifactName)
-            displayName: logging $(WindowsArtifactName)
-          - pwsh: Write-Host $(WindowsArtifactName)
-            displayName: logging $(AndroidArtifactName)
-
   - stage: Deployment
     jobs:
-      - job: EmptyJob
+      - job: Windows_deployment
+        displayName: Windows deployment
         steps:
-          - pwsh: echo cokolwiek
+          - download: current
+            displayName: Download artifact 
+            artifact: $(WindowsArtifactName)
 
-      - template: templates/GithubReleaseJob.yml
-        parameters:
-          artifactName: $(WindowsArtifactName)
+          - task: GitHubRelease@1
+            inputs:
+              repositoryName: $(Build.Repository.Name)
+              target: $(Build.SourceVersion)
+              tagSource: userSpecifiedTag
+              tag: $(currentVersionName)
+              gitHubConnection: GitHub_ikarmus2001
+              action: create
+              assets: $(Pipeline.Workspace)\$(WindowsArtifactName)
+              isDraft: true
 
-      - template: templates/GithubReleaseJob.yml
-        parameters:
-          artifactName: $(AndroidArtifactName)
+
+      - job: Android_deployment
+        displayName: Android deployment
+        steps:
+          - download: current
+            displayName: Download artifact 
+            artifact: $(AndroidArtifactName)
+
+          - task: GitHubRelease@1
+            inputs:
+              repositoryName: $(Build.Repository.Name)
+              target: $(Build.SourceVersion)
+              tagSource: userSpecifiedTag
+              tag: $(currentVersionName)
+              gitHubConnection: GitHub_ikarmus2001
+              action: edit
+              assets: $(Pipeline.Workspace)\$(AndroidArtifactName)
+              isDraft: true
