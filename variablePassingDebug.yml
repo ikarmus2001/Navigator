@@ -24,7 +24,8 @@ stages:
             displayName: logging $(WindowsArtifactName)
           - pwsh: Write-Host $(WindowsArtifactName)
             displayName: logging $(AndroidArtifactName)
-      - job:
+      - job: Assignment
+        dependsOn: EmptyVars
         displayName: Assignment
         steps:
           - checkout: none
@@ -33,6 +34,7 @@ stages:
           - pwsh: Write-Host "##vso[task.setvariable variable=AndroidArtifactName;isOutput=true]whatevertestingAndroid"
             displayName: Export artifact name to pipeline
       - job: filled
+        dependsOn: Assignment
         steps:
           - checkout: none
           - pwsh: Write-Host $(WindowsArtifactName)
