@@ -63,28 +63,28 @@ stages:
               $winVar = $(WindowsArtifactName)
               Write-Host $winVar
               echo $winVar
-              echo pwsh.exe trueLog.ps1 -inputText $winVar
+              .\trueLog.ps1 -inputText $winVar
             displayName: logging $ WindowsArtifactName
           - pwsh: |
               Write-Host $(AndroidArtifactName)
               $aVar = $(AndroidArtifactName)
               Write-Host $aVar
               echo $aVar
-              echo pwsh.exe trueLog.ps1 -inputText $aVar
+              .\trueLog.ps1 -inputText  $aVar
             displayName: logging $ AndroidArtifactName
           - pwsh: |
               Write-Host "$env:WINDOWSARTIFACTNAME"
               $winVar2 = Write-Host "$env:WINDOWSARTIFACTNAME"
               Write-Host $winVar2
               echo $winVar2
-              echo pwsh.exe trueLog.ps1 -inputText $winVar2
+              .\trueLog.ps1 -inputText  $winVar2
             displayName: logging env:WINDOWSARTIFACTNAME
           - pwsh: |
               Write-Host "$env:ANDROIDARTIFACTNAME"
               $aVar2 = "$env:ANDROIDARTIFACTNAME"
               Write-Host $aVar2
               echo $aVar2
-              echo pwsh.exe trueLog.ps1 -inputText $aVar2
+              .\trueLog.ps1 -inputText  $aVar2
             displayName: logging env:ANDROIDARTIFACTNAME
             
       - job: filled
@@ -96,27 +96,27 @@ stages:
               $winVar = $(WindowsArtifactName)
               Write-Host $winVar
               echo $winVar
-              echo pwsh.exe trueLog.ps1 -inputText $winVar
+              .\trueLog.ps1 -inputText  $winVar
             displayName: logging $ WindowsArtifactName
           - pwsh: |
               Write-Host $(AndroidArtifactName)
               $aVar = $(AndroidArtifactName)
               Write-Host $aVar
               echo $aVar
-              echo pwsh.exe trueLog.ps1 -inputText $aVar
+              .\trueLog.ps1 -inputText  $aVar
             displayName: logging $ AndroidArtifactName
           - pwsh: |
               Write-Host "$env:WINDOWSARTIFACTNAME"
               $winVar2 = Write-Host "$env:WINDOWSARTIFACTNAME"
               Write-Host $winVar2
               echo $winVar2
-              echo pwsh.exe trueLog.ps1 -inputText $winVar2
+              .\trueLog.ps1 -inputText  $winVar2
             displayName: logging env:WINDOWSARTIFACTNAME
           - pwsh: |
               Write-Host "$env:ANDROIDARTIFACTNAME"
               $aVar2 = "$env:ANDROIDARTIFACTNAME"
               Write-Host $aVar2
               echo $aVar2
-              echo pwsh.exe trueLog.ps1 -inputText $aVar2
+              .\trueLog.ps1 -inputText  $aVar2
             displayName: logging env:ANDROIDARTIFACTNAME
 
