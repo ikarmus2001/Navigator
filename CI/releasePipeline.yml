@@ -63,7 +63,7 @@ stages:
               tag: $(currentVersionName)
               gitHubConnection: GitHub_ikarmus2001
               action: edit
-              assets: $(Pipeline.Workspace)\$(WindowsArtifactName)
+              assets: $(Pipeline.Workspace)\$(WindowsArtifactName)\$(WindowsArtifactName).zip
               isDraft: true
 
 
