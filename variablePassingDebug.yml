@@ -1,0 +1,43 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger: none
+
+variables:
+- name: WindowsArtifactName
+  value: ''
+- name: AndroidArtifactName
+  value: ''
+
+stages:
+  - stage: Quick_debug
+    jobs:
+      - job: EmptyVars
+        steps:
+          - checkout: none
+          - pwsh: Write-Host $(WindowsArtifactName)
+            displayName: logging $(WindowsArtifactName)
+          - pwsh: Write-Host $(WindowsArtifactName)
+            displayName: logging $(AndroidArtifactName)
+      - job:
+        displayName: Assignment
+        steps:
+          - checkout: none
+          - pwsh: Write-Host "##vso[task.setvariable variable=WindowsArtifactName;isOutput=true]whatevertestingWin"
+            displayName: Export artifact name to pipeline
+          - pwsh: Write-Host "##vso[task.setvariable variable=AndroidArtifactName;isOutput=true]whatevertestingAndroid"
+            displayName: Export artifact name to pipeline
+      - job: filled
+        steps:
+          - checkout: none
+          - pwsh: Write-Host $(WindowsArtifactName)
+            displayName: logging $(WindowsArtifactName)
+          - pwsh: Write-Host $(WindowsArtifactName)
+            displayName: logging $(AndroidArtifactName)
+          - pwsh: Write-Host "$env:WINDOWSARTIFACTNAME"
+            displayName: logging $(WindowsArtifactName)
+          - pwsh: Write-Host "$env:ANDROIDARTIFACTNAME"
+            displayName: logging $(AndroidArtifactName)
+
