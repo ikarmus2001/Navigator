@@ -59,7 +59,7 @@ stages:
           displayName: Publish app
           inputs:
             command: publish
-            zipAfterPublish: true
+            zipAfterPublish: false
             publishWebProjects: false
             projects: SMCEBI_Navigator\SMCEBI_Navigator.csproj
             ${{ if eq(parameters.config, 'Release') }}:
@@ -82,7 +82,7 @@ stages:
         #     contents: '**'
         #     targetFolder: $(Build.BinariesDirectory)/$(Build.BuildNumber)_net8_0-windows10_0_19041_0
 
-        - publish: $(Build.SourcesDirectory)/SMCEBI_Navigator/bin
+        - publish: $(Build.SourcesDirectory)/SMCEBI_Navigator/bin/Release/net8.0-android34/pl.ikarmus.Navigator-Signed.apk
           displayName: Publish compiled app
           artifact: '$(Build.BuildNumber)_${{ parameters.framework }}'
 
@@ -123,8 +123,20 @@ stages:
         #     contents: '**'
         #     targetFolder: $(Build.BinariesDirectory)/$(Build.BuildNumber)_net8_0-windows10_0_19041_0
 
-        - publish: $(Build.SourcesDirectory)/SMCEBI_Navigator/bin
-          displayName: Publish compiled app
+        - publish: $(Build.SourcesDirectory)/SMCEBI_Navigator/bin/Release/net8.0-windows10.0.19041.0/win10-x64/publish.zip
+          displayName: Upload compiled artifacts
+          artifact: 'artifact_$(Build.BuildNumber)_${{ parameters.framework }}'
+
+        - task: ArchiveFiles@2
+          inputs:
+            rootFolderOrFile: '$(Build.SourcesDirectory)/SMCEBI_Navigator/bin/Release/net8.0-windows10.0.19041.0/win10-x64/AppPackages'
+            includeRootFolder: false
+            archiveType: 'zip'
+            archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildNumber)_${{ parameters.framework }}.zip'
+            replaceExistingArchive: true
+
+        - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildNumber)_${{ parameters.framework }}.zip
+          displayName: Upload published app
           artifact: '$(Build.BuildNumber)_${{ parameters.framework }}'
 
         - pwsh: Write-Host "##vso[task.setvariable variable=outputArtifactName;isOutput=true]$(Build.BuildNumber)_${{ parameters.framework }}"
