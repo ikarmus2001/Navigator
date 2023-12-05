@@ -60,21 +60,21 @@ stages:
 
           - pwsh: |
               Write-Host $(WindowsArtifactName)
-              $winVar = $(WindowsArtifactName)
+              $winVar = "$(WindowsArtifactName)"
               Write-Host $winVar
               echo $winVar
               .\trueLog.ps1 -inputText $winVar
             displayName: logging $ WindowsArtifactName
           - pwsh: |
               Write-Host $(AndroidArtifactName)
-              $aVar = $(AndroidArtifactName)
+              $aVar = "$(AndroidArtifactName)"
               Write-Host $aVar
               echo $aVar
               .\trueLog.ps1 -inputText  $aVar
             displayName: logging $ AndroidArtifactName
           - pwsh: |
               Write-Host "$env:WINDOWSARTIFACTNAME"
-              $winVar2 = Write-Host "$env:WINDOWSARTIFACTNAME"
+              $winVar2 = "$env:WINDOWSARTIFACTNAME"
               Write-Host $winVar2
               echo $winVar2
               .\trueLog.ps1 -inputText  $winVar2
@@ -93,21 +93,21 @@ stages:
           # - checkout: none
           - pwsh: |
               Write-Host $(WindowsArtifactName)
-              $winVar = $(WindowsArtifactName)
+              $winVar = "$(WindowsArtifactName)"
               Write-Host $winVar
               echo $winVar
               .\trueLog.ps1 -inputText  $winVar
             displayName: logging $ WindowsArtifactName
           - pwsh: |
               Write-Host $(AndroidArtifactName)
-              $aVar = $(AndroidArtifactName)
+              $aVar = "$(AndroidArtifactName)"
               Write-Host $aVar
               echo $aVar
               .\trueLog.ps1 -inputText  $aVar
             displayName: logging $ AndroidArtifactName
           - pwsh: |
               Write-Host "$env:WINDOWSARTIFACTNAME"
-              $winVar2 = Write-Host "$env:WINDOWSARTIFACTNAME"
+              $winVar2 = "$env:WINDOWSARTIFACTNAME"
               Write-Host $winVar2
               echo $winVar2
               .\trueLog.ps1 -inputText  $winVar2
