@@ -20,10 +20,33 @@ stages:
       - job: EmptyVars
         steps:
           - checkout: none
-          - pwsh: Write-Host $(WindowsArtifactName)
+          - pwsh: |
+              Write-Host $(WindowsArtifactName)
+              $winVar = $(WindowsArtifactName)
+              Write-Host $winVar
+              echo $winVar
             displayName: logging $(WindowsArtifactName)
-          - pwsh: Write-Host $(WindowsArtifactName)
+          - pwsh: |
+              Write-Host $(AndroidArtifactName)
+              $aVar = $(AndroidArtifactName)
+              Write-Host $aVar
+              echo $aVar
             displayName: logging $(AndroidArtifactName)
+
+          - pwsh: |
+              Write-Host "$env:WINDOWSARTIFACTNAME"
+              $winVar2 = Write-Host "$env:WINDOWSARTIFACTNAME"
+              Write-Host $winVar2
+              echo $winVar2
+            displayName: logging $(WindowsArtifactName)
+          - pwsh: |
+              Write-Host "$env:ANDROIDARTIFACTNAME"
+              $aVar2 = $env:ANDROIDARTIFACTNAME"
+              Write-Host $aVar2
+              echo $aVar2
+
+
+
       - job: Assignment
         dependsOn: EmptyVars
         displayName: Assignment
@@ -33,16 +56,49 @@ stages:
             displayName: Export artifact name to pipeline
           - pwsh: Write-Host "##vso[task.setvariable variable=AndroidArtifactName;isOutput=true]whatevertestingAndroid"
             displayName: Export artifact name to pipeline
+
+          - pwsh: |
+              Write-Host $(WindowsArtifactName)
+              $winVar = $(WindowsArtifactName)
+              Write-Host $winVar
+              echo $winVar
+            displayName: logging $(WindowsArtifactName)
+          - pwsh: |
+              Write-Host $(AndroidArtifactName)
+              $aVar = $(AndroidArtifactName)
+              Write-Host $aVar
+              echo $aVar
+            displayName: logging $(AndroidArtifactName)
+
+
+            
       - job: filled
         dependsOn: Assignment
         steps:
           - checkout: none
-          - pwsh: Write-Host $(WindowsArtifactName)
+          - pwsh: |
+              Write-Host $(WindowsArtifactName)
+              $winVar = $(WindowsArtifactName)
+              Write-Host $winVar
+              echo $winVar
             displayName: logging $(WindowsArtifactName)
-          - pwsh: Write-Host $(WindowsArtifactName)
+          - pwsh: |
+              Write-Host $(AndroidArtifactName)
+              $aVar = $(AndroidArtifactName)
+              Write-Host $aVar
+              echo $aVar
             displayName: logging $(AndroidArtifactName)
-          - pwsh: Write-Host "$env:WINDOWSARTIFACTNAME"
+
+          - pwsh: |
+              Write-Host "$env:WINDOWSARTIFACTNAME"
+              $winVar2 = Write-Host "$env:WINDOWSARTIFACTNAME"
+              Write-Host $winVar2
+              echo $winVar2
             displayName: logging $(WindowsArtifactName)
-          - pwsh: Write-Host "$env:ANDROIDARTIFACTNAME"
+          - pwsh: |
+              Write-Host "$env:ANDROIDARTIFACTNAME"
+              $aVar2 = $env:ANDROIDARTIFACTNAME"
+              Write-Host $aVar2
+              echo $aVar2
             displayName: logging $(AndroidArtifactName)
 
