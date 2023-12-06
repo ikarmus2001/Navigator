@@ -1,5 +1,4 @@
-\section{Zastosowanie platformy Microsoft Azure}
-\todo{zmiana tytułu rozdziału?}
+\section{Narzędzia CI/CD}
 
 % W tym rozdziale planuję opisać w jaki sposób tworzone są kompletne pipeline'y, 
 % dlaczego są one tak istotne (najlepiej na przykładzie anegdotycznym?).
@@ -12,7 +11,7 @@ i przeniesienie ich na końcowe urządzenie. O ile jest to najprostsze i najbard
 jest ono zdecydowanie najmniej wydajne na dłuższą metę.
 \todo[size=\scriptsize]{Czy ten fragment nie jest za mało konkretny? Coś takiego może się znaleźć w pracy dyplomowej?}
 
-\subsection[pipelineIntro]{Wprowadzenie}
+\subsection{Wprowadzenie}
 Wydanie nowej wersji programu możemy w uproszczony sposób przedstawić jako cykl na poniższym rysunku~\ref{fig:cyklZmian}.
 Za każdym razem gdy zostaną wprowadzone jakiekolwiek zmiany, należy przygotować nową wersję (kompilacja),
 umieścić ją w odpowiedniej lokalizacji (czy to będzie sklep z aplikacjami, strona internetowa czy nośnik cyfrowy),
@@ -41,10 +40,51 @@ a następnie poinformować o tym użytkownika (przykładowo wyświetlić powiado
 \end{figure}
 
 Wraz ze wzrostem częstotliwości wprowadzania zmian, ilości urządzeń oraz ograniczeniem dostępu do nich,
-potrzeba automatyzacji tego procesu staje się coraz bardziej realna.
+potrzeba automatyzacji tego procesu staje się coraz bardziej realna. 
+W tym celu wykorzystuje się szeroki wachlarz narzędzi CI/CD. \todo{}
+
+\subsection{Czym jest CI/CD?}
+Angielskie \textbf{\textit{Continous Integration / Continous Delivery}} (czyli ciągła integracja i dystrybucja oprogramowania) 
+to określenie na zestaw narzędzi automatyzujących dostarczanie programów wraz z ich rozwojem. 
+Pełne rozwiązanie, które samodzielnie wypełnia wszystkie nasze kroki wydawcze, nazywamy \textbf{\textit{pipeline}}m (z ang. rurociąg).
+Jego istotą jest wypracowana lista kroków, które każdorazowo zostaną wykonane w ten sam sposób~\footnote[1]{
+    \label{determinismFootnote}
+    Z dokładnością do środowiska, w którym skrypt zostanie uruchomiony, 
+    oraz sposobu działania narzędzi (Patrz determinizm kompilatora~\cite{compilerDeterminism})
+}, aby otrzymać zamierzony efekt.
+Do jego zalet zaliczamy:
+\begin{itemize}
+    \item Wyeliminowanie błędów i niedopatrzeń człowieka na etapie wydawczym
+    \item Przyspieszenie działania procesu
+    \item Zwiększenie dostępności 
+    \item Determinizm wydania~\footref{determinismFootnote}
+    \item Uproszczona analiza szczegółów procesu
+\end{itemize}
+
+O ile sam pipeline możemy przedstawić i wykonać jako skrypt terminalowy, 
+to jednak dysponujemy już nowoczesnymi narzędziami, które wprowadzają kolejny poziom abstrakcji.
+U podstaw są to dokładnie takie same wywołania z linii poleceń, ale opakowanie ich w interfejs graficzny 
+upraszcza ich konfigurowanie, obniża trudność uczenia się ich obsługi oraz zazwyczaj pozwala na szybszą analizę 
+wyników ich wywołań.
+
 Prócz przyspieszenia działania, jej główną zaletą jest ograniczenie błędów i niedopatrzeń człowieka.
 Im bardziej złożony jest nasz proces wydawczy, tym więcej czasu i wysiłku wymaga pilnowanie jego poprawności -
 zautomatyzowanie go daje gwarancję, że żaden z kroków nie zostanie pominięty lub niepoprawnie wykonany.
+
+Dobrym przykładem będzie skorzystanie z .NET Core SDK - o ile musimy poznać opcje SDK,
+to wywołanie ręczne przekazywanie danych wejściowych do terminala zostaje zastąpione 
+modułem, dzięki któremu jesteśmy odciążeni z wpisywania słów kluczowych, a jedynie wybieramy je z rozwijanej listy 
+lub opisujemy nasze wymagania w skrótach. \todo{To mi brzydko brzmi}
+
+Spotkałem się z opiniami, że przywiązanie do jednego dostawcy narzędzia negatywnie wpływa na elastyczność 
+takiego pipeline'a - w przypadku potrzeby zmiany narzędzia CI/CD, mogą pojawić się komplikacje, 
+przykładowo różnice w składni, limity przechowywania poufnych danych, sposób działania~\footnote[2]{
+    Niekompatybilność przekazywania zmiennych, konwencje nazewnicze, dostępność szablonów zadań
+} itp.
+Aby zabezpieczyć się przed takimi trudnościami, należy przeznaczyć dodatkowe nakłady pracy na stworzenie 
+modularnych skryptów, które będą łatwe w użyciu.
+Sprawa sekretów jest znacznie bardziej skomplikowana - większość firm stosuje mechanizmy uniemożliwiające pobranie już 
+zabezpieczonych danych, więc o ile nie przechowujemy ich kopii samodzielnie, może okazać się to istotnym utrudnieniem w migracji.
 
 Istnieje kilka zagadnień, które należy rozważyć podczas planowania zintegrowania do naszego projektu pipeline'a CI/CD,
 czyli podzielonego na kroki procesu, który automatyzuje wspomniane wyżej czynności.
@@ -69,7 +109,7 @@ czyli podzielonego na kroki procesu, który automatyzuje wspomniane wyżej czynn
 \end{enumerate}
 
 
-\subsection[pipelineSafety]{Bezpieczeństwo}
+\subsection{Bezpieczeństwo}
 Ważnym aspektem jest również bezpieczeństwo - wrażliwe dane, takie jak certyfikaty używane do podpisywania aplikacji czy
 hasła dostępowe do serwerów powinny być udostępnione jak najmniejszej ilości osób.
 
@@ -83,26 +123,10 @@ a następnie podszyć się pod prawdziwą aplikację.
 Tego rodzaju straty prowadzą do bardzo poważnych konsekwencji, na co nie możemy sobie pozwolić.
 \newpage
 
-\subsection[pipelinePreparation]{Przygotowanie pipeline'a}
-Istotę pipeline'a jesteśmy w stanie przekazać w najprostszy sposób za pomocą skryptu - 
-zaprogramujemy listę kroków, które za każdym razem zostaną wykonane w ten sam sposób~\footnote{
-    Z dokładnością do środowiska, w którym skrypt zostanie uruchomiony, oraz sposobu działania narzędzi~\cite{compilerDeterminism}
-}.
+\subsection{Implementacja}
+W mojej pracy zdecydowałem się na skorzystanie z platformy Azure~\ref{MS_AzureSection} - wpłynęły
+na nią przyjazny interfejs, łatwość instalacji agenta, jasna struktura tworzenia pipeline'ów 
+oraz mnogość instrukcji i poradników dotępnych w Internecie.
+\todo[size=\tiny]{Dodać link do rejestracji na Azure (w Dodatkowych linkach)}
 
 
-Jednak dysponujemy już nowoczesnymi narzędziami, które wprowadzają kolejny poziom abstrakcji.
-Dobrym przykładem będzie skorzystanie z .NET Core SDK - o ile musimy poznać sposób skorzystania z niego,
-to wywołanie terminalowe zostaje zastąpione wygodnym interfejsem graficznym lub zadaniem, dzięki którym jesteśmy 
-odciążeni z wpisywania słów kluczowych, a jedynie wybieramy je z rozwijanej listy.
-\todo[size=\scriptsize]{Oczywiście to jest do poprawki}
-
-Spotkałem się z opiniami, że korzystanie z konkretnego dostawcy takiego narzędzia negatywnie wpływa na elastyczność 
-takiego pipeline'a - w przypadku potrzeby zmiany narzędzia CI/CD, mogą pojawić się komplikacje, 
-przykładowo różnice w składni, limitach przechowywania poufnych danych, sposób działania~\footnote{
-    Niekompatybilność przekazywania zmiennych, konwencje nazewnicze, dostępność szablonów zadań
-} itp.
-Aby zabezpieczyć się przed takimi problemami należy wrócić do korzeni i własnoręcznie napisać modularne skrypty,
-które będą odporne na takie zmiany. 
-Niestety haseł tak łatwo nie przeniesiemy \todo{zmienić, to tylko myśl}
-
-Najpopularnie
