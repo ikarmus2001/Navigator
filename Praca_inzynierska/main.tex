@@ -13,7 +13,9 @@
     sorting=none
 ]{biblatex}
 \addbibresource{bibliografia.bib}
-% \usepackage{graphicx} % Required for inserting images
+\usepackage{cprotect} % escape \verb in hrefs
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
 
 
 \begin{document}

@@ -47,7 +47,8 @@ W tym celu wykorzystuje się szeroki wachlarz narzędzi CI/CD. \todo{}
 Angielskie \textbf{\textit{Continous Integration / Continous Delivery}} (czyli ciągła integracja i dystrybucja oprogramowania) 
 to określenie na zestaw narzędzi automatyzujących dostarczanie programów wraz z ich rozwojem. 
 Pełne rozwiązanie, które samodzielnie wypełnia wszystkie nasze kroki wydawcze, nazywamy \textbf{\textit{pipeline}}m (z ang. rurociąg).
-Jego istotą jest wypracowana lista kroków, które każdorazowo zostaną wykonane w ten sam sposób~\footnote[1]{
+Jego istotą jest zapewnienie wydajnego i stabilnego przepływu danych w ramach wypracowanej listy kroków, 
+które każdorazowo zostaną wykonane w ten sam sposób~\footnote[1]{
     \label{determinismFootnote}
     Z dokładnością do środowiska, w którym skrypt zostanie uruchomiony, 
     oraz sposobu działania narzędzi (Patrz determinizm kompilatora~\cite{compilerDeterminism})
@@ -67,17 +68,13 @@ U podstaw są to dokładnie takie same wywołania z linii poleceń, ale opakowan
 upraszcza ich konfigurowanie, obniża trudność uczenia się ich obsługi oraz zazwyczaj pozwala na szybszą analizę 
 wyników ich wywołań.
 
-Prócz przyspieszenia działania, jej główną zaletą jest ograniczenie błędów i niedopatrzeń człowieka.
-Im bardziej złożony jest nasz proces wydawczy, tym więcej czasu i wysiłku wymaga pilnowanie jego poprawności -
-zautomatyzowanie go daje gwarancję, że żaden z kroków nie zostanie pominięty lub niepoprawnie wykonany.
-
-Dobrym przykładem będzie skorzystanie z .NET Core SDK - o ile musimy poznać opcje SDK,
-to wywołanie ręczne przekazywanie danych wejściowych do terminala zostaje zastąpione 
-modułem, dzięki któremu jesteśmy odciążeni z wpisywania słów kluczowych, a jedynie wybieramy je z rozwijanej listy 
+Jako przykład takiego zadania możemy podać skorzystanie .NET Core SDK - o ile musimy poznać możliwości SDK,
+to wywołanie ręczne przekazywanie danych wejściowych do terminala zostaje zastąpione modułem, 
+dzięki któremu jesteśmy odciążeni z wpisywania słów kluczowych, a jedynie wybieramy je z rozwijanej listy 
 lub opisujemy nasze wymagania w skrótach. \todo{To mi brzydko brzmi}
 
 Spotkałem się z opiniami, że przywiązanie do jednego dostawcy narzędzia negatywnie wpływa na elastyczność 
-takiego pipeline'a - w przypadku potrzeby zmiany narzędzia CI/CD, mogą pojawić się komplikacje, 
+takiego pipeline'a - w przypadku potrzeby zmiany narzędzia CI/CD mogą pojawić się komplikacje, 
 przykładowo różnice w składni, limity przechowywania poufnych danych, sposób działania~\footnote[2]{
     Niekompatybilność przekazywania zmiennych, konwencje nazewnicze, dostępność szablonów zadań
 } itp.
@@ -129,4 +126,42 @@ na nią przyjazny interfejs, łatwość instalacji agenta, jasna struktura tworz
 oraz mnogość instrukcji i poradników dotępnych w Internecie.
 \todo[size=\tiny]{Dodać link do rejestracji na Azure (w Dodatkowych linkach)}
 
+Na przykładzie aplikacji Navigator~\ref{NavigatorAppSection} chciałbym przedstawić proces \\
+planowania i konfiguracji pipeline'a \todo{}
 
+\subsubsection{Określenie potrzeb i możliwości}
+W moim projekcie, oprócz samej kompilacji, postanowiłem zaimplementować etap testowania 
+oraz wydania aplikacji na GitHub Releases~\todo{}, czyli publicznej platformie, która 
+pozwala na pobranie gotowych programów zgodnych z ich kodem źródłowym. \\
+\includegraphics[scale=0.4]{StagesOverview_temp.png}
+
+\subsubsection{Przygotowanie środowiska kompilacyjnego}
+Pierwszym krokiem było zainstalowanie specjalnego oprogramowania, 
+które wykonuje wszystkie kroki zdefiniowane w pipelinie - Azure Build Agent~\footnote[1]{
+    \href{https://learn.microsoft.com/en-us/azure/devops/pipelines/agents/agents}{
+        Informacje o Agentach
+    }
+}.
+Ze względu na dysponowanie własną, dostępną maszyną zdecydowałem się na tą opcję,
+jednak taki sam efekt można osiągnąć opłacając maszyny wirtualne, udostępniane przez Microsoft.
+Po krótkiej konfiguracji\todo{podać tu jakieś szczegóły albo linki?} Agent był gotowy do 
+wykonywania zleconego pipeline'owego skryptu, ale należało jeszcze dodać zmienne środowiskowe, 
+które pozwalają na skorzystanie z określonych funkcji zadań (przykładem jest użycie Javy~\ref{}\todo{task java}).
+
+\subsubsection{Zdefiniowanie wymaganych akcji}
+Utworzenie pakietu mojej aplikacji napisanej w .NET MAUI przebiega za pomocą wywołania kompilatora 
+\verb|dotnet| z opcją \cprotect{\href{https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-publish}}{\verb|publish|}, 
+która uruchamia przywrócenie wszystkich zależności (\verb|restore|), 
+kompiluje ją (\verb|build|) oraz pakuje do przewidzianego w konfiguracji projektu (\verb|.csproj|) formatu~\cprotect\footnote{%
+    Interesującym może okazać się fakt, że aplikację w .NET MAUI kompilujemy w oparciu o projekt, a nie rozwiązanie (\verb|.sln|).
+    Jest to spowodowane mnogością platform, których rozpatrzenie jest 
+}.
+
+Zdecydowałem się na podpisywanie aplikacji osobnym zadaniem ze względu na modularność,
+jak również ze względu na chęć ominięcia szczegółów tej operacji wewnątrz samego kodu (tj. w pliku projektu).
+
+\subsubsection{Podejście graficzne}
+Moja pierwsza próba konfiguracji została podjęta w ramach graficznego konfiguratora, 
+który pozwolił mi na wykonanie (jak się później okazało szkicu) 
+
+\subsubsection{Wersja YAML}
