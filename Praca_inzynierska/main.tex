@@ -5,6 +5,7 @@
     \usetikzlibrary{positioning, shapes.geometric, arrows}
 \usepackage[T1]{fontenc} % https://tex.stackexchange.com/a/392210 polskie znaki
 \usepackage{indentfirst}
+\usepackage{todonotes}
 \usepackage[breaklinks]{hyperref} % Citation to bibliography linking
 \usepackage[
     backend=biber,
@@ -12,7 +13,9 @@
     sorting=none
 ]{biblatex}
 \addbibresource{bibliografia.bib}
-% \usepackage{graphicx} % Required for inserting images
+\usepackage{cprotect} % escape \verb in hrefs
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
 
 
 \begin{document}
@@ -31,12 +34,12 @@
     \include{Rozdzialy/Aplikacja/dzialanieAplikacji}
     % Prezentacja schematu działania wraz ze snippetami
     
-    \include{Rozdzialy/azure}
+    \include{Rozdzialy/zastosowanieAzure}
     % Wymagania wstępne (założenie organizacji, fork rozwiązania)
 
     \include{Rozdzialy/dodatkowe}
     % przydatne linki, których nie cytuję
 
     \printbibliography
-    
+
 \end{document}

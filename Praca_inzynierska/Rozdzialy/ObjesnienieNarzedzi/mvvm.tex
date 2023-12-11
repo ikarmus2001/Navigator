@@ -17,7 +17,7 @@ Na rysunku~\ref{fig:MVVM_diagram} możemy zaobserwować zależność komunikacji
             \node[block] (View) [right=of ViewModel] {View};
             
             \draw[->] (Model.east) -- node[anchor=east]{} (ViewModel.west);
-            \draw[->] (ViewModel.west) -- node[anchor=east]{} (View.east);
+            \draw[->] (ViewModel.east) -- node[anchor=east]{} (View.west);
     \end{tikzpicture}
     \caption{Zależności między klasami w MVVM~\cite{mvvm}}
     \label{fig:MVVM_diagram}
