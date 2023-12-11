@@ -1,0 +1,90 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  name: Self-hosted pool
+
+variables:
+- name: dotnetSdkVersion
+  value: '8.x'
+  readonly: false
+- name: nugetVersion
+  value: '>=6.7.x'
+- group: Android signing password
+- name: WindowsArtifactName
+  value: $(Build.BuildNumber)_net8.0-windows10.0.19041.0
+- name: AndroidArtifactName
+  value: $(Build.BuildNumber)_net8.0-android34
+
+stages:
+  - template: templates/envPreparationStage.yml
+    parameters:
+      dotnetVersion: $(dotnetSdkVersion)
+
+  - template: templates/appCompilation.yml
+    parameters:
+      config: Release
+      framework: net8.0-windows10.0.19041.0
+      outputArtifactName: WindowsArtifactName
+      dotnetVersion: $(dotnetSdkVersion)
+
+  - stage: Testing
+    jobs:
+      - template: templates/unitTestStage.yml
+        parameters:
+          dotnetVersion: $(dotnetSdkVersion)
+
+  - template: templates/appCompilation.yml
+    parameters:
+      config: Release
+      framework: net8.0-android34
+      outputArtifactName: AndroidArtifactName
+      dotnetVersion: $(dotnetSdkVersion)
+
+  - stage: Deployment
+    jobs:
+      - job: Windows_deployment
+        displayName: Windows deployment
+        steps:
+          - checkout: none
+          - download: current
+            displayName: Download artifact 
+            artifact: $(WindowsArtifactName)
+
+          - task: GitHubRelease@1
+            inputs:
+              repositoryName: $(Build.Repository.Name)
+              target: $(Build.SourceVersion)
+              tagSource: userSpecifiedTag
+              tag: release
+              gitHubConnection: GitHub_ikarmus2001
+              action: edit
+              assets: $(Pipeline.Workspace)\$(WindowsArtifactName)\$(WindowsArtifactName).zip
+              assetUploadMode: replace
+              isDraft: true
+
+
+      - job: Android_deployment
+        displayName: Android deployment
+        steps:
+          - checkout: none
+          - download: current
+            displayName: Download artifact 
+            artifact: $(AndroidArtifactName)
+
+          - task: GitHubRelease@1
+            inputs:
+              repositoryName: $(Build.Repository.Name)
+              target: $(Build.SourceVersion)
+              tagSource: userSpecifiedTag
+              tag: release
+              gitHubConnection: GitHub_ikarmus2001
+              action: edit
+              assets: $(Pipeline.Workspace)\$(AndroidArtifactName)\pl.ikarmus.Navigator-Signed.apk
+              assetUploadMode: replace
+              isDraft: true

@@ -1,0 +1,26 @@
+parameters:
+  - name: dotnetVersion
+    type: string
+
+jobs:
+  - job:
+    displayName: Testing assemblies
+    steps:
+      - checkout: none
+      - task: UseDotNet@2
+        displayName: Use .NET SDK ${{ parameters.dotnetVersion }}
+        inputs:
+          version: ${{ parameters.dotnetVersion }}
+          includePreviewVersions: true
+          installationPath: $(Agent.ToolsDirectory)/dotnet/${{ parameters.dotnetVersion }}
+          packageType: sdk
+          useGlobalJson: false
+          performMultiLevelLookup: false
+
+      - task: DotNetCoreCLI@2
+        displayName: Run unit tests
+        inputs:
+          command: test
+          projects: '**/NavigatorTests.csproj'
+          arguments: --collect "Code coverage" --settings $(Build.SourcesDirectory)/.runsettings
+
