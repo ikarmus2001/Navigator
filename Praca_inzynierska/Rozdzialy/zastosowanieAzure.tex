@@ -93,7 +93,7 @@ czyli podzielonego na kroki procesu, który automatyzuje wspomniane wyżej czynn
     to oprócz jego standardowych zalet, zyskujemy również spokój współautorów, 
     którzy nie muszą znać szczegółów procesu wydawczego i mogą skupić się na tworzeniu jego zawartości.
 
-    Często przygotowanie takiej konfiguracji jest skomplikowane i czasochłonne, 
+    Często przygotowanie takiej konfiguracji jest skomplikowane oraz \\ czasochłonne, 
     więc do tego zadania zatrudnia się dobrze zorientowanych specjalistów.
 
     \item Czy pipeline ma działać w chmurze, czy na własnym urządzeniu
@@ -133,7 +133,7 @@ planowania i konfiguracji pipeline'a \todo{}
 W moim projekcie, oprócz samej kompilacji, postanowiłem zaimplementować etap testowania 
 oraz wydania aplikacji na GitHub Releases~\todo{}, czyli publicznej platformie, która 
 pozwala na pobranie gotowych programów zgodnych z ich kodem źródłowym. \\
-\includegraphics[scale=0.4]{StagesOverview_temp.png}
+\includegraphics[scale=0.38]{StagesOverview_temp.png}
 
 \subsubsection{Przygotowanie środowiska kompilacyjnego}
 Pierwszym krokiem było zainstalowanie specjalnego oprogramowania, 
@@ -146,7 +146,7 @@ Ze względu na dysponowanie własną, dostępną maszyną zdecydowałem się na 
 jednak taki sam efekt można osiągnąć opłacając maszyny wirtualne, udostępniane przez Microsoft.
 Po krótkiej konfiguracji\todo{podać tu jakieś szczegóły albo linki?} Agent był gotowy do 
 wykonywania zleconego pipeline'owego skryptu, ale należało jeszcze dodać zmienne środowiskowe, 
-które pozwalają na skorzystanie z określonych funkcji zadań (przykładem jest użycie Javy~\ref{}\todo{task java}).
+które pozwalają na skorzystanie z określonych funkcji zadań (przykładem jest użycie Javy~\ref{javaTask}\todo{task java}).
 
 \subsubsection{Zdefiniowanie wymaganych akcji}
 Utworzenie pakietu mojej aplikacji napisanej w .NET MAUI przebiega za pomocą wywołania kompilatora 
@@ -163,5 +163,7 @@ jak również ze względu na chęć ominięcia szczegółów tej operacji wewną
 \subsubsection{Podejście graficzne}
 Moja pierwsza próba konfiguracji została podjęta w ramach graficznego konfiguratora, 
 który pozwolił mi na wykonanie (jak się później okazało szkicu) 
+\label{javaTask}
 
 \subsubsection{Wersja YAML}
+Etap kompilacji jest prawie ekwiwalentny do 
