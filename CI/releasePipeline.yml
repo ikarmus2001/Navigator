@@ -61,7 +61,7 @@ stages:
               repositoryName: $(Build.Repository.Name)
               target: $(Build.SourceVersion)
               tagSource: userSpecifiedTag
-              tag: $(currentVersionName)
+              tag: release
               gitHubConnection: GitHub_ikarmus2001
               action: edit
               assets: $(Pipeline.Workspace)\$(WindowsArtifactName)\$(WindowsArtifactName).zip
@@ -82,7 +82,7 @@ stages:
               repositoryName: $(Build.Repository.Name)
               target: $(Build.SourceVersion)
               tagSource: userSpecifiedTag
-              tag: $(currentVersionName)
+              tag: release
               gitHubConnection: GitHub_ikarmus2001
               action: edit
               assets: $(Pipeline.Workspace)\$(AndroidArtifactName)\pl.ikarmus.Navigator-Signed.apk
