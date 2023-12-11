@@ -51,6 +51,7 @@ stages:
       - job: Windows_deployment
         displayName: Windows deployment
         steps:
+          - checkout: none
           - download: current
             displayName: Download artifact 
             artifact: $(WindowsArtifactName)
@@ -64,12 +65,14 @@ stages:
               gitHubConnection: GitHub_ikarmus2001
               action: edit
               assets: $(Pipeline.Workspace)\$(WindowsArtifactName)\$(WindowsArtifactName).zip
+              assetUploadMode: replace
               isDraft: true
 
 
       - job: Android_deployment
         displayName: Android deployment
         steps:
+          - checkout: none
           - download: current
             displayName: Download artifact 
             artifact: $(AndroidArtifactName)
@@ -83,4 +86,5 @@ stages:
               gitHubConnection: GitHub_ikarmus2001
               action: edit
               assets: $(Pipeline.Workspace)\$(AndroidArtifactName)\pl.ikarmus.Navigator-Signed.apk
+              assetUploadMode: replace
               isDraft: true
