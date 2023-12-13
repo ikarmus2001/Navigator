@@ -6,11 +6,11 @@ pool:
 
 steps:
 - script: |
-    %%latex%%\latexmk.exe $ENV:BUILD_SOURCESDIRECTORY/Praca_inzynierska/main.tex
+    %%latex%%\latexmk.exe $env:BUILD_SOURCESDIRECTORY/Praca_inzynierska/main.tex
   displayName: Running latexmk
 
 - script: |
-    %%latex%%\pdflatex.tex $ENV:BUILD_SOURCESDIRECTORY/Praca_inzynierska/main.tex
+    %%latex%%\pdflatex.tex $env:BUILD_SOURCESDIRECTORY/Praca_inzynierska/main.tex
   displayName: 'Export to PDF'
 
 - publish: /Praca_inzynierska/main.pdf
