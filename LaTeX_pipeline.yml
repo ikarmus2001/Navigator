@@ -1,0 +1,17 @@
+trigger:
+- main
+
+pool:
+  name: Self-hosted pool
+
+steps:
+- script: |
+    %latex%\latexmk.exe ${{ Build.Repository.LocalPath }}/Praca_inzynierska/main.tex
+  displayName: Running latexmk
+
+- script: |
+    pdflatex.tex ${{ Build.Repository.LocalPath }}/Praca_inzynierska/main.tex
+  displayName: 'Export to PDF'
+
+- publish: ${{ Build.Repository.LocalPath }}/Praca_inzynierska/main.pdf
+  artifact: PracaInzynierska_${{ Build.BuildNumber }}.pdf
