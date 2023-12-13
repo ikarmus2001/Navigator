@@ -6,12 +6,12 @@ pool:
 
 steps:
 - script: |
-    %latex%\latexmk.exe ${{ Build.SourcesDirectory }}/Praca_inzynierska/main.tex
+    %%latex%%\latexmk.exe $ENV:BUILD_SOURCESDIRECTORY/Praca_inzynierska/main.tex
   displayName: Running latexmk
 
 - script: |
-    pdflatex.tex ${{ Build.SourcesDirectory }}/Praca_inzynierska/main.tex
+    %%latex%%\pdflatex.tex $ENV:BUILD_SOURCESDIRECTORY/Praca_inzynierska/main.tex
   displayName: 'Export to PDF'
 
-- publish: ${{ Build.SourcesDirectory }}/Praca_inzynierska/main.pdf
-  artifact: PracaInzynierska_${{ Build.BuildNumber }}.pdf
+- publish: /Praca_inzynierska/main.pdf
+  artifact: PracaInzynierska_$(Build.BuildNumber).pdf
