@@ -1,0 +1,31 @@
+\subsection{Wprowadzenie}
+Wydanie nowej wersji programu możemy w uproszczony sposób przedstawić jako cykl na poniższym rysunku~\ref{fig:cyklZmian}.
+Za każdym razem gdy zostaną wprowadzone jakiekolwiek zmiany, należy przygotować nową wersję (kompilacja),
+umieścić ją w odpowiedniej lokalizacji (czy to będzie sklep z aplikacjami, strona internetowa czy nośnik cyfrowy),
+a następnie poinformować o tym użytkownika (przykładowo wyświetlić powiadomienie o dostępności aktualizacji).
+
+
+\begin{figure}[!htp]
+    \centering
+    \begin{tikzpicture}[
+        minimum height=1cm,
+        block/.style={rectangle, draw=black!60, fill=green!30, thick, rounded corners=2mm}
+        ]
+            \node[block] (codeChange) {1. Wprowadzenie zmian w kodzie};
+            \node[block] (compilation) [right=of codeChange] {2. Kompilacja rozwiązania};
+            \node[block] (publish) [below=of compilation] {3. Publikacja plików};
+            \node[block] (newVerInfo) [below=of codeChange] {4. Poinformowanie o nowej wersji};
+
+            \draw[->] (codeChange.east) -- node[anchor=east]{} (compilation.west);
+            \draw[->] (compilation.south) -- node[anchor=south]{} (publish.north);
+            \draw[->] (publish.west) -- node[anchor=west]{} (newVerInfo.east);
+            \draw[dotted] (newVerInfo.north) -- node[anchor=north]{} (codeChange.south);
+            
+    \end{tikzpicture}
+    \caption{Uproszczony proces wydawania nowej wersji oprogramowania}
+    \label{fig:cyklZmian}
+\end{figure}
+
+Wraz ze wzrostem częstotliwości wprowadzania zmian, ilości urządzeń oraz ograniczeniem dostępu do nich,
+potrzeba automatyzacji tego procesu staje się coraz bardziej realna. 
+W tym celu wykorzystuje się szeroki wachlarz narzędzi CI/CD. \todo{}

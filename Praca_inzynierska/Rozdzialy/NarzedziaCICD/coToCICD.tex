@@ -1,0 +1,76 @@
+\subsection{Czym jest CI/CD?}
+Angielskie \textbf{\textit{Continous Integration / Continous Delivery}} (czyli ciągła integracja i dystrybucja oprogramowania) 
+to określenie na zestaw narzędzi automatyzujących dostarczanie programów wraz z ich rozwojem. 
+Pełne rozwiązanie, które samodzielnie wypełnia wszystkie nasze kroki wydawcze, nazywamy \textbf{\textit{pipeline}}m (z ang. rurociąg).
+Jego istotą jest zapewnienie wydajnego i stabilnego przepływu danych w ramach wypracowanej listy kroków, 
+które każdorazowo zostaną wykonane w ten sam sposób~\footnote[1]{
+    \label{determinismFootnote}
+    Z dokładnością do środowiska, w którym skrypt zostanie uruchomiony, 
+    oraz sposobu działania narzędzi (Patrz determinizm kompilatora~\cite{compilerDeterminism})
+}, aby otrzymać zamierzony efekt.
+
+\subsubsection[short]{Zalety Pipeline'ów}
+Do jego zalet zaliczamy:
+\begin{itemize}
+    \item Wyeliminowanie błędów i niedopatrzeń człowieka na etapie wydawczym
+    \item Przyspieszenie działania procesu
+    \item Zwiększenie dostępności 
+    \item Determinizm wydania~\footref{determinismFootnote}
+    \item Uproszczona analiza szczegółów procesu
+    \item Odciążenie zespołu programistycznego z wiedzy o szczegółach procesu wydania
+    \item Bezpieczeństwo
+\end{itemize}
+
+O ile sam pipeline możemy przedstawić i wykonać jako skrypt terminalowy, 
+to jednak dysponujemy już nowoczesnymi narzędziami, które wprowadzają kolejny poziom abstrakcji.
+U podstaw są to dokładnie takie same wywołania z linii poleceń, ale opakowanie ich w interfejs graficzny 
+lub prostszy język (najczęściej jest to YAML~\cite{yamlDefinition}) upraszcza ich konfigurowanie, 
+obniża trudność uczenia się ich obsługi oraz zazwyczaj pozwala na szybszą analizę wyników ich wywołań.
+
+Jako przykład takiego zadania możemy podać skorzystanie .NET Core SDK - o ile musimy poznać możliwości SDK,
+to wywołanie ręczne przekazywanie danych wejściowych do terminala zostaje zastąpione modułem, 
+dzięki któremu jesteśmy odciążeni z wpisywania słów kluczowych, a jedynie wybieramy je z rozwijanej listy 
+lub opisujemy nasze wymagania w skrótach.
+
+Ważnym aspektem jest również bezpieczeństwo - wrażliwe dane, takie jak certyfikaty używane do podpisywania aplikacji czy
+hasła dostępowe do serwerów powinny być udostępnione jak najmniejszej ilości osób.
+
+W momencie gdy każdy z deweloperów uaktualnia aplikację ręcznie, musi dysponować tymi informacjami,
+zaś korzystając z pipeline'a taki dostęp mają wyłącznie wyselekcjonowane osoby zarządzające procesem.
+Zmniejszenie dostępności tych informacji sprawia, że ryzyko wykradnięcia tych danych jest niemal zerowe.
+
+Przykładowo duża firma, która tworzy popularną przeglądarkę internetową, zostaje okradnięta z certyfikatów i haseł - 
+będąc w posiadaniu tak istotnych danych, ktoś może stworzyć własną aplikację, która przykładowo wykrada personalia użytkowników, 
+a następnie podszyć się pod prawdziwą aplikację. 
+Tego rodzaju straty prowadzą do bardzo poważnych konsekwencji, na co nie możemy sobie pozwolić.
+
+\subsubsection{Kompromisy i wady}
+Istnieje kilka zagadnień, które należy rozważyć podczas planowania integracji pipeline'a z naszym projektem:
+\begin{enumerate}
+    \item Ilość czasu potrzebnego do przygotowania konfiguracji
+    \item Czy pipeline ma działać w chmurze, czy na własnym urządzeniu
+\end{enumerate}
+
+Zwykle przygotowanie konfiguracji pipeline'a jest skomplikowane oraz \\%
+czasochłonne, więc do tego zadania zatrudnia się specjalistów\todo{}. \\
+Chociaż początkowo może wydawać się to zbędnym nakładem pracy, z upływem czasu zwraca się on z nawiązką.
+Jeżeli nasz projekt ma być rozwijany przez więcej osób, w większej perspektywie czasowej, 
+to oprócz jego standardowych zalet, zyskujemy również spokój współautorów, 
+którzy nie muszą znać szczegółów procesu wydawczego i mogą skupić się na tworzeniu jego zawartości.
+
+Spotkałem się z opiniami, że przywiązanie do jednego dostawcy narzędzia negatywnie wpływa na elastyczność 
+takiego pipeline'a - w przypadku potrzeby zmiany narzędzia CI/CD mogą pojawić się komplikacje, 
+przykładowo różnice w składni, limity przechowywania poufnych danych, sposób działania~\footnote[2]{
+    Niekompatybilność przekazywania zmiennych, konwencje nazewnicze, dostępność szablonów zadań
+} itp.
+Aby zabezpieczyć się przed takimi trudnościami, należy przeznaczyć dodatkowe nakłady pracy na stworzenie 
+modularnych skryptów, które będą łatwe w użyciu.
+Sprawa sekretów jest znacznie bardziej skomplikowana - większość firm stosuje mechanizmy uniemożliwiające pobranie już 
+zabezpieczonych danych, więc o ile nie przechowujemy ich kopii samodzielnie, może okazać się to istotnym utrudnieniem w migracji.
+
+W zależności od naszych możliwości finansowych oraz zaopatrzeniowych, możemy wynająć maszynę wirtualną
+lub zainstalować odpowiednie oprogramowanie CI/CD na własnej maszynie. 
+Jeżeli wolimy nie martwić się o sprawy sprzętowe, wygodniejszym rozwiązaniem jest chmura,
+ale jeśli dysponujemy sprzętem, to prawdopodobnie skorzystanie z niego będzie tańszą opcją. 
+\todo[size=\scriptsize]{czy ja to muszę jakoś potwierdzać? czy to wystarczy?}
+
