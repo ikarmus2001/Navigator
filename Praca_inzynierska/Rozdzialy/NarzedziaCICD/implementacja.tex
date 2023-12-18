@@ -14,10 +14,10 @@ pozwala na pobranie gotowych programów zgodnych z ich kodem źródłowym.
 Na rysunku \ref{img:JobsOverview} widzimy efekt wykonania takiego pipeline'a z poziomu 
 widoku zarządzania pipeline'ami na stronie Microsoft Azure:
 
-% \includegraphics[scale=0.3]{StagesOverview.png} \\
+% \includegraphics[width=\textwidth]{StagesOverview.png} \\
 \begin{figure}[ht]
     \centering
-    \includegraphics[scale=0.58]{JobsOverview.png}
+    \includegraphics[width=\textwidth]{JobsOverview.png}
     \caption{Zadania (ang. Joby) wykonane przez pipeline}
     \label{img:JobsOverview}
 \end{figure}
@@ -33,7 +33,8 @@ które wykonuje wszystkie kroki zdefiniowane w pipelinie - Azure Build Agent~\fo
 Ze względu na dysponowanie własną, dostępną maszyną zdecydowałem się na tą opcję,
 jednak taki sam efekt można osiągnąć opłacając maszyny wirtualne, udostępniane przez Microsoft. \\%
 Po krótkiej konfiguracji\todo{podać tu jakieś szczegóły albo linki?} Agent był gotowy do 
-wykonywania zleconego pipeline'owego skryptu, ale należało jeszcze dodać zmienne środowiskowe, 
+wykonywania zleconego \\%
+pipeline'owego skryptu, ale należało jeszcze dodać zmienne środowiskowe, 
 które pozwalają na skorzystanie z określonych funkcji zadań (przykładem jest użycie Javy~\ref{javaTask}\todo{task java}).
 
 \subsubsection{Zdefiniowanie wymaganych akcji}
@@ -54,13 +55,13 @@ który pozwolił mi na wykonanie (jak się później okazało szkicu) mojego pip
 Na rysunkach~\ref{img:PipelineGuiApproach} i \ref{img:taskGroupMauiPrepare} możemy zobaczyć jego schemat działania:\\
 \begin{figure}
     \centering
-    \includegraphics[scale=0.8]{PipelineGuiApproach.png}
+    \includegraphics[width=\textwidth]{PipelineGuiApproach.png}
     \caption{Grupa zadań inicjujących środowisko (szczegóły na rys.~\ref{img:taskGroupMauiPrepare}) oraz zadania publikujące i podpisujące cyfrowo aplikację}
     \label{img:PipelineGuiApproach}
 \end{figure}
 \begin{figure}
     \centering
-    \includegraphics[scale=0.8]{taskGroupMauiPrepare.png}
+    \includegraphics[width=\textwidth]{taskGroupMauiPrepare.png}
     \caption{Zawartość grupy zadań inicjujących środowisko}
     \label{img:taskGroupMauiPrepare}
 \end{figure}
@@ -81,7 +82,7 @@ którego nie mogłem zmienić przed wywołaniem pipeline'a.
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[scale=0.8]{variableGroups.png}
+    \includegraphics[width=\textwidth]{variableGroups.png}
     \caption{Predefiniowane zmienne przechowujące nazwę oraz hasło podpisujące certyfikat}
     \label{img:variableGroups}
 \end{figure}
@@ -90,6 +91,3 @@ którego nie mogłem zmienić przed wywołaniem pipeline'a.
 \newpage
 
 \label{javaTask}
-
-\subsubsection{Wersja YAML}
-Etap kompilacji jest prawie ekwiwalentny do 
