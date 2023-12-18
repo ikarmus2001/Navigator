@@ -40,7 +40,8 @@ public class MapObjectStyle
         {
             {nameof(FillOpacity), this.FillOpacity.ToString() },
             {nameof(Weight), this.Weight.ToString() },
-            {nameof(Opacity), this.Opacity.ToString() }
+            {nameof(Opacity), this.Opacity.ToString() },
+            {nameof(FillColor), this.FillColor }
         };
     }
 
@@ -55,7 +56,6 @@ public class MapObjectStyle
 
         return $@"var {this.Name} = {{
             color: '{this.Color}'
-            {nameof(FillColor)}: '{this.FillColor}',
             {optionalParameters}
         }};";
     }

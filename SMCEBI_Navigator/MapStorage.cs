@@ -43,8 +43,6 @@ internal static class MapStorage
             throw new ArgumentException("Can't deserialize saved maps", e);
         }
 
-        //if (deserialized == null) throw new ArgumentException("Can't deserialize saved maps");
-
         configs.Add(deserialized);
     }
 

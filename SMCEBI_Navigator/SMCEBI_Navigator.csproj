@@ -71,7 +71,6 @@
 	<ItemGroup>
 	  <None Remove="Resources\AppIcon\simple_icon_single_floor_build.png" />
 	  <None Remove="Resources\Raw\Dom_sample.json" />
-	  <None Remove="Resources\Raw\floorplans.html" />
 	  <None Remove="Resources\Raw\SMCEBI_sample.json" />
 	</ItemGroup>
 
