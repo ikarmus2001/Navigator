@@ -10,3 +10,32 @@ W zrozumieniu jej działania, nieopisaną pomocą okazał się projekt Floorplan
 na jego podstawie byłem w stanie wstępnie sprawdzić zachowanie przeglądarkowych kontrolek, 
 a następnie za pomocą inżynierii wstecznej zaimplementowałem podstawowy interfejs biblioteki, 
 czyli \verb|LeafletAPI|.
+
+Aplikacja jest podzielona na 3 główne sekcje: 
+\begin{itemize}
+    \item Wybór mapy - \verb|MapPickerPage|~\ref{img:MapPickerPage}
+    \item Kreator pokoju - \verb|FeatureEditorPage|~\ref{img:FeatureEditorPage}
+    \item Wyświetlanie mapy - \verb|MapDisplayPage|~\ref{img:MapDisplayPage}
+\end{itemize}
+
+\begin{figure}[h]
+    \centering
+    \frame{\includegraphics[scale=0.75]{MapPickerPage_light.png}}
+    \caption{Ekran wyboru mapy w aplikacji "Navigator"}
+    \label{img:MapPickerPage}
+\end{figure}
+
+\begin{figure}[ht]
+    \centering
+    \begin{minipage}[b]{0.6\textwidth}
+        \frame{\includegraphics[width=\textwidth]{FeatureEditorPage_light.png}}
+      \caption{Ekran kreatora pokoju w aplikacji "Navigator"}
+      \label{img:FeatureEditorPage}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[b]{0.39\textwidth}
+        \frame{\includegraphics[width=\textwidth]{MapDisplayPage_light.png}}
+        \caption{Ekran wyświetlający mapę w aplikacji "Navigator"}
+        \label{img:MapDisplayPage}
+    \end{minipage}
+\end{figure}

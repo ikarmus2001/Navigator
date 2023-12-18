@@ -1,4 +1,24 @@
 \subsection{Architektura aplikacji}
 
 W aplikacji starałem się korzystać ze wzorca projektowego MVVM~\ref{MVVM} - 
-każdy z widoków 
+każdy z widoków składa się odpowiednio z:
+\begin{itemize}
+    \item Pliku znaczników - strona\verb|.XAML|
+    \item Code-behind (kodu związanego bezpośrednio z danym widokiem) - strona\verb|.xaml.cs|
+    \item ViewModelu, który jest przygotowany dla widoku - strona\verb|ViewModel.cs|
+\end{itemize}
+
+
+Oprócz bezpośredniego kodu aplikacji, zdecydowałem się na wyodrębnienie 3 projektów:
+
+\paragraph{NavigatorTests}
+Projekt służący do statycznej analizy kodu poprzez przeprowadzenie testów jednostkowych.
+Nie jest on obszerny, ale wraz z rozwojem oprogramowania znajdzie się w nim więcej 
+testów. Na potrzeby tej pracy został zaimplementowany jeden test, żeby móc skonfigurować 
+ich wykonywanie wewnątrz pipeline'a.
+
+\paragraph{MapBuilder_API_Base}
+Projekt ma za zadanie definiować 
+
+\paragraph{LeafletAPI}
+
