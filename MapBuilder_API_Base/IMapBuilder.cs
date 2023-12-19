@@ -4,9 +4,9 @@ public interface IMapBuilder
 {
     public void AddFeature();
 
-    public void AddFloor();
+    public void AddFloor(string floorName);
 
-    public void AddRoom();
+    public void AddRoom(string roomName, IEnumerable<PointClass> roomShape, MapObjectStyle roomStyle, string floorName = "");
 
     public string Build();
 }

@@ -1,20 +1,19 @@
-﻿using MapBuilder_API_Base;
-using LeafletAPI.Models;
-using System.Text.Json;
-using System.Text;
+﻿using LeafletAPI.Models;
+using MapBuilder_API_Base;
 
 namespace LeafletAPI;
 
 // All the code in this file is included in all platforms.
 public partial class MapBuilder : IMapBuilder
 {
+    private Models.Map map;
+    
     private string _htmlHeader = @"<!DOCTYPE html>
 <html>
 <head>
 <meta charset=""utf-8"" />
         <meta name=""viewport"" content=""width=device-width, initial-scale=1.0"">";
-    private Models.Map map;
-
+    
     private string _htmlBody = "<body>";
 
     internal L_Polyline buildingShape { get; private set; }
@@ -24,6 +23,7 @@ public partial class MapBuilder : IMapBuilder
         map = new Models.Map();
         PrepareStructure();
     }
+#region ObjectPreparing
 
     private void PrepareStructure()
     {
@@ -82,47 +82,7 @@ public partial class MapBuilder : IMapBuilder
             """;
     }
 
-    /// <summary>
-    /// Creates new map level with provided name.
-    /// </summary>
-    /// <param name="levelName"></param>
-    /// <exception cref="ArgumentException"> if <paramref name="levelName"/> is null or empty</exception>
-    public MapBuilder AddLevel(string levelName)
-    {
-        if (string.IsNullOrEmpty(levelName))
-        {
-            throw new ArgumentException($"'{nameof(levelName)}' cannot be null or empty.", nameof(levelName));
-        }
-
-        map.layers.Add(new L_Layer(levelName));
-        return this;
-    }
-
-    /// <summary>
-    /// Creates named room from given shape and associates it with
-    /// <paramref name="level"/>
-    /// </summary>
-    /// <param name="roomName"></param>
-    /// <param name="roomShape"></param>
-    /// <param name="level">Optional, last level created before the method call or the one with provided name</param>
-    public MapBuilder AddRoom(string roomName, IEnumerable<PointClass> roomShape, MapObjectStyle roomStyle, string level = "")
-    {
-        if (map.layers.Count < 1)
-            throw new InvalidOperationException($"Room cannot be instantiated withouot creating level, call {nameof(AddLevel)}");
-
-        L_Layer roomLevel;
-        if (level == "")
-            roomLevel = map.layers[^1];
-        else
-            roomLevel = map.layers.Find(layer => layer.Name == level);
-
-        if (roomLevel == null) throw new ArgumentException($"Level named {level} was not found, did you create it first using {nameof(AddLevel)}?");
-
-
-        roomLevel.polygons.Add(new L_Polygon(roomName, roomShape, roomStyle));
-        return this;
-    }
-
+#endregion
 
     /// <summary>
     /// Defines outer shape of building, which will be inserted on every level
@@ -135,15 +95,87 @@ public partial class MapBuilder : IMapBuilder
         return this;
     }
 
+
+    /// <summary>
+    /// Creates new map level with provided name.
+    /// </summary>
+    /// <param name="floorName"></param>
+    /// <exception cref="ArgumentException"> if <paramref name="floorName"/> is null or empty</exception>
+    public void AddFloor(string floorName)
+    {
+        if (string.IsNullOrEmpty(floorName))
+        {
+            throw new ArgumentException($"'{nameof(floorName)}' cannot be null or empty.", nameof(floorName));
+        }
+
+        map.layers.Add(new L_Layer(floorName));
+    }
+
+    /// <summary>
+    /// Creates named room from given shape and associates it with
+    /// <paramref name="floorName"/>
+    /// </summary>
+    /// <param name="roomName"></param>
+    /// <param name="roomShape"></param>
+    /// <param name="floorName">Optional, last level created before the method call or the one with provided name</param>
+    public void AddRoom(string roomName, IEnumerable<PointClass> roomShape, MapObjectStyle roomStyle, string floorName = "")
+    {
+        if (map.layers.Count < 1)
+            throw new InvalidOperationException($"Room cannot be instantiated withouot creating level, call {nameof(AddFloor)}");
+
+        L_Layer roomFloor;
+        if (floorName == "")
+            roomFloor = map.layers[^1];
+        else
+            roomFloor = map.layers.Find(layer => layer.Name == floorName);
+
+        if (roomFloor == null) throw new ArgumentException($"Level named {floorName} was not found, did you create it first using {nameof(AddFloor)}?");
+
+        roomFloor.polygons.Add(new L_Polygon(roomName, roomShape, roomStyle));
+    }
+
+    public void AddFeature()
+    {
+        throw new NotImplementedException();
+    }
+
+    private void ParseMap()
+    {
+        _htmlBody += $@"var map = L.map('map', {{crs: L.CRS.Simple,
+            minZoom: 0,
+            //		cursor: true,
+            layers: [{string.Join(", ", map.layers.Select(l => l.NameVariable))}]}});" + Environment.NewLine;
+
+        _htmlBody += $"map.setView([25.25, 9], 4);" + Environment.NewLine;
+        //_htmlBody += $"map.addControl(new L.Control.Fullscreen());" + Environment.NewLine;
+        _htmlBody += "L.control.layers(mapLevels, null, {collapsed:false}).addTo(map);" + Environment.NewLine;
+    }
+
+
+
+    #region Build
+    public string Build()
+    {
+        if (map.layers.Count == 0) throw new InvalidOperationException($"Map cannot be built without any levels nor rooms, call {nameof(AddFloor)} and {nameof(AddRoom)}");
+        else if (map.layers.FirstOrDefault().polygons.Count == 0) throw new InvalidOperationException($"Map cannot be built without any rooms, call {nameof(AddRoom)}");
+
+        PrepareMapVariable();
+        _htmlBody += "<script>"; // Open script tag
+        ParseStyles();
+        ParsePolylines();
+        ParsePolygons();
+        ParseLayers();
+        ParseMap();
+        _htmlBody += "</script>"; // Close script tag
+
+        return _htmlHeader + "</head>" + _htmlBody + "</body></html>";
+    }
+
+    private void PrepareMapVariable() => _htmlBody += "<div id=\"map\"></div>";
+
     private void ParseStyles()
     {
-        L_Layer anyLevel;
-        L_StyledObject anyPolygon;
-
-        try { anyLevel = map.layers.First(); } catch (System.Exception ex) { throw new InvalidOperationException($"{ex.Message}"); }
-        try { anyPolygon = anyLevel.polygons.First(); } catch (System.Exception) { throw new InvalidOperationException($"You did not create any level features such as rooms, use {nameof(AddRoom)} or nameof(AddFeature) first."); }
-        
-        List<MapObjectStyle> createdStyles = anyPolygon.Style.GetInstances();
+        List<MapObjectStyle> createdStyles = MapObjectStyle.GetInstances();
 
         string htmlStyles = "";
 
@@ -190,65 +222,5 @@ public partial class MapBuilder : IMapBuilder
 
         _htmlBody += parsedPolygons;
     }
-
-    //public async Task<MapBuilder> ImportJson(string inputJson)
-    //{
-    //    Stream jsonStream = new MemoryStream(Encoding.UTF8.GetBytes(inputJson));
-
-    //    LeafletAPI.Models.Map deserialized = await JsonSerializer.DeserializeAsync<LeafletAPI.Models.Map>(jsonStream);  // TODO: error handling
-
-    //    this.map = deserialized;
-    //    return this;
-    //}
-
-    public string ExportToJson()
-    {
-        throw new NotImplementedException();
-    }
-
-    public void AddFloor()
-    {
-        throw new NotImplementedException();
-    }
-
-    public void AddRoom()
-    {
-        throw new NotImplementedException();
-    }
-
-    public void AddFeature()
-    {
-        throw new NotImplementedException();
-    }
-
-    private void ParseMap()
-    {
-        _htmlBody += $@"var map = L.map('map', {{crs: L.CRS.Simple,
-            minZoom: 0,
-            //		cursor: true,
-            layers: [{string.Join(", ", map.layers.Select(l => l.NameVariable))}]}});" + Environment.NewLine;
-
-        _htmlBody += $"map.setView([25.25, 9], 4);" + Environment.NewLine;
-        //_htmlBody += $"map.addControl(new L.Control.Fullscreen());" + Environment.NewLine;
-        _htmlBody += "L.control.layers(mapLevels, null, {collapsed:false}).addTo(map);" + Environment.NewLine;
-    }
-
-    public string Build()
-    {
-        PrepareMapVariable();
-        _htmlBody += "<script>"; // Open script tag
-        ParseStyles();
-        ParsePolylines();
-        ParsePolygons();
-        ParseLayers();
-        ParseMap();
-        _htmlBody += "</script>"; // Close script tag
-
-        return _htmlHeader + "</head>" + _htmlBody + "</body></html>";
-    }
-
-    private void PrepareMapVariable()
-    {
-        _htmlBody += "<div id=\"map\"></div>";
-    }
+    #endregion
 }
