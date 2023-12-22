@@ -1,0 +1,32 @@
+\section{Podsumowanie i wnioski}
+Nowoczesny rozwój oprogramowania jest bardzo dynamiczny, dociera już do nawet 
+najmniejszych odbiorców prywatnych czy mikrofirm. W przypadku dużych organów 
+skorzystanie z takich usług jest kluczowe.
+
+Dla zapewnienia jak najwyższej jakości usług, wykorzystanie przedstawionych 
+narzędzi CI/CD jest bardzo istotne. Problemy dystrybucji, środowisk oraz 
+czuwania wprowadzeniem zmian zostają w prosty sposób zautomatyzowane, 
+co obniża koszty obsługi i zwiększa dostępność takich serwisów.
+
+Celem tej pracy było zaprezentowanie przygotowanego rozwiązania CI/CD, 
+wyjaśnienie powodu jego zastosowania, sposobu działania i najistotniejszych 
+elementów składowych pipeline'a. Aplikacja "Navigator" posłużyła jako 
+przykład dzięki swoim wieloplatformowym możliwościom, ale również zwróciła 
+uwagę na istotność dobrych praktyk programistycznych, takich jak zastosowanie 
+wzorców projektowych lub odpowiedniego stworzenia architektury projektu.
+W rezultacie cel pracy został osiągnięty.
+
+Aplikacja "Navigator" może być w dalszym stopniu rozwijana, nie tylko pod 
+względem naprawy błędów czy zmiany jej wyglądu, ale również dodawania 
+nowych funkcjonalności. Skonfigurowany pipeline bez wątpienia ułatwi 
+i przyspieszy wprowadzanie zmian, a uporządkowana architektura 
+zmniejszy ilość trudności przy czytaniu kodu przez nowych programistów.
+W celu zmniejszenia ilości wykonywanych operacji, dobrym pomysłem byłoby 
+zaimplementowanie zapisywania wygenerowanych widoków HTML w pamięci 
+oraz wprowadzenie systemu wersjonowania map.
+W celu zmniejszenia ruchu sieciowego, istnieje również opcja 
+dodania obsługi lokalnej kopii biblioteki Leaflet.
+
+Modularna struktura plików \verb|.yaml| pozwala na bezproblemowe 
+dodanie kolejnych etapów oraz kroków do procesu wydania, 
+a ich czytelność ułatwi diagnozowanie ewentualnych błędów.

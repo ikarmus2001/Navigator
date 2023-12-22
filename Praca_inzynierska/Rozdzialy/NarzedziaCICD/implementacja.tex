@@ -51,17 +51,24 @@ jak również ze względu na chęć ominięcia szczegółów tej operacji wewną
 Moja pierwsza próba konfiguracji została podjęta w ramach graficznego konfiguratora, 
 który pozwolił mi na wykonanie (jak się później okazało szkicu) mojego pipeline'a.
 Na rysunkach~\ref{img:PipelineGuiApproach} i \ref{img:taskGroupMauiPrepare} możemy zobaczyć jego schemat działania:\\
-\begin{figure}
+\begin{figure}[ht]
     \centering
-    \includegraphics[width=\textwidth]{PipelineGuiApproach.png}
-    \caption{Grupa zadań inicjujących środowisko (szczegóły na rys.~\ref{img:taskGroupMauiPrepare}) oraz zadania publikujące i podpisujące cyfrowo aplikację}
-    \label{img:PipelineGuiApproach}
-\end{figure}
-\begin{figure}
-    \centering
-    \includegraphics[width=\textwidth]{taskGroupMauiPrepare.png}
-    \caption{Zawartość grupy zadań inicjujących środowisko}
-    \label{img:taskGroupMauiPrepare}
+    \begin{minipage}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{PipelineGuiApproach.png}
+        \caption{Grupa zadań \\%
+        inicjujących środowisko \\%
+        (szczegóły na rys.~\ref{img:taskGroupMauiPrepare}) oraz \\%
+        publikacja i podpisanie cyfrowe}
+        \label{img:PipelineGuiApproach}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{taskGroupMauiPrepare.png}
+        \caption{Zawartość grupy zadań \\inicjujących środowisko}
+        \label{img:taskGroupMauiPrepare}
+    \end{minipage}
 \end{figure}
 
 \newpage
@@ -80,9 +87,9 @@ zmiennych (rys. \ref{img:variableGroups}) w procesie podpisywania pliku APK,
 to byłem w stanie skorzystać wyłącznie z jednego, wcześniej przygotowanego zestawu danych, 
 którego nie mogłem zmienić przed wywołaniem pipeline'a.
 
-\begin{figure}[ht]
+\begin{figure}[hb]
     \centering
-    \includegraphics[width=\textwidth]{variableGroups.png}
+    \includegraphics[width=0.87\textwidth]{variableGroups.png}
     \caption{Predefiniowane zmienne przechowujące nazwę oraz hasło podpisujące certyfikat}
     \label{img:variableGroups}
 \end{figure}

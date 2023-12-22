@@ -1,24 +1,49 @@
 \subsection{Architektura aplikacji}
 
-W aplikacji starałem się korzystać ze wzorca projektowego MVVM~\ref{MVVM} - 
-każdy z widoków składa się odpowiednio z:
+\subsubsection{Wzorce projektowe}
+\paragraph{Wzorzec MVVM}
+W aplikacji starałem się korzystać ze wzorca projektowego MVVM~\ref{mvvmSubsection} - 
+wprowadziłem podział na odpowiednio:
 \begin{itemize}
-    \item Pliku znaczników - strona\verb|.XAML|
+    \item Pliki znaczników - strona\verb|.xaml|
     \item Code-behind (kodu związanego bezpośrednio z danym widokiem) - strona\verb|.xaml.cs|
-    \item ViewModelu, który jest przygotowany dla widoku - strona\verb|ViewModel.cs|
+    \item ViewModel, który jest przygotowany dla każdego widoku - strona\verb|ViewModel.cs|
+    \item Modele, przechowywane w specjalnym folderze \verb|Models| oraz ujęte w odrębnej przestrzeni nazw
 \end{itemize}
 
+Zamysł polega na umożliwieniu bezpośrednich interakcji danych 
+modelowych wyłącznie z ViewModelami. Takie podejście umożliwia bezpieczną zmianę 
+widoków, bez zastanawiania się czy wpłyną one na zachowanie ViewModelu lub co gorsza wprost na dane.
 
+\paragraph{Wzorzec "Budowniczy"}
+Tworzenie obiektu mapy postanowiłem rozwiązać za pomocą wzorca Buildera - 
+specjalna klasa MapBuilder krok po kroku 
+
+
+\subsubsection{Podział na projekty}
 Oprócz bezpośredniego kodu aplikacji, zdecydowałem się na wyodrębnienie 3 projektów:
 
 \paragraph{NavigatorTests}
 Projekt służący do statycznej analizy kodu poprzez przeprowadzenie testów jednostkowych.
-Nie jest on obszerny, ale wraz z rozwojem oprogramowania znajdzie się w nim więcej 
-testów. Na potrzeby tej pracy został zaimplementowany jeden test, żeby móc skonfigurować 
-ich wykonywanie wewnątrz pipeline'a.
+Nie jest on obszerny, ale wraz z rozwojem oprogramowania może znaleźć się w nim więcej 
+scenariuszy. Na potrzeby tej pracy został zaimplementowany jeden test pokazowy, 
+żeby móc skonfigurować ich wywołanie za pomocą pipeline'a.
 
-\paragraph{MapBuilder_API_Base}
-Projekt ma za zadanie definiować 
+\paragraph{MapBuilder\_API\_Base}
+Projekt definiuje interfejs \verb|IMapBuilder|, który należy zaimplementować przy dodawaniu 
+do aplikacji biblioteki wyświetlającej mapę, tak jak stało się to w przypadku LeafletAPI.
+Ten podział wprowadza kompatybilność i możliwość zmian minimalnym kosztem programistycznym.
+
+Aby dodać swoją bibliotekę należy \todo{Rozważyć zmiany w programie aby nie przekompilowywać Navigatora}
 
 \paragraph{LeafletAPI}
+W projekcie zaimplementowałem generowanie strony HTML z wykorzystaniem wspomnianej biblioteki Leaflet~\cite{leafletGithub}.
+Biblioteka tworzy obiekt \verb|MapBuilder| implementujący interfejs \verb|IMapBuilder|, który jest 
+za pomocą aplikacji poszerzany o kolejne piętra, pokoje oraz obiekty z kreatora, a po wywołaniu 
+metody \verb|Build| zwraca wynikowy skrypt, który zostaje zwrócony do aplikacji.
+
+W zrozumieniu działania biblioteki, nieopisaną pomocą okazał się projekt Floorplans~\cite{floorplansGithub},
+na którego podstawie byłem w stanie wstępnie sprawdzić zachowanie przeglądarkowych kontrolek, 
+a następnie za pomocą inżynierii wstecznej zaimplementować jego funkcjonalność w uniwersalny sposób.
+
 
