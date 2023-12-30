@@ -2,10 +2,9 @@
 W mojej pracy zdecydowałem się na skorzystanie z platformy Azure~\ref{MS_AzureSection} - 
 wpłynęły na nią przyjazny interfejs, łatwość instalacji agenta, jasna struktura tworzenia pipeline'ów 
 oraz mnogość instrukcji i poradników dotępnych w Internecie.
-\todo[size=\tiny]{Dodać link do rejestracji na Azure (w Dodatkowych linkach)}
 
 Na przykładzie aplikacji Navigator~\ref{NavigatorAppSection} chciałbym przedstawić proces \\
-planowania i konfiguracji pipeline'a \todo{}
+planowania i konfiguracji pipeline'a.
 
 \subsubsection{Określenie potrzeb i możliwości}
 W moim projekcie, oprócz samej kompilacji, postanowiłem zaimplementować etap testowania 
@@ -16,11 +15,12 @@ widoku zarządzania pipeline'ami na stronie Microsoft Azure:
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=\textwidth]{JobsOverview.png}
+    \includegraphics[scale=0.5]{JobsOverview.png}
     \caption{Zadania (ang. Joby) wykonane przez pipeline}
     \label{img:JobsOverview}
 \end{figure}
 
+\newpage
 
 \subsubsection{Przygotowanie środowiska kompilacyjnego}
 Pierwszym krokiem było zainstalowanie specjalnego oprogramowania, 
@@ -31,10 +31,9 @@ które wykonuje wszystkie kroki zdefiniowane w pipelinie - Azure Build Agent~\fo
 }.
 Ze względu na dysponowanie własną, dostępną maszyną zdecydowałem się na tą opcję,
 jednak taki sam efekt można osiągnąć opłacając maszyny wirtualne, udostępniane przez Microsoft. \\%
-Po krótkiej konfiguracji\todo{podać tu jakieś szczegóły albo linki?} Agent był gotowy do 
-wykonywania zleconego \\%
+Po krótkiej konfiguracji Agent był gotowy do wykonywania zleconego \\%
 pipeline'owego skryptu, ale należało jeszcze dodać zmienne środowiskowe, 
-które pozwalają na skorzystanie z określonych funkcji zadań (przykładem jest użycie Javy~\ref{javaTask}\todo{task java}).
+które pozwalają na skorzystanie z określonych funkcji zadań (przykładem jest użycie Javy~\ref{javaTask}).
 
 \subsubsection{Zdefiniowanie wymaganych akcji}
 Utworzenie pakietu mojej aplikacji napisanej w .NET MAUI przebiega za pomocą wywołania kompilatora 
@@ -42,7 +41,7 @@ Utworzenie pakietu mojej aplikacji napisanej w .NET MAUI przebiega za pomocą wy
 która uruchamia przywrócenie wszystkich zależności (\verb|restore|), 
 kompiluje ją (\verb|build|) oraz pakuje do przewidzianego w konfiguracji projektu (\verb|.csproj|) formatu~\cprotect\footnote{%
     Interesującym może okazać się fakt, że aplikację w .NET MAUI kompilujemy w oparciu o projekt, a nie rozwiązanie (\verb|.sln|).
-    Jest to spowodowane mnogością platform, których rozpatrzenie jest 
+    Jest to spowodowane kolejnością interpretacji plików
 }.
 
 Zdecydowałem się na podpisywanie aplikacji osobnym zadaniem ze względu na modularność,
@@ -52,24 +51,33 @@ jak również ze względu na chęć ominięcia szczegółów tej operacji wewną
 Moja pierwsza próba konfiguracji została podjęta w ramach graficznego konfiguratora, 
 który pozwolił mi na wykonanie (jak się później okazało szkicu) mojego pipeline'a.
 Na rysunkach~\ref{img:PipelineGuiApproach} i \ref{img:taskGroupMauiPrepare} możemy zobaczyć jego schemat działania:\\
-\begin{figure}
+\begin{figure}[ht]
     \centering
-    \includegraphics[width=\textwidth]{PipelineGuiApproach.png}
-    \caption{Grupa zadań inicjujących środowisko (szczegóły na rys.~\ref{img:taskGroupMauiPrepare}) oraz zadania publikujące i podpisujące cyfrowo aplikację}
-    \label{img:PipelineGuiApproach}
+    \begin{minipage}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{PipelineGuiApproach.png}
+        \caption{Grupa zadań \\%
+        inicjujących środowisko \\%
+        (szczegóły na rys.~\ref{img:taskGroupMauiPrepare}) oraz \\%
+        publikacja i podpisanie cyfrowe}
+        \label{img:PipelineGuiApproach}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{taskGroupMauiPrepare.png}
+        \caption{Zawartość grupy zadań \\inicjujących środowisko}
+        \label{img:taskGroupMauiPrepare}
+    \end{minipage}
 \end{figure}
-\begin{figure}
-    \centering
-    \includegraphics[width=\textwidth]{taskGroupMauiPrepare.png}
-    \caption{Zawartość grupy zadań inicjujących środowisko}
-    \label{img:taskGroupMauiPrepare}
-\end{figure}
+
 \newpage
+
 O ile ten pipeline spełniał swoje zadanie na minimalnym poziomie, czyli przygotowywał potrzebne narzędzia 
 oraz kompilował i podpisywał aplikację skierowaną na system Android, to jednak jego efektywność i prostota 
 utrzymania pozostawiały wiele do życzenia.
 
-Pierwszym z zarzutów jest niepotrzebne wykonanie zadania \verb|dotnet restore| - choć narzut pracy 
+Pierwszym z zarzutów jest zbędne wykonanie \verb|dotnet restore| - choć narzut pracy 
 jest stosunkowo niewielki, wprowadza kolejny punkt zaczepienia do zadania pytania "czy mogę to zmienić?", 
 które mogłaby zadać osoba bliżej niezaznajomiona z działaniem narzędzia.
 
@@ -79,14 +87,11 @@ zmiennych (rys. \ref{img:variableGroups}) w procesie podpisywania pliku APK,
 to byłem w stanie skorzystać wyłącznie z jednego, wcześniej przygotowanego zestawu danych, 
 którego nie mogłem zmienić przed wywołaniem pipeline'a.
 
-\begin{figure}[ht]
+\begin{figure}[hb]
     \centering
-    \includegraphics[width=\textwidth]{variableGroups.png}
+    \includegraphics[width=0.87\textwidth]{variableGroups.png}
     \caption{Predefiniowane zmienne przechowujące nazwę oraz hasło podpisujące certyfikat}
     \label{img:variableGroups}
 \end{figure}
-\todo{To zdjęcie pewnie jest trochę zbędne}
 
 \newpage
-
-\label{javaTask}

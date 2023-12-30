@@ -25,7 +25,7 @@ internal static class ConfigParser
 
         foreach (var floor in config.Building.Floors)
         {
-            builder.AddLevel(floor.Name);
+            builder.AddFloor(floor.Name);
 
             foreach (var room in floor.Rooms)
             {
@@ -36,9 +36,9 @@ internal static class ConfigParser
         return builder;
     }
 
-    internal static LeafletAPI.Models.MapObjectStyle ToLeafletApi(this ElementStyle style)
+    internal static MapObjectStyle ToLeafletApi(this ElementStyle style)
     {
-        var parsed = new LeafletAPI.Models.MapObjectStyle(style.Name, style.LineColor)
+        var parsed = new MapObjectStyle(style.Name, style.LineColor)
         {
             Opacity = float.Parse(style.LineOpacity ?? "1", CultureInfo.InvariantCulture.NumberFormat),
             Weight = float.Parse(style.LineWidth ?? "0", CultureInfo.InvariantCulture.NumberFormat),
