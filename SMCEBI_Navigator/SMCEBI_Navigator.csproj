@@ -41,12 +41,19 @@
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android34|AnyCPU'">
 	  <AndroidPackageFormat>apk</AndroidPackageFormat>
+	  <DebugSymbols>False</DebugSymbols>
+	  <PublishTrimmed>False</PublishTrimmed>
+	  <RunAOTCompilation>False</RunAOTCompilation>
+	  <AndroidEnableMultiDex>False</AndroidEnableMultiDex>
+	  <AndroidStoreUncompressedFileExtensions>.json</AndroidStoreUncompressedFileExtensions>
 		<!--Signing made in CI CD-->
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android34|AnyCPU'">
 	  <AndroidPackageFormat>apk</AndroidPackageFormat>
 	  <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
+	  <AndroidEnableMultiDex>False</AndroidEnableMultiDex>
+	  <AndroidStoreUncompressedFileExtensions>.json</AndroidStoreUncompressedFileExtensions>
 	</PropertyGroup>
 
 	<ItemGroup>
