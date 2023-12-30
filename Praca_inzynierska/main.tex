@@ -16,7 +16,11 @@
 \addbibresource{bibliografia.bib}
 \usepackage{cprotect} % escape \verb in hrefs and footers
 \usepackage{graphicx}
+\usepackage{float}
 \graphicspath{ {./images/} }
+
+\renewcommand*\figurename{Rysunek}
+\renewcommand*\listfigurename{Spis rysunków}
 
 
 \begin{document}
@@ -37,6 +41,9 @@
     \include{podsumowanie}
 
     \include{Rozdzialy/dodatkowe}
+
+    \listoffigures
+    \newpage
 
     \printbibliography
 
