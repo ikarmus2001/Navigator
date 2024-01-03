@@ -27,9 +27,18 @@ Na rysunku \ref{img:mauiArchitectureDiagram} możemy zaobserwować, jak kod apli
 zostaje za pomocą .NET MAUI przekonwertowany na różne systemy operacyjne (3 rząd), 
 a następnie ponownie przetłumaczony na elementy zdefiniowane w .NET BCL, 
 czyli Base Class Library (biblioteki klas bazowych). \\
-\begin{figure}[hb]
+\newpage
+\begin{figure}[ht]
     \centering
     \includegraphics[width=\textwidth]{mauiArchitectureDiagram.png}
     \caption{Diagram architektury .NET MAUI wśród wszystkich obsługiwanych platform~\cite{mauiDefinition}}
     \label{img:mauiArchitectureDiagram}
 \end{figure}
+
+
+Jego istotną zaletą jest możliwość utworzenia elementów dostępnych wyłącznie 
+na danej platformie, przykładowo konkretny widok może wyglądać inaczej na Androidzie, 
+niż na Windowsie. Decyzja o podjęciu takiego \\
+rozdziału może być spowodowana nieporządanym zachowaniem kontrolek, 
+brakiem potrzeby udostępnienia niektórych funkcjonalności na wybranej\\%
+platformie lub różnicą koncepcyjną.
