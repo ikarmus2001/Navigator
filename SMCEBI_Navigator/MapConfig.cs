@@ -30,10 +30,15 @@ internal sealed class MapConfig
     internal async Task<WebView> GetView()
     {
         IMapBuilder builder = await ConfigParser.ParseToApi(this);
-        var x = new WebView()
+        WebView x = new();
+        try
         {
-            Source = new HtmlWebViewSource() { Html = builder.Build() }
-        };
+            x.Source = new HtmlWebViewSource() { Html = builder.Build() };
+        }
+        catch (InvalidOperationException)
+        {
+            // TODO notification or broken map icon
+        }
 
         return x;
     }

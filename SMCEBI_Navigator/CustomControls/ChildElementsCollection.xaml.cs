@@ -1,8 +1,4 @@
-using Microsoft.Maui.Controls;
 using SMCEBI_Navigator.Models;
-using SMCEBI_Navigator.Views;
-using FA = SMCEBI_Navigator.ViewModels.FeatureAction;
-using VM = SMCEBI_Navigator.ViewModels.FeatureEditorViewModel;
 
 namespace SMCEBI_Navigator.CustomControls;
 
