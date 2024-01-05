@@ -33,7 +33,7 @@ podzielenia fragmentów pracy na etapy, jak również na wygodne odseparowanie �
 Nie każda osoba musi pobierać wszystkie odgałęzienia, nie mamy ograniczeń ilościowych lub wielkościowych 
 jeżeli chodzi o wprowadzane zmiany. Możemy zacząć nad czymś pracować, ale jeżeli będziemy chcieli tymczasowo 
 wstrzymać lub porzucić prace, możemy niemalże bez konsekwencji odłożyć je na później i zacząć wdrażać 
-inne funkcjonalności.
+inne funkcjonalności.\\%
 Po zakończeniu pracy w danym branchu, możemy z powrotem włączyć go do współdzielonej części - następuje 
 wtedy specjalne porównanie zmian, które w większości wypadków pozwala na automatyczne ich połączenie, 
 a w razie bardziej skomplikowanych niuansów łatwo rozwiejemy wątpliwości w specjalnym narzędziu.
@@ -46,13 +46,18 @@ kanały informacyjne (WebHooki, RSS, powiadomienia i e-maile), jak również dos
 funkcjonalności jak narzędzia upraszczające i formalizujące kontakt z zespołem 
 lub podstronie wydawczej, takiej jak GitHub Releases~\cite{githubReleases}.
 
-Github Releases to specjalny mechanizm, pozwalający na opublikowanie gotowych rozwiązań, dostępnych do 
-pobrania w gotowej do użytku formie. 
+GitHub Releases to specjalny mechanizm, pozwalający na opublikowanie gotowych rozwiązań, dostępnych do 
+pobrania w gotowej do użytku formie. Na rysunku~\ref{img:githubReleases_sample} możemy zobaczyć 
+przykładowe wydanie wersji programu - zawiera tytuł (lub w tym przypadku numer wersji), listę zmian 
+oraz co najważniejsze skompilowane pliki wraz z ich ekwiwalentnym kodem źródłowym.
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=\textwidth]{imagefile}
-    \caption{title}
-    \label{}
-
+    \frame{\includegraphics[width=0.9\textwidth]{githubReleases_sample.png}}
+    \caption{Przykładowe wydanie aplikacji w GitHub Releases}
+    \label{img:githubReleases_sample}
 \end{figure}
 
+W moim projekcie skorzystałem również z opcji triggerów (ang. wyzwalaczy), które powiadamiają 
+połączone usługi o zmianach w kodzie. \\%
+Wysłanie kolejnego commita na określony branch powiadamia 
+Azure o tym fakcie, co skutkuje zakolejkowaniem nowego uruchomienia pipeline'a.

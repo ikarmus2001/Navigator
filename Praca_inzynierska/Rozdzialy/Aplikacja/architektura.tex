@@ -25,21 +25,23 @@ Zamysł polega na uniemożliwieniu bezpośrednich interakcji danych
 modelowych z widokami, a poprzez ViewModele. Takie podejście umożliwia bezpieczną zmianę 
 widoków, bez zastanawiania się czy wpłyną one na zachowanie ViewModelu lub co gorsza wprost na dane.
 Na rysunku  widzimy skrótowy podział rozwiązania na klasy, pogrupowany 
-zgodnie z ich przeznaczeniem oraz najważniejszą relacją z klasami sąsiadującymi.\todo{Opisać dokładniej połączenia między klasami?}
+zgodnie z ich przeznaczeniem oraz najważniejszą relacją z klasami sąsiadującymi.
+\subsubsection{Podział na projekty}
+\begin{figure}[!h]
+    \centering
+    \frame{\includegraphics[width=0.7\textwidth]{projectDiagram.png}}
+    \caption{Podział rozwiązania na projekty}
+    \label{img:projectDiagram}
+\end{figure}
+
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.95\textwidth]{shortClassDiagram.png}
+    \includegraphics[width=0.99\textwidth]{shortClassDiagram.png}
     \caption{Diagram najważniejszych klas w projekcie SMCEBI Navigator}
     \label{img:shortClassDiagram}
 \end{figure}
 \newpage
-\subsubsection{Podział na projekty}
-\begin{figure}[!h]
-    \centering
-    \includegraphics[width=0.4\textwidth]{projectDiagram.png}
-    \caption{Podział rozwiązania na projekty}
-    \label{img:projectDiagram}
-\end{figure}
+
 
 Zgodnie z rysunkiem \ref{img:projectDiagram}, oprócz bezpośredniego kodu aplikacji, 
 zdecydowałem się na wyodrębnienie 3 projektów:
