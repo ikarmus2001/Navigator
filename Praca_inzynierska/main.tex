@@ -18,6 +18,7 @@
 \usepackage{graphicx}
 \usepackage{float}
 \graphicspath{ {./images/} }
+\usepackage{geometry}
 
 \renewcommand*\figurename{Rysunek}
 \renewcommand*\listfigurename{Spis rysunków}
@@ -26,7 +27,7 @@
 \begin{document}
     \include{stronaTytulowa}
 
-    \include{Rozdzialy/oswiadczenie}
+    % \include{Rozdzialy/streszczenie}
     
     \tableofcontents
 
@@ -45,6 +46,9 @@
     \listoffigures
     \newpage
 
+    \newgeometry{top=3cm}
     \printbibliography
+    \restoregeometry
+    \include{Rozdzialy/oswiadczenie}
 
 \end{document}

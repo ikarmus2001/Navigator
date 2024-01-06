@@ -19,8 +19,6 @@ widoku zarządzania pipeline'ami na stronie Microsoft Azure:
     \label{img:JobsOverview}
 \end{figure}
 
-\newpage
-
 \subsubsection{Przygotowanie środowiska kompilacyjnego}
 Pierwszym krokiem było zainstalowanie specjalnego oprogramowania, 
 które wykonuje wszystkie kroki zdefiniowane w pipelinie - Azure Build Agent~\footnote[1]{
@@ -81,16 +79,14 @@ jest stosunkowo niewielki, wprowadza kolejny punkt zaczepienia do zadania pytani
 które mogłaby zadać osoba bliżej niezaznajomiona z działaniem narzędzia.
 
 Drugim problemem okazał się brak wykorzystania zmiennych, które wraz z parametryzacją procesu 
-pozwoliłyby na uczynienie go bardziej elastycznym i uniwersalnym. Pomimo skorzystania z bezpiecznych 
-zmiennych (rys. \ref{img:variableGroups}) w procesie podpisywania pliku APK, 
-to byłem w stanie skorzystać wyłącznie z jednego, wcześniej przygotowanego zestawu danych, 
+pozwoliłyby na uczynienie go bardziej elastycznym i uniwersalnym. 
+Pomimo skorzystania z bezpiecznych zmiennych w procesie podpisywania pliku APK, 
+byłem w stanie skorzystać wyłącznie z jednego, wcześniej przygotowanego zestawu danych, 
 którego nie mogłem zmienić przed wywołaniem pipeline'a.
 
-\begin{figure}[hb]
-    \centering
-    \includegraphics[width=0.87\textwidth]{variableGroups.png}
-    \caption{Predefiniowane zmienne przechowujące nazwę oraz hasło podpisujące certyfikat}
-    \label{img:variableGroups}
-\end{figure}
-
-\newpage
+% \begin{figure}[hb]
+%     \centering
+%     \includegraphics[width=0.75\textwidth]{variableGroups.png}
+%     \caption{Predefiniowane zmienne przechowujące nazwę oraz hasło podpisujące certyfikat}
+%     \label{img:variableGroups}
+% \end{figure}
