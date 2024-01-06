@@ -20,6 +20,7 @@
 \graphicspath{ {./images/} }
 \usepackage{geometry}
 
+\renewcommand*\contentsname{Spis treści}
 \renewcommand*\figurename{Rysunek}
 \renewcommand*\listfigurename{Spis rysunków}
 
@@ -47,7 +48,7 @@
     \newpage
 
     \newgeometry{top=3cm}
-    \printbibliography
+    \printbibliography[title={Bibliografia}]
     \restoregeometry
     \include{Rozdzialy/oswiadczenie}
 
