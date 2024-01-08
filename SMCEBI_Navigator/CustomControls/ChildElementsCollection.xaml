@@ -44,7 +44,6 @@
                         x:Name="AddFloorBtn"
                         Clicked="AddFloorBtn_Clicked"
                         HeightRequest="50"
-                        IsVisible="{Binding AddBtnVisibility}"
                         Source="add_fill0_wght400_grad0_opsz24.png"
                         WidthRequest="50" />
                 </Border>

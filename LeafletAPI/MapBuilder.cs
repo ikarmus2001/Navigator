@@ -3,7 +3,7 @@ using MapBuilder_API_Base;
 
 namespace LeafletAPI;
 
-// All the code in this file is included in all platforms.
+
 public partial class MapBuilder : IMapBuilder
 {
     private Models.Map map;
@@ -147,7 +147,6 @@ public partial class MapBuilder : IMapBuilder
             layers: [{string.Join(", ", map.layers.Select(l => l.NameVariable))}]}});" + Environment.NewLine;
 
         _htmlBody += $"map.setView([25.25, 9], 4);" + Environment.NewLine;
-        //_htmlBody += $"map.addControl(new L.Control.Fullscreen());" + Environment.NewLine;
         _htmlBody += "L.control.layers(mapLevels, null, {collapsed:false}).addTo(map);" + Environment.NewLine;
     }
 

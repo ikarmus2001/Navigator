@@ -44,8 +44,16 @@ public partial class ChildElementsCollection : ContentView
     private void ChildElementsCollection_Loaded(object sender, EventArgs e)
     {
         Children_CollectionView.ItemsSource = Items;
-        ToolTipProperties.SetText(AddFloorBtn, "Add " + ChildName_Tooltip);
+        if (string.IsNullOrEmpty(ChildName_Tooltip))
+            AddFloorBtn.IsVisible = false;
+        else
+            ToolTipProperties.SetText(AddFloorBtn, "Add " + ChildName_Tooltip);
+
+        if (AddFloorBtn.IsVisible == false && (Items == null || Items.Count() == 0))
+            this.IsVisible = false;
+
         InvalidateLayout();
+        InvalidateMeasure();
     }
 
     private async void CollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
