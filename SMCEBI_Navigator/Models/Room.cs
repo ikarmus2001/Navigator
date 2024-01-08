@@ -2,7 +2,10 @@
 
 public class Room : BuildingElement
 {
-    public Room() { }
+    public Room() 
+    {
+        Features = new();
+    }
 
     public override BuildingElement AddElement()
     {

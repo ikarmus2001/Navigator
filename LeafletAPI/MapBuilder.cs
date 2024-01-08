@@ -3,7 +3,7 @@ using MapBuilder_API_Base;
 
 namespace LeafletAPI;
 
-// All the code in this file is included in all platforms.
+
 public partial class MapBuilder : IMapBuilder
 {
     private Models.Map map;

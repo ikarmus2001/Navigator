@@ -14,13 +14,6 @@
         </Style>
     </ContentPage.Resources>
 
-    <ContentPage.ToolbarItems>
-        <ToolbarItem
-            x:Name="Debug_ToolbarItem"
-            Clicked="Debug_ToolbarItem_Clicked"
-            Text="Debug me" />
-    </ContentPage.ToolbarItems>
-
     <VerticalStackLayout Padding="10">
         <Label
             Padding="0,0,0,5"
@@ -46,14 +39,6 @@
             IsVisible="{Binding IsSizePickerVisible}"
             Items="{Binding EditorElement.Corners}" />
 
-        <cc:ElementPreview
-            x:Name="ElementPreview_CC"
-            Margin="10"
-            ControlVisibility="{Binding IsPreviewVisible}"
-            HeightRequest="100"
-            PreviewElement="{Binding EditorElement, Mode=OneWay}"
-            WidthRequest="100" />
-
         <cc:ChildElementsCollection
             x:Name="ChildElements_CC"
             AddClicked="ChildElements_CC_AddClicked"
@@ -67,6 +52,14 @@
             ChildName_Tooltip="Feature"
             ItemSelected="FeaturesChildren_CC_ItemSelected"
             Items="{Binding MarkedFeatures}" />
+
+        <cc:ElementPreview
+            x:Name="ElementPreview_CC"
+            Margin="10"
+            ControlVisibility="{Binding IsPreviewVisible}"
+            HeightRequest="100"
+            PreviewElement="{Binding EditorElement, Mode=OneWay}"
+            WidthRequest="100" />
 
     </VerticalStackLayout>
 </ContentPage>

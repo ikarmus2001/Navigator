@@ -9,6 +9,7 @@ public class Floor : BuildingElement
     public Floor() 
     {
         Rooms = new();
+        Features = new();
     }
 
     public override BuildingElement AddElement()
