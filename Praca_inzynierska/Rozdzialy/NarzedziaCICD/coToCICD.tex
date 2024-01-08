@@ -50,9 +50,8 @@ Istnieje kilka zagadnień, które należy rozważyć podczas planowania integrac
     \item Ilość czasu potrzebnego do przygotowania konfiguracji
     \item Czy pipeline ma działać w chmurze, czy na własnym urządzeniu
 \end{enumerate}
-
-Zwykle przygotowanie konfiguracji pipeline'a jest skomplikowane oraz \\%
-czasochłonne, więc do tego zadania zatrudnia się specjalistów\todo{}. \\
+Przygotowanie konfiguracji pipeline'a może być skomplikowane oraz \\%
+czasochłonne, więc w większych zespołach do tego zadania zatrudnia się specjalistów. 
 Chociaż początkowo może wydawać się to zbędnym nakładem pracy, z upływem czasu zwraca się on z nawiązką.
 Jeżeli nasz projekt ma być rozwijany przez więcej osób, w większej perspektywie czasowej, 
 to oprócz jego standardowych zalet, zyskujemy również spokój współautorów, 
@@ -61,7 +60,8 @@ którzy nie muszą znać szczegółów procesu wydawczego i mogą skupić się n
 Spotkałem się z opiniami, że przywiązanie do jednego dostawcy narzędzia negatywnie wpływa na elastyczność 
 takiego pipeline'a - w przypadku potrzeby zmiany narzędzia CI/CD mogą pojawić się komplikacje, 
 przykładowo różnice w składni, limity przechowywania poufnych danych, sposób działania~\footnote[2]{
-    Niekompatybilność przekazywania zmiennych, konwencje nazewnicze, dostępność szablonów zadań
+    Niekompatybilność przekazywania zmiennych, konwencje nazewnicze, dostępność \\%
+    szablonów zadań
 } itp.
 Aby zabezpieczyć się przed takimi trudnościami, należy przeznaczyć dodatkowe nakłady pracy na stworzenie 
 modularnych skryptów, które będą łatwe w użyciu.
@@ -71,6 +71,4 @@ zabezpieczonych danych, więc o ile nie przechowujemy ich kopii samodzielnie, mo
 W zależności od naszych możliwości finansowych oraz zaopatrzeniowych, możemy wynająć maszynę wirtualną
 lub zainstalować odpowiednie oprogramowanie CI/CD na własnej maszynie. 
 Jeżeli wolimy nie martwić się o sprawy sprzętowe, wygodniejszym rozwiązaniem jest chmura,
-ale jeśli dysponujemy sprzętem, to prawdopodobnie skorzystanie z niego będzie tańszą opcją. 
-\todo[size=\scriptsize]{czy ja to muszę jakoś potwierdzać? czy to wystarczy?}
-
+ale jeśli dysponujemy sprzętem, to skorzystanie z niego może okazać się tańszą opcją. 

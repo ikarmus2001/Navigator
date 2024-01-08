@@ -1,9 +1,49 @@
-\subsection{Dostępne systemy CI/CD}
+\subsection{Wybór systemu CI/CD}
 
-Jenkins
+Dobranie odpowiedniego dostawcy oprogramowania CI/CD znacząco wpływa 
+na dalsze losy projektu. Najważniejszymi punktami, które \\
+powinniśmy podjąć przy omawianiu takiej decyzji to:
 
-TeamCity
 
-GitHub Actions 
+\paragraph{Doświadczenie zespołu z danym środowiskiem} 
+W zależności od poprze\-dnich doświadczeń i specjalizacji deweloperów, 
+możemy obrać wiele ścieżek. Zdarzają się sytuację, gdy większość korzystała 
+z konkretnego rozwiązania, mamy w zespole specjalistę DevOps 
+- w takich wypadkach możliwość ominięcia etapu wdrażania do nowego narzędzia 
+może okazać się bardzo dobrym pomysłem (jeżeli spełnia ono wymagania funkcjonalne).
 
-BitBucket Pipelines
+Jednak w niewielkich projektach i firmach może okazać się, że nie 
+mieliśmy okazji pracować z wykorzy\-staniem żadnego z funkcjonalnie zgodnych 
+systemów, lub co gorsza z jakimkolwiek oprogramowaniem DevOps. 
+W takim wypadku, warto dokładnie rozważyć oferowane na rynku narzędzia, 
+aby nie wykonywać dodatkowo frustrującej pracy przy ewentualnej wymuszonej 
+migracji między systemami. Osoba oddelegowana do tego zadania powinna wziąć pod 
+uwagę niżej wymienione zagadnienia:
+
+
+\paragraph{Dostępność wymaganych narzędzi}
+Każdy projekt ma określone wymogi, które odpowiednio kwalifikują lub 
+dyskwalifikują systemy CI/CD z wykorzystania w danym rozwiązaniu.
+Najważniejszym z nich jest dostępność i łatwość integracji narzędzi - 
+o ile niemalże wszystko jesteśmy w stanie napisać w interfejsie konsolowym, 
+wielokrotnie taki narzut pracy został już przez kogoś wykonany, więc nie ma 
+potrzeby tracić czas i środki na wypracowanie własnych, niewykluczone że mniej 
+wydajnych, algorytmów i skryptów. Mnogość gotowych zadań, przygotowanych 
+przez twórców i współpracowników systemu, prawdopodobnie oszczędzi nam 
+problemów i przyspieszy implementację pipelineów.
+
+
+\paragraph{Stabilność, wydajność i "dojrzałość" narzędzia}
+Ogólna jakość systemu jest kolejnym ważnym kryterium, którego nie powinniśmy 
+pomijać. Te same zadania, ze względu na architekturę czy mnogość możliwości~\footnote{%
+    Bardziej skomplikowane środowisko wykonujące skrypty może dodawać niemały narzut 
+    pracy - o ile w małych projektach 15 sekund wobec 10 minut czasu działania pipeline'a może 
+    nie mieć większego znaczenia, tak w projektach dużych czy budowanych bardzo często 
+    może nie być to pomijalna sprawa.
+}, 
+mogą trwać dłużej, wymagać więcej konfiguracji. 
+
+Istotną sprawą jest również popularność rozwiązania i idąca za tym wielkość społeczności, 
+która jest chętna pomóc w razie wszelkich perturbacji - możliwość wymiany 
+doświadczeń oraz bezpośrednie wsparcie, w mojej opinii, jest niemalże tak ważne, 
+jak dobrze skonstruowana dokumentacja techniczna.

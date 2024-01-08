@@ -22,7 +22,7 @@ internal static class StyleExtension
         foreach (var optionalPar in style.GetOptionalProperties())
         {
             if (!string.IsNullOrEmpty(optionalPar.Value))
-                optionalParameters += $",{optionalPar.Key}: {optionalPar.Value}";
+                optionalParameters += $",{optionalPar.Key}: '{optionalPar.Value}'";
         }
 
         return $@"var {style.Name} = {{

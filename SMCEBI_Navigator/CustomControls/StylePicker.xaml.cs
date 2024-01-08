@@ -10,7 +10,6 @@ public partial class StylePicker : ContentView
             propertyName: nameof(StyleItem), 
             returnType: typeof(ElementStyle), 
             declaringType: typeof(StylePicker),
-            //defaultValue: new ElementStyle(),
             defaultBindingMode: BindingMode.TwoWay);
 
     public ElementStyle StyleItem

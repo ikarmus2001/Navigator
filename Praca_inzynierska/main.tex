@@ -16,13 +16,19 @@
 \addbibresource{bibliografia.bib}
 \usepackage{cprotect} % escape \verb in hrefs and footers
 \usepackage{graphicx}
+\usepackage{float}
 \graphicspath{ {./images/} }
+\usepackage{geometry}
+
+\renewcommand*\contentsname{Spis treści}
+\renewcommand*\figurename{Rysunek}
+\renewcommand*\listfigurename{Spis rysunków}
 
 
 \begin{document}
     \include{stronaTytulowa}
 
-    \include{Rozdzialy/oswiadczenie}
+    % \include{Rozdzialy/streszczenie}
     
     \tableofcontents
 
@@ -32,12 +38,18 @@
 
     \include{Rozdzialy/Aplikacja/aplikacjaNavigator}
     
-    \include{Rozdzialy/NarzedziaCICD/zastosowanieAzure}
+    \include{Rozdzialy/NarzedziaCICD/NarzedziaCICD}
 
     \include{podsumowanie}
 
     \include{Rozdzialy/dodatkowe}
 
-    \printbibliography
+    \listoffigures
+    \newpage
+
+    \newgeometry{top=3cm}
+    \printbibliography[title={Bibliografia}]
+    \restoregeometry
+    \include{Rozdzialy/oswiadczenie}
 
 \end{document}
