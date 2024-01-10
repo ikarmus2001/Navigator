@@ -27,7 +27,6 @@ public partial class SizePicker : ContentView
     {
         _ = Items.Append(new PointClass());
         (Items as ObservableCollection<PointClass>).Add(new PointClass());
-        //InvalidateLayout();
     }
 
     private void DeletePoint_Clicked(object sender, EventArgs e)

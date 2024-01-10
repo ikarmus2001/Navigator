@@ -8,7 +8,10 @@ public class Building : BuildingElement, IBuildingElementOperations
     public ObservableCollection<Floor> Floors { get; set; } = new();
 
 
-    public Building() { }
+    public Building() 
+    {
+        Features = new();
+    }
 
     public override BuildingElement AddElement()
     {

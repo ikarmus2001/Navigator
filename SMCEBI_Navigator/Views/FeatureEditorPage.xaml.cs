@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using VM = SMCEBI_Navigator.ViewModels.FeatureEditorViewModel;
 
 namespace SMCEBI_Navigator.Views;
@@ -18,6 +17,16 @@ public partial class FeatureEditorPage : ContentPage
         StylePicker_CC.IsVisible = ((VM)BindingContext).IsStylePickerVisible;
         SizePicker_CC.IsVisible = ((VM)BindingContext).IsSizePickerVisible;
         ElementPreview_CC.IsVisible = ((VM)BindingContext).IsPreviewVisible;
+
+#if DEBUG
+        var Debug_ToolbarItem = new ToolbarItem()
+        {
+            Text = "Debug me"
+        };
+        Debug_ToolbarItem.Clicked += Debug_ToolbarItem_Clicked;
+
+        this.ToolbarItems.Add(Debug_ToolbarItem);
+#endif
     }
 
     private void ChildElements_CC_AddClicked(object sender, EventArgs e)

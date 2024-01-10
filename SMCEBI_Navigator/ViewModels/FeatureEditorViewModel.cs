@@ -96,7 +96,7 @@ internal partial class FeatureEditorViewModel : ObservableObject
 
     internal void AddFeature()
     {
-        //_ = MarkedFeatures.Append(new MarkedFeature());
+        //MarkedFeatures.Add(EditorElement.AddFeature());
     }
 
     internal async Task GoToEditor(BuildingElement element, FA fa=FA.Modify) =>

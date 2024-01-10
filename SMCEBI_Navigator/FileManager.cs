@@ -105,6 +105,6 @@ internal static class FileManager
         var x = JsonSerializer.Serialize<MapConfig>(editedMap);
 
         s.Seek(0, SeekOrigin.Begin);
-        _ = await SaveFileAsync(s, editedMap.Building.Name + ".json", initialPath: pathOverride);  // TODO change filename to something more persistent
+        _ = await SaveFileAsync(s, editedMap.Building.Name + ".json", initialPath: pathOverride);
     }
 }

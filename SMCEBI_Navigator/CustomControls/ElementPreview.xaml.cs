@@ -56,8 +56,6 @@ public partial class ElementPreview : ContentView
     {
         Points = new PointCollection();
 
-        //Opacity = double.Parse(PreviewElement.Style.FillOpacity ?? "1");
-
         if (PreviewElement == null) return;
         foreach (var c in PreviewElement.Corners)
         {
