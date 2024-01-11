@@ -12,7 +12,7 @@ Finalną wersję pipeline'a umieściłem bezpośrednio w repozytorium jako pliki
 Korzystając z możliwości Azure podzieliłem duży plik zawierający wszystkie kroki 
 na pomniejsze template'y (szablony), które mogę ponownie wykorzystać w dowolnie dużej 
 ilości i kolejności.
-Na rysunku~\ref{img:shortFinalCIDiagram} zawarłem skrótowy diagram, który 
+Na Rys.~\ref{img:shortFinalCIDiagram} zawarłem skrótowy diagram, który 
 przedstawia kolejność wykonywanych etapów działania pipeline'a. 
 Zdecydowałem się na wykorzystanie zmiennych do zdefiniowania wersji środowisk potrzebnych 
 do kompilacji, ale bez problemu można było parametryzować więcej opcji, jak choćby 
@@ -26,11 +26,11 @@ możliwość publikacji rozwiązania w trybie wersji roboczej (opcja \verb|IsDra
     \label{img:shortFinalCIDiagram}
 \end{figure}
 
-Na rysunku~\ref{img:yamlCompilationDeploymentDiagram} uszczegółowiłem kroki kompilacyjne 
-oraz wydawcze z rysunku~\ref{img:shortFinalCIDiagram}. Pozwoliłem sobie nie dodawać kolejnego 
+Na Rys.~\ref{img:yamlCompilationDeploymentDiagram} uszczegółowiłem kroki kompilacyjne 
+oraz wydawcze z Rys.~\ref{img:shortFinalCIDiagram}. Pozwoliłem sobie nie dodawać kolejnego 
 rysunku na etap testowania, ponieważ ogranicza się on do wykonania polecenia \verb|dotnet test|
-ze wskazaniem w parametrach ścieżki do projektu testującego 
-oraz eksportu wyników tzw. pokrycia kodu testami.
+ze wskazaniem w parametrach ścieżki do projektu testującego oraz eksportu 
+wyników tzw. pokrycia kodu testami (ang. Code Coverage).
 
 \begin{figure}[ht]
     \centering
@@ -42,9 +42,9 @@ oraz eksportu wyników tzw. pokrycia kodu testami.
 Dla każdego działania pipeline'a możemy zobaczyć podsumowanie wykonanych zadań.
 Pierwszym widokiem (rys. \ref{img:runSummary}) jest wypunktowanie podstawowych informacji o podjętej pracy:
 \begin{itemize}
-    \item Skąd i w jakiej wersji pobraliśmy kodu
-    \item Czas trwania oraz data rozpoczęcia działania zadania
-    \item Wygenerowane artefakty (skompilowane pliki)
+    \item Skąd i w jakiej wersji pobraliśmy kodu.
+    \item Czas trwania oraz data rozpoczęcia działania zadania.
+    \item Wygenerowane artefakty (skompilowane pliki).
     \item Podsumowanie testowania kodu
 \end{itemize}
 

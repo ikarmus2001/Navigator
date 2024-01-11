@@ -3,7 +3,7 @@ Angielskie \textbf{\textit{Continous Integration / Continous Delivery}} (czyli c
 to określenie na zestaw narzędzi automatyzujących dostarczanie programów wraz z ich rozwojem. 
 Pełne rozwiązanie, które samodzielnie wypełnia wszystkie nasze kroki wydawcze, nazywamy \textbf{\textit{pipeline}}m (z ang. rurociąg).
 Jego istotą jest zapewnienie wydajnego i stabilnego przepływu danych w ramach wypracowanej listy kroków, 
-które każdorazowo zostaną wykonane w ten sam sposób~\footnote[1]{
+które każdorazowo zostaną wykonane w ten sam sposób~\footnote{
     \label{determinismFootnote}
     Z dokładnością do środowiska, w którym skrypt zostanie uruchomiony, 
     oraz sposobu działania narzędzi (Patrz determinizm kompilatora~\cite{compilerDeterminism})
@@ -15,7 +15,7 @@ Do jego zalet zaliczamy:
     \item Wyeliminowanie błędów i niedopatrzeń człowieka na etapie wydawczym
     \item Przyspieszenie działania procesu
     \item Zwiększenie dostępności 
-    \item Determinizm wydania~\footref{determinismFootnote}
+    \item Determinizm wydania
     \item Uproszczona analiza szczegółów procesu
     \item Odciążenie zespołu programistycznego z wiedzy o szczegółach procesu wydania
     \item Bezpieczeństwo
@@ -50,8 +50,8 @@ Istnieje kilka zagadnień, które należy rozważyć podczas planowania integrac
     \item Ilość czasu potrzebnego do przygotowania konfiguracji
     \item Czy pipeline ma działać w chmurze, czy na własnym urządzeniu
 \end{enumerate}
-Przygotowanie konfiguracji pipeline'a może być skomplikowane oraz \\%
-czasochłonne, więc w większych zespołach do tego zadania zatrudnia się specjalistów. 
+Przygotowanie konfiguracji pipeline'a może być skomplikowane oraz czasochłonne, 
+więc w większych zespołach do tego zadania zatrudnia się specjalistów. 
 Chociaż początkowo może wydawać się to zbędnym nakładem pracy, z upływem czasu zwraca się on z nawiązką.
 Jeżeli nasz projekt ma być rozwijany przez więcej osób, w większej perspektywie czasowej, 
 to oprócz jego standardowych zalet, zyskujemy również spokój współautorów, 
@@ -59,9 +59,8 @@ którzy nie muszą znać szczegółów procesu wydawczego i mogą skupić się n
 
 Spotkałem się z opiniami, że przywiązanie do jednego dostawcy narzędzia negatywnie wpływa na elastyczność 
 takiego pipeline'a - w przypadku potrzeby zmiany narzędzia CI/CD mogą pojawić się komplikacje, 
-przykładowo różnice w składni, limity przechowywania poufnych danych, sposób działania~\footnote[2]{
-    Niekompatybilność przekazywania zmiennych, konwencje nazewnicze, dostępność \\%
-    szablonów zadań
+przykładowo różnice w składni, limity przechowywania poufnych danych, sposób działania~\footnote{
+    Niekompatybilność przekazywania zmiennych, konwencje nazewnicze, dostępność szablonów zadań
 } itp.
 Aby zabezpieczyć się przed takimi trudnościami, należy przeznaczyć dodatkowe nakłady pracy na stworzenie 
 modularnych skryptów, które będą łatwe w użyciu.

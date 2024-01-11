@@ -10,13 +10,13 @@ Ze względu na optymalizację czasowo-kosztową (szybkość działania,
 wygodę obsługi, optymalizację zajmowanego miejsca) znacznie lepszym systemem są dedykowane 
 rozwiązania, takie jak Subversion (SVN), CVS czy opisany niżej (prawdopodobnie najpopularniejszy) Git.
 
-W dużym skrócie, Git jest systemem kontroli wersji, charakteryzujący się:
-\paragraph{Rozproszeniem repozytoriów}
+W dużym skrócie, Git jest systemem kontroli wersji, charakteryzującym się:
+\paragraph{Rozproszeniem repozytoriów -}
 Pobierając aktualną wersję kodu, najczęściej wykonujemy również pełne sklonowanie repozytorium, 
 co częściowo uodparnia system na ewentualne utraty efektów pracy przez awarie sprzętowe lub pomyłki.
 Możemy również cofać się w historii wersji bez wielokrotnego kontaktowania się z serwerem.
 
-\paragraph{Zaoszczędzenie przestrzeni dyskowej}
+\paragraph{Zaoszczędzenie przestrzeni dyskowej -}
 Mechanizm różnicowego przechowywania danych pozwala na zmniejszenie rozmiaru plików, 
 wciąż zachowując możliwość dostępu do ich wcześniejszych wersji.
 Zamiast wielokrotnie nieznacznie zmieniony plik w całości, wystarczy notować w którym miejscu 
@@ -27,7 +27,7 @@ z prędkością aktualnych komputerów jest to bardziej opłacalna metoda~\cprot
     Oczywiście istnieją specjalne mechanizmy pozwalające na optymalizację tego zachowania, 
     dobrym punktem wyjścia jest \verb|git maintenance|~\cite{gitMaintenance}}.
 
-\paragraph{Uproszczeniem pracy zespołowej}
+\paragraph{Uproszczeniem pracy zespołowej -}
 System branchy (z ang. gałęzi, odgałęzień) pozwala na odesparowanie konkretnych funkcjonalności, 
 podzielenia fragmentów pracy na etapy, jak również na wygodne odseparowanie środowisk pracy deweloperów.
 Nie każda osoba musi pobierać wszystkie odgałęzienia, nie mamy ograniczeń ilościowych lub wielkościowych 
@@ -47,7 +47,7 @@ funkcjonalności jak narzędzia upraszczające i formalizujące kontakt z zespo�
 lub podstronie wydawczej, takiej jak GitHub Releases~\cite{githubReleases}.
 
 GitHub Releases to specjalny mechanizm, pozwalający na opublikowanie gotowych rozwiązań, dostępnych do 
-pobrania w gotowej do użytku formie. Na rysunku~\ref{img:githubReleases_sample} możemy zobaczyć 
+pobrania w gotowej do użytku formie. Na Rys.~\ref{img:githubReleases_sample} możemy zobaczyć 
 przykładowe wydanie wersji programu - zawiera tytuł (lub w tym przypadku numer wersji), listę zmian 
 oraz co najważniejsze skompilowane pliki wraz z ich ekwiwalentnym kodem źródłowym.
 \begin{figure}[ht]

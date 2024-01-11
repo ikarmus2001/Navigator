@@ -3,34 +3,35 @@ W mojej pracy zdecydowałem się na skorzystanie z platformy Azure~\ref{MS_Azure
 wpłynęły na nią przyjazny interfejs, łatwość instalacji agenta, jasna struktura tworzenia pipeline'ów 
 oraz mnogość instrukcji i poradników dotępnych w Internecie.
 
-Na przykładzie aplikacji Navigator~\ref{NavigatorAppSection} chciałbym przedstawić proces \\
+Na przykładzie aplikacji ,,Navigator''~\ref{NavigatorAppSection} chciałbym przedstawić proces \\
 planowania i konfiguracji pipeline'a.
 
 \subsubsection{Określenie potrzeb i możliwości}
 W moim projekcie, oprócz samej kompilacji, postanowiłem zaimplementować etap testowania 
 oraz wydania aplikacji na wspomnianym wcześniej GitHub Releases~\cite{githubReleases}.
-Na rysunku \ref{img:JobsOverview} widzimy efekt wykonania takiego pipeline'a z poziomu 
+Na Rys.~\ref{img:JobsOverview} widzimy efekt wykonania takiego pipeline'a z poziomu 
 widoku zarządzania pipeline'ami na stronie Microsoft Azure:
 
 \begin{figure}[ht]
     \centering
     \includegraphics[scale=0.5]{JobsOverview.png}
-    \caption{Zadania (ang. Joby) wykonane przez pipeline}
+    \caption{Zadania (ang. joby) wykonane przez pipeline}
     \label{img:JobsOverview}
 \end{figure}
 
 \subsubsection{Przygotowanie środowiska kompilacyjnego}
 Pierwszym krokiem było zainstalowanie specjalnego oprogramowania, 
-które wykonuje wszystkie kroki zdefiniowane w pipelinie - Azure Build Agent~\footnote[1]{
+które wykonuje wszystkie kroki zdefiniowane w pipelinie - Azure Build Agent~\footnote{
     \href{https://learn.microsoft.com/en-us/azure/devops/pipelines/agents/agents}{
         Informacje o Agentach
     }
 }.
 Ze względu na dysponowanie własną, dostępną maszyną zdecydowałem się na tą opcję,
-jednak taki sam efekt można osiągnąć opłacając maszyny wirtualne, udostępniane przez Microsoft. \\%
-Po krótkiej konfiguracji Agent był gotowy do wykonywania zleconego \\%
-pipeline'owego skryptu, ale należało jeszcze dodać zmienne środowiskowe, 
-które pozwalają na skorzystanie z określonych funkcji zadań (przykładem jest użycie Javy~\ref{javaTask}).
+jednak taki sam efekt można osiągnąć opłacając maszyny wirtualne, udostępniane przez Microsoft.
+
+Po krótkiej konfiguracji Agent był gotowy do wykonywania zleconego pipeline'owego skryptu, 
+ale należało jeszcze dodać zmienne środowiskowe, które pozwalają na 
+skorzystanie z określonych funkcji zadań (przykładowo użycie Javy - paragraf \ref{javaTask}).
 
 \subsubsection{Zdefiniowanie wymaganych akcji}
 Utworzenie pakietu mojej aplikacji napisanej w .NET MAUI przebiega za pomocą wywołania kompilatora 
@@ -47,23 +48,23 @@ jak również ze względu na chęć ominięcia szczegółów tej operacji wewną
 \subsubsection{Podejście graficzne}
 Moja pierwsza próba konfiguracji została podjęta w ramach graficznego konfiguratora, 
 który pozwolił mi na wykonanie (jak się później okazało szkicu) mojego pipeline'a.
-Na rysunkach~\ref{img:PipelineGuiApproach} i \ref{img:taskGroupMauiPrepare} możemy zobaczyć jego schemat działania:\\
+Na Rys.~\ref{img:PipelineGuiApproach} i \ref{img:taskGroupMauiPrepare} możemy zobaczyć jego schemat działania:
+
 \begin{figure}[ht]
     \centering
-    \begin{minipage}[t]{0.48\textwidth}
+    \begin{minipage}[t]{0.5\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{PipelineGuiApproach.png}
-        \caption{Grupa zadań \\%
-        inicjujących środowisko \\%
-        (szczegóły na rys.~\ref{img:taskGroupMauiPrepare}) oraz \\%
-        publikacja i podpisanie cyfrowe}
+        \frame{\includegraphics[width=\textwidth]{PipelineGuiApproach_light.png}}
+        \caption{Grupa zadań inicjujących środowisko 
+            (szczegóły na Rys.~\ref{img:taskGroupMauiPrepare}) 
+            oraz publikacja i podpisanie cyfrowe}
         \label{img:PipelineGuiApproach}
     \end{minipage}
     \hfill
     \begin{minipage}[t]{0.47\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{taskGroupMauiPrepare.png}
-        \caption{Zawartość grupy zadań \\inicjujących środowisko}
+        \frame{\includegraphics[width=\textwidth]{taskGroupMauiPrepare_light.png}}
+        \caption{Zawartość grupy zadań inicjujących środowisko}
         \label{img:taskGroupMauiPrepare}
     \end{minipage}
 \end{figure}

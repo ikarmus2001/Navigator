@@ -2,7 +2,7 @@
 
 \subsubsection{Wzorce projektowe}
 
-\paragraph{Wzorzec "Budowniczy"}
+\paragraph{Wzorzec Budowniczy -}
 Tworzenie obiektu mapy postanowiłem rozwiązać za pomocą wzorca Buildera - 
 specjalna klasa MapBuilder udostępnia metody, które pozwalają inkrementacyjnie 
 dodawać coraz to nowe szczegóły do mapy, a następnie zwrócić gotowy widok, 
@@ -11,8 +11,8 @@ który został już przetłumaczony do HTML~\cprotect\footnote{%
     ale w przyszłości może zostać zaimplementowana obsługa natywnych widoków,
     przez co typ zostanie odpowiednio zmieniony.}.
 
-\paragraph{Wzorzec MVVM}
-W aplikacji starałem się korzystać ze wzorca projektowego MVVM~\ref{mvvmSubsection} - 
+\paragraph{Wzorzec MVVM -}
+W aplikacji starałem się korzystać ze wzorca projektowego MVVM (rozdział \ref{mvvmSubsection}) - 
 wprowadziłem podział na odpowiednio:
 \begin{itemize}
     \item Pliki znaczników - strona\verb|.xaml| wraz z code-behind 
@@ -24,11 +24,19 @@ wprowadziłem podział na odpowiednio:
 Zamysł polega na uniemożliwieniu bezpośrednich interakcji danych 
 modelowych z widokami, a poprzez ViewModele. Takie podejście umożliwia bezpieczną zmianę 
 widoków, bez zastanawiania się czy wpłyną one na zachowanie ViewModelu lub co gorsza wprost na dane.
-Na rysunku  widzimy skrótowy podział rozwiązania na klasy, pogrupowany 
+Na Rys.~\ref{img:shortClassDiagram} widzimy skrótowy podział rozwiązania na klasy, pogrupowany 
 zgodnie z ich przeznaczeniem oraz najważniejszą relacją z klasami sąsiadującymi.
 \clearpage
 
 \newgeometry{top=2cm,right=1cm}
+
+\begin{figure}[!hb]
+    \centering
+    \includegraphics[width=0.9\textwidth]{shortClassDiagram.png}
+    \caption{Diagram najważniejszych klas w projekcie SMCEBI Navigator}
+    \label{img:shortClassDiagram}
+\end{figure}
+
 \subsubsection{Podział na projekty}
 \begin{figure}[!ht]
     \centering
@@ -37,26 +45,19 @@ zgodnie z ich przeznaczeniem oraz najważniejszą relacją z klasami sąsiadują
     \label{img:projectDiagram}
 \end{figure}
 
-
-\begin{figure}[!hb]
-    \centering
-    \includegraphics[width=0.9\textwidth]{shortClassDiagram.png}
-    \caption{Diagram najważniejszych klas w projekcie SMCEBI Navigator}
-    \label{img:shortClassDiagram}
-\end{figure}
 \newpage
 \restoregeometry
 
-Zgodnie z rysunkiem \ref{img:projectDiagram}, oprócz bezpośredniego kodu aplikacji, 
+Zgodnie z Rys.~\ref{img:projectDiagram}, oprócz bezpośredniego kodu aplikacji, 
 zdecydowałem się na wyodrębnienie 3 projektów:
 
-\paragraph{NavigatorTests}
-Projekt służący do statycznej analizy kodu poprzez przeprowadzenie testów jednostkowych.
+\paragraph{NavigatorTests -}
+Projekt służący do statycznej analizy kodu poprzez prze\-pro\-wa\-dze\-nie testów jednostkowych.
 Nie jest on obszerny, ale wraz z rozwojem oprogramowania może znaleźć się w nim więcej 
 scenariuszy. Na potrzeby tej pracy został zaimplementowany jeden test pokazowy, 
 żeby móc skonfigurować ich wywołanie za pomocą pipeline'a.
 
-\paragraph{MapBuilder\_API\_Base}
+\paragraph{MapBuilder\_API\_Base -}
 Projekt definiuje interfejs \verb|IMapBuilder|, który należy zaimplementować przy dodawaniu 
 do aplikacji biblioteki wyświetlającej mapę, tak jak stało się to w przypadku LeafletAPI.
 Ten podział wprowadza kompatybilność i możliwość zmian minimalnym kosztem programistycznym.
@@ -70,7 +71,7 @@ planuję ten proces skrócić do dołączenia biblioteki poprzez mechanizm refle
     na odsunięcie tej decyzji w czasie.
 }.
 
-\paragraph{LeafletAPI}
+\paragraph{LeafletAPI -}
 W projekcie zaimplementowałem generowanie strony HTML z wykorzystaniem wspomnianej biblioteki Leaflet~\cite{leafletGithub}.
 Biblioteka tworzy obiekt \verb|MapBuilder| implementujący interfejs \verb|IMapBuilder|, który jest 
 za pomocą aplikacji poszerzany o kolejne piętra, pokoje oraz obiekty z kreatora, a po wywołaniu 

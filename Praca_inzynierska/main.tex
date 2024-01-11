@@ -24,11 +24,13 @@
 \renewcommand*\figurename{Rysunek}
 \renewcommand*\listfigurename{Spis rysunków}
 
+\DefineBibliographyStrings{english}{%
+  urlseen = {Dostęp:},
+}
+
 
 \begin{document}
     \include{stronaTytulowa}
-
-    % \include{Rozdzialy/streszczenie}
     
     \tableofcontents
 
@@ -50,6 +52,5 @@
     \newgeometry{top=3cm}
     \printbibliography[title={Bibliografia}]
     \restoregeometry
-    \include{Rozdzialy/oswiadczenie}
-
+    
 \end{document}
